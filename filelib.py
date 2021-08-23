@@ -3,6 +3,7 @@ import os
 
 west_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\West_Plant_Operations_Reports\\"
 east_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\East_Plant_Operations_Reports\\"
+chem_treat_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Chemical_Treatment_Records\\"
 
 def get_file_from_date():
 	months = {
@@ -30,18 +31,22 @@ def get_file_from_date():
 	#list of files in 2021 directory
 	west_list = os.listdir(west_dir)
 	east_list = os.listdir(east_dir)
+	chem_list = os.listdir(chem_treat_dir)
 
 	#sort through directory for file corresponding with the current month
 	west_file = [file for file in west_list if file.startswith(month)]
 	east_file = [file for file in east_list if file.startswith(month)]
+	chem_file = [file for file in chem_list if file.startswith(month)]
 	print(f'West file: {west_file[0]}')
 	print(f'East file: {east_file[0]}')
+	print(f'Chem file: {chem_file[0]}')
 
 
 	west_path = west_dir + west_file[0]
 	east_path = east_dir + east_file[0]
+	chem_path = chem_treat_dir + chem_file[0]
 
-	return west_path, east_path
+	return west_path, east_path, chem_path
 
 def create_files(west_dir, east_dir):
 	year = str(datetime.today()).split('-')
