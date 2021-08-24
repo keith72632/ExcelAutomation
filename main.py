@@ -4,7 +4,7 @@ from datetime import datetime
 from loggers import *
 from filelib import *
 from workbooks import *
-from soups import scan_health_dep
+from soups import scan_health_dep, display_list_of_dicks
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
 
@@ -26,7 +26,8 @@ def main():
 	log_chloramine(w_active, e_active)
 
 	save_workbooks(west_wb, east_wb, west_path, east_path)
-	scan_health_dep()
+	locations_data = scan_health_dep()
+	display_list_of_dicks(locations_data)
 	os.system("pause")
 
 	print('workbooks saved\n')
