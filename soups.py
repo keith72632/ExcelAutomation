@@ -2,11 +2,15 @@ from bs4 import BeautifulSoup
 import requests
 
 def display_list_of_dicks(dick_list):
+	print('\n' + '*' * 50)
+	print('Entries for BMR from Health Departement Website')
 	for i, dick in enumerate(dick_list):
 		print(f'{i} entry:\n')
 		for key, value in dick.items():
 			print(f'\t{key}: {value}')
-		print('\n\n')
+		print('\n')
+	print('\n' + '*' * 50)
+
 
 def scan_health_dep():
 	URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
@@ -37,8 +41,6 @@ def scan_health_dep():
 					'chlorine': items[12]
 				}
 			)
-
-	# display_list_of_dicks(locations)
 
 	return locations
 	# cleaned = [x for x in data if x[0].text == "CARROLL-BOONE WATER DISTRICT"]
