@@ -1,3 +1,5 @@
+from colors import ok_block, error_block, warning_block
+
 def log_rainfall(w_active, e_active):
 	west_rainfall = [
 		w_active['G9'].value,
@@ -447,7 +449,8 @@ def log_bmr(bmr_wb, data_objs):
 		'H17',
 		'H18'
 	]
-	# print(f' first date value = {bmr_wb[dates[0]].value}')
+
+	#TODO add try and except block
 	bmr_wb['H5'].value = 'Carroll'
 	for i, data in enumerate(data_objs):
 		# print(bmr_wb[dates[i]].value)
@@ -459,3 +462,4 @@ def log_bmr(bmr_wb, data_objs):
 		bmr_wb[lab_results[i]].value = data['result']
 		bmr_wb[lab_num[i]].value = data['lab_no']
 		bmr_wb[date_results_recv[i]] = data['date_recv']
+	print(f'{ok_block()}BMR saved\n')
