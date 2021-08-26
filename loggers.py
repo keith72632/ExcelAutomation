@@ -369,3 +369,93 @@ def log_chloramine(w_active, e_active):
 		day.value = west_chloramine_cl2[i]
 
 	return west_chloramine_cl2
+
+def log_bmr(bmr_wb, data_objs):
+	dates = [
+		'A11',
+		'A12',
+		'A13',
+		'A14',
+		'A15',
+		'A16',
+		'A17',
+		'A18',
+	]
+
+	sample_sites = [
+		'B11',
+		'B12',
+		'B13',
+		'B14',
+		'B15',
+		'B16',
+		'B17',
+		'B18'
+	]
+
+	sample_type = [
+		'C11',
+		'C12',
+		'C13',
+		'C14',
+		'C15',
+		'C16',
+		'C17',
+		'C18'
+	]
+
+	chlorine_res = [
+		'D11',
+		'D12',
+		'D13',
+		'D14',
+		'D15',
+		'D16',
+		'D17',
+		'D18'
+	]
+
+	lab_results = [
+		'E11',
+		'E12',
+		'E13',
+		'E14',
+		'E15',
+		'E16',
+		'E17',
+		'E18'
+	]
+
+	lab_num = [
+		'F11',
+		'F12',
+		'F13',
+		'F14',
+		'F15',
+		'F16',
+		'F17',
+		'F18'
+	]
+
+	date_results_recv = [
+		'H11',
+		'H12',
+		'H13',
+		'H14',
+		'H15',
+		'H16',
+		'H17',
+		'H18'
+	]
+	# print(f' first date value = {bmr_wb[dates[0]].value}')
+	bmr_wb['H5'].value = 'Carroll'
+	for i, data in enumerate(data_objs):
+		# print(bmr_wb[dates[i]].value)
+		# print(data['date_collected'])
+		bmr_wb[dates[i]].value = data['date_collected']
+		bmr_wb[sample_sites[i]].value = data['location_id']
+		bmr_wb[sample_type[i]].value = data['sample_type']
+		bmr_wb[chlorine_res[i]].value = data['chlorine']
+		bmr_wb[lab_results[i]].value = data['result']
+		bmr_wb[lab_num[i]].value = data['lab_no']
+		bmr_wb[date_results_recv[i]] = data['date_recv']

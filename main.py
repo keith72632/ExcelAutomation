@@ -5,6 +5,7 @@ from loggers import *
 from filelib import *
 from workbooks import *
 from soups import scan_health_dep, display_list_of_dicks
+from colors import bcolors
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
 
@@ -18,6 +19,10 @@ def main():
 	w_active = west_wb.active
 	e_active = east_wb.active
 	c_active = chem_wb.active
+	bmr_wb = west_wb['BMR']
+
+	locations_data = scan_health_dep()
+	display_list_of_dicks(locations_data)
 
 	log_rainfall(w_active, e_active)
 	log_fluoride(w_active, e_active)
@@ -25,13 +30,14 @@ def main():
 	log_total(w_active, e_active)
 	log_chloramine(w_active, e_active)
 
+	#TODO change dates for BMR because it uses previous month
+	log_bmr(bmr_wb, locations_data)
+
+	# print(bmr_wb['A11'].value)
+
 	save_workbooks(west_wb, east_wb, west_path, east_path)
-	locations_data = scan_health_dep()
-	display_list_of_dicks(locations_data)
-	os.system("pause")
 
-	print('workbooks saved\n')
-
+	print('[ OK ] workbooks saved\n')
 
 if __name__ == '__main__':
 	main()
