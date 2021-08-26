@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
+import sys
 import requests
+from colors import ok_block, error_block, warning_block
 
 def display_list_of_dicks(dick_list):
 	print('\n' + '*' * 50)
@@ -23,9 +25,11 @@ def scan_health_dep():
 	# print(f'td = {fir.td.text}')
 
 	locations = []
+	i = 1
 	for line in data[1:]:
-		if line.td.text == "CARROLL-BOONE WATER DISTRICT":
-			# print(line.text)
+		if line.td.text == sys.argv[1]:
+			print(f'{ok_block()}{i} Entries for {sys.argv[1]} found\n')
+			i += 1
 			items = line.text.split('\n')
 			locations.append(
 				{

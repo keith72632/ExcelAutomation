@@ -5,12 +5,15 @@ from loggers import *
 from filelib import *
 from workbooks import *
 from soups import scan_health_dep, display_list_of_dicks
-from colors import bcolors
+from colorama import init
+from colors import bcolors, ok_block
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
 
 
 def main():
+
+	init()
 
 	print('Opening workbooks...\n')
 	west_path, east_path, chem_path = get_file_from_date()
@@ -35,9 +38,7 @@ def main():
 
 	# print(bmr_wb['A11'].value)
 
-	save_workbooks(west_wb, east_wb, west_path, east_path)
-
-	print('[ OK ] workbooks saved\n')
+	save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path)
 
 if __name__ == '__main__':
 	main()
