@@ -23,8 +23,10 @@ def get_file_from_date():
 	#get month number to use as prefix
 	monthnum = str(datetime.today()).split('-')
 	month = monthnum[1]
+	
+	#use this below for previous month
+	#month = '0' + str((datetime.now().month) - 1)
 	print(f'Month: {months[month]}')
-
 
 
 

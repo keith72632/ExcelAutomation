@@ -1,465 +1,423 @@
 from colors import ok_block, error_block, warning_block
 
+#Transfers rainfall data from West Operations Report to East Operations Report
 def log_rainfall(w_active, e_active):
-	west_rainfall = [
-		w_active['G9'].value,
-		w_active['G10'].value,
-		w_active['G11'].value,
-		w_active['G12'].value,
-		w_active['G13'].value,
-		w_active['G14'].value,
-		w_active['G15'].value,
-		w_active['G16'].value,
-		w_active['G17'].value,
-		w_active['G18'].value,
-		w_active['G19'].value,
-		w_active['G20'].value,
-		w_active['G21'].value,
-		w_active['G22'].value,
-		w_active['G23'].value,
-		w_active['G24'].value,
-		w_active['G25'].value,
-		w_active['G26'].value,
-		w_active['G27'].value,
-		w_active['G28'].value,
-		w_active['G29'].value,
-		w_active['G30'].value,
-		w_active['G31'].value,
-		w_active['G32'].value,
-		w_active['G33'].value,
-		w_active['G34'].value,
-		w_active['G35'].value,
-		w_active['G36'].value,
-		w_active['G37'].value,
-		w_active['G38'].value,
-		w_active['G39'].value,
+	west_cells = [
+		'G9', 'G10', 'G11', 'G12', 'G13',
+		'G14', 'G15', 'G16', 'G17', 'G18',
+		'G19', 'G20', 'G21', 'G22', 'G23',
+		'G24', 'G25', 'G26', 'G27', 'G28',
+		'G29', 'G30', 'G31', 'G32', 'G33',
+		'G34', 'G35', 'G36', 'G37', 'G38',
+		'G39',
 	]
 
-	east_rainfall = [
-		e_active['G9'],
-		e_active['G10'],
-		e_active['G11'],
-		e_active['G12'],
-		e_active['G13'],
-		e_active['G14'],
-		e_active['G15'],
-		e_active['G16'],
-		e_active['G17'],
-		e_active['G18'],
-		e_active['G19'],
-		e_active['G20'],
-		e_active['G21'],
-		e_active['G22'],
-		e_active['G23'],
-		e_active['G24'],
-		e_active['G25'],
-		e_active['G26'],
-		e_active['G27'],
-		e_active['G28'],
-		e_active['G29'],
-		e_active['G30'],
-		e_active['G31'],
-		e_active['G32'],
-		e_active['G33'],
-		e_active['G34'],
-		e_active['G35'],
-		e_active['G36'],
-		e_active['G37'],
-		e_active['G38'],
-		e_active['G39'],
+	east_cells = [
+		'G9', 'G10', 'G11', 'G12', 'G13',
+		'G14', 'G15', 'G16', 'G17', 'G18',
+		'G19', 'G20', 'G21', 'G22', 'G23',
+		'G24', 'G25', 'G26', 'G27', 'G28',
+		'G29', 'G30', 'G31', 'G32', 'G33',
+		'G34', 'G35', 'G36', 'G37', 'G38',
+		'G39',
 	]
 
-	for i, day in enumerate(east_rainfall):
-		day.value = west_rainfall[i]
+	try:
+		for i, day in enumerate(east_cells):
+			e_active[day].value = w_active[west_cells[i]].value
 
-	return west_rainfall
+		print(f'{ok_block()}Rainfall data successfully transfered\n')
+		return west_cells
+
+	except:
+		print(f'{error_block()}Error transferring rainfall data\n')
 
 
+
+
+#Transfers fluoride residual data from West Operations Report to the East Operations Report
 def log_fluoride(w_active, e_active):
-	west_fluoride = [
-		w_active['O9'].value,
-		w_active['O10'].value,
-		w_active['O11'].value,
-		w_active['O12'].value,
-		w_active['O13'].value,
-		w_active['O14'].value,
-		w_active['O15'].value,
-		w_active['O16'].value,
-		w_active['O17'].value,
-		w_active['O18'].value,
-		w_active['O19'].value,
-		w_active['O20'].value,
-		w_active['O21'].value,
-		w_active['O22'].value,
-		w_active['O23'].value,
-		w_active['O24'].value,
-		w_active['O25'].value,
-		w_active['O26'].value,
-		w_active['O27'].value,
-		w_active['O28'].value,
-		w_active['O29'].value,
-		w_active['O30'].value,
-		w_active['O31'].value,
-		w_active['O32'].value,
-		w_active['O33'].value,
-		w_active['O34'].value,
-		w_active['O35'].value,
-		w_active['O36'].value,
-		w_active['O37'].value,
-		w_active['O38'].value,
-		w_active['O39'].value,
+	west_cells = [
+		'O9', 'O10', 'O11', 'O12', 'O13',
+		'O14', 'O15', 'O16', 'O17', 'O18',
+		'O19', 'O20', 'O21', 'O22', 'O23',
+		'O24', 'O25', 'O26', 'O27', 'O28',
+		'O29', 'O30', 'O31', 'O32', 'O33',
+		'O34', 'O35', 'O36', 'O37', 'O38',
+		'O39',
 	]
 
-	east_fluoride = [
-		e_active['O9'],
-		e_active['O10'],
-		e_active['O11'],
-		e_active['O12'],
-		e_active['O13'],
-		e_active['O14'],
-		e_active['O15'],
-		e_active['O16'],
-		e_active['O17'],
-		e_active['O18'],
-		e_active['O19'],
-		e_active['O20'],
-		e_active['O21'],
-		e_active['O22'],
-		e_active['O23'],
-		e_active['O24'],
-		e_active['O25'],
-		e_active['O26'],
-		e_active['O27'],
-		e_active['O28'],
-		e_active['O29'],
-		e_active['O30'],
-		e_active['O31'],
-		e_active['O32'],
-		e_active['O33'],
-		e_active['O34'],
-		e_active['O35'],
-		e_active['O36'],
-		e_active['O37'],
-		e_active['O38'],
-		e_active['O39'],
+	east_cells = [
+		'O9', 'O10', 'O11', 'O12', 'O13',
+		'O14', 'O15', 'O16', 'O17', 'O18',
+		'O19', 'O20', 'O21', 'O22', 'O23',
+		'O24', 'O25', 'O26', 'O27', 'O28',
+		'O29', 'O30', 'O31', 'O32', 'O33',
+		'O34', 'O35', 'O36', 'O37', 'O38',
+		'O39',
 	]
 
-	for i, day in enumerate(east_fluoride):
-		day.value = west_fluoride[i]
+	try:
+		for i, day in enumerate(east_cells):
+			e_active[day].value = w_active[west_cells[i]].value
 		
-	return west_fluoride
+		print(f'{ok_block()}Fluoride data successfully transfered\n')	
+		return west_cells
+
+	except:
+		print(f'{error_block()}Error transferring fluroide data\n')
 
 
+#Transfers Finish pH data from the West Operations report to the East Operations Report
 def log_finish_pH(w_active, e_active):
-	west_finishPH = [
-		w_active['S9'].value,
-		w_active['S10'].value,
-		w_active['S11'].value,
-		w_active['S12'].value,
-		w_active['S13'].value,
-		w_active['S14'].value,
-		w_active['S15'].value,
-		w_active['S16'].value,
-		w_active['S17'].value,
-		w_active['S18'].value,
-		w_active['S19'].value,
-		w_active['S20'].value,
-		w_active['S21'].value,
-		w_active['S22'].value,
-		w_active['S23'].value,
-		w_active['S24'].value,
-		w_active['S25'].value,
-		w_active['S26'].value,
-		w_active['S27'].value,
-		w_active['S28'].value,
-		w_active['S29'].value,
-		w_active['S30'].value,
-		w_active['S31'].value,
-		w_active['S32'].value,
-		w_active['S33'].value,
-		w_active['S34'].value,
-		w_active['S35'].value,
-		w_active['S36'].value,
-		w_active['S37'].value,
-		w_active['S38'].value,
-		w_active['S39'].value,
+	west_cells = [
+		'S9', 'S10', 'S11', 'S12', 'S13',
+		'S14', 'S15', 'S16', 'S17', 'S18',
+		'S19', 'S20', 'S21', 'S22', 'S23', 
+		'S24', 'S25', 'S26', 'S27', 'S28',
+		'S29', 'S30', 'S31', 'S32', 'S33',
+		'S34', 'S35', 'S36', 'S37', 'S38',
+		'S39',
 	]
 
-	east_finish_PH = [
-		e_active['R9'],
-		e_active['R10'],
-		e_active['R11'],
-		e_active['R12'],
-		e_active['R13'],
-		e_active['R14'],
-		e_active['R15'],
-		e_active['R16'],
-		e_active['R17'],
-		e_active['R18'],
-		e_active['R19'],
-		e_active['R20'],
-		e_active['R21'],
-		e_active['R22'],
-		e_active['R23'],
-		e_active['R24'],
-		e_active['R25'],
-		e_active['R26'],
-		e_active['R27'],
-		e_active['R28'],
-		e_active['R29'],
-		e_active['R30'],
-		e_active['R31'],
-		e_active['R32'],
-		e_active['R33'],
-		e_active['R34'],
-		e_active['R35'],
-		e_active['R36'],
-		e_active['R37'],
-		e_active['R38'],
-		e_active['R39'],
+	east_cells = [
+		'R9', 'R10', 'R11', 'R12', 'R13',
+		'R14', 'R15', 'R16', 'R17', 'R18',
+		'R19', 'R20', 'R21', 'R22', 'R23',
+		'R24', 'R25', 'R26', 'R27', 'R28',
+		'R29', 'R30', 'R31', 'R32', 'R33',
+		'R34', 'R35', 'R36', 'R37', 'R38',
+		'R39',
 	]
 
-	for i, day in enumerate(east_finish_PH):
-		day.value = west_finishPH[i]
+	try:
+		for i, day in enumerate(east_cells):
+			e_active[day].value = w_active[west_cells[i]].value
 
-	return west_finishPH
+		print(f'{ok_block()}Finish pH data successfully transfered\n')
+		return west_cells
 
+	except:
+		print(f'{error_block()}Error transferring finish pH data\n')
+
+
+
+#Transfer total chlorine data from the West Operations Report to the East Operations Report
 def log_total(w_active, e_active):
-	west_total = [
-		w_active['AI9'].value,
-		w_active['AI10'].value,
-		w_active['AI11'].value,
-		w_active['AI12'].value,
-		w_active['AI13'].value,
-		w_active['AI14'].value,
-		w_active['AI15'].value,
-		w_active['AI16'].value,
-		w_active['AI17'].value,
-		w_active['AI18'].value,
-		w_active['AI19'].value,
-		w_active['AI20'].value,
-		w_active['AI21'].value,
-		w_active['AI22'].value,
-		w_active['AI23'].value,
-		w_active['AI24'].value,
-		w_active['AI25'].value,
-		w_active['AI26'].value,
-		w_active['AI27'].value,
-		w_active['AI28'].value,
-		w_active['AI29'].value,
-		w_active['AI30'].value,
-		w_active['AI31'].value,
-		w_active['AI32'].value,
-		w_active['AI33'].value,
-		w_active['AI34'].value,
-		w_active['AI35'].value,
-		w_active['AI36'].value,
-		w_active['AI37'].value,
-		w_active['AI38'].value,
-		w_active['AI39'].value,
+	west_cells = [
+		'AI9', 'AI10', 'AI11', 'AI12', 'AI13',
+		'AI14', 'AI15', 'AI16', 'AI17', 'AI18',
+		'AI19', 'AI20', 'AI21', 'AI22', 'AI23',
+		'AI24', 'AI25', 'AI26', 'AI27', 'AI28',
+		'AI29', 'AI30', 'AI31', 'AI32', 'AI33',
+		'AI34', 'AI35', 'AI36', 'AI37', 'AI38',
+		'AI39',
 	]
 
-	east_total = [
-		e_active['AH9'],
-		e_active['AH10'],
-		e_active['AH11'],
-		e_active['AH12'],
-		e_active['AH13'],
-		e_active['AH14'],
-		e_active['AH15'],
-		e_active['AH16'],
-		e_active['AH17'],
-		e_active['AH18'],
-		e_active['AH19'],
-		e_active['AH20'],
-		e_active['AH21'],
-		e_active['AH22'],
-		e_active['AH23'],
-		e_active['AH24'],
-		e_active['AH25'],
-		e_active['AH26'],
-		e_active['AH27'],
-		e_active['AH28'],
-		e_active['AH29'],
-		e_active['AH30'],
-		e_active['AH31'],
-		e_active['AH32'],
-		e_active['AH33'],
-		e_active['AH34'],
-		e_active['AH35'],
-		e_active['AH36'],
-		e_active['AH37'],
-		e_active['AH38'],
-		e_active['AH39']
+	east_cells = [
+		'AH9', 'AH10', 'AH11', 'AH12', 'AH13',
+		'AH14', 'AH15', 'AH16', 'AH17', 'AH18',
+		'AH19', 'AH20', 'AH21', 'AH22', 'AH23',
+		'AH24', 'AH25', 'AH26', 'AH27', 'AH28',
+		'AH29', 'AH30', 'AH31', 'AH32', 'AH33',
+		'AH34', 'AH35', 'AH36', 'AH37', 'AH38',
+		'AH39'
 	]
 
-	for i, day in enumerate(east_total):
-		day.value = west_total[i]
+	try:
+		for i, day in enumerate(east_cells):
+			e_active[day].value = w_active[west_cells[i]].value
 
-	return west_total
+		print(f'{ok_block()}Total chlorine data successfully transfered\n')
+		return west_cells
+	except:
+		print(f'{error_block()}Error transferring total chlorine data\n')
 
+
+
+#Copies Chloramine Data from the West Operations Report to the East Operation Report
 def log_chloramine(w_active, e_active):
-	west_chloramine_cl2 = [
-		w_active['AJ9'].value,
-		w_active['AJ10'].value,
-		w_active['AJ11'].value,
-		w_active['AJ12'].value,
-		w_active['AJ13'].value,
-		w_active['AJ14'].value,
-		w_active['AJ15'].value,
-		w_active['AJ16'].value,
-		w_active['AJ17'].value,
-		w_active['AJ18'].value,
-		w_active['AJ19'].value,
-		w_active['AJ20'].value,
-		w_active['AJ21'].value,
-		w_active['AJ22'].value,
-		w_active['AJ23'].value,
-		w_active['AJ24'].value,
-		w_active['AJ25'].value,
-		w_active['AJ26'].value,
-		w_active['AJ27'].value,
-		w_active['AJ28'].value,
-		w_active['AJ29'].value,
-		w_active['AJ30'].value,
-		w_active['AJ31'].value,
-		w_active['AJ32'].value,
-		w_active['AJ33'].value,
-		w_active['AJ34'].value,
-		w_active['AJ35'].value,
-		w_active['AJ36'].value,
-		w_active['AJ37'].value,
-		w_active['AJ38'].value,
-		w_active['AJ39'].value,
+	west_cells = [
+		'AJ9', 'AJ10', 'AJ11', 'AJ12', 'AJ13',
+		'AJ14', 'AJ15', 'AJ16', 'AJ17', 'AJ18', 
+		'AJ19', 'AJ20', 'AJ21', 'AJ22', 'AJ23',
+		'AJ24', 'AJ25', 'AJ26', 'AJ27', 'AJ28',
+		'AJ29', 'AJ30', 'AJ31', 'AJ32', 'AJ33',
+		'AJ34', 'AJ35', 'AJ36', 'AJ37', 'AJ38',
+		'AJ39',
 	]
 
-	east_chloramine_cl2 = [
-		e_active['AI9'] ,
-		e_active['AI10'],
-		e_active['AI11'],
-		e_active['AI12'],
-		e_active['AI13'],
-		e_active['AI14'],
-		e_active['AI15'],
-		e_active['AI16'],
-		e_active['AI17'],
-		e_active['AI18'],
-		e_active['AI19'],
-		e_active['AI20'],
-		e_active['AI21'],
-		e_active['AI22'],
-		e_active['AI23'],
-		e_active['AI24'],
-		e_active['AI25'],
-		e_active['AI26'],
-		e_active['AI27'],
-		e_active['AI28'],
-		e_active['AI29'],
-		e_active['AI30'],
-		e_active['AI31'],
-		e_active['AI32'],
-		e_active['AI33'],
-		e_active['AI34'],
-		e_active['AI35'],
-		e_active['AI36'],
-		e_active['AI37'],
-		e_active['AI38'],
-		e_active['AI39'],
+	east_cells = [
+		'AI9', 'AI10', 'AI11', 'AI12', 'AI13',
+		'AI14', 'AI15', 'AI16', 'AI17','AI18',
+		'AI19', 'AI20', 'AI21', 'AI22', 'AI23',
+		'AI24', 'AI25', 'AI26', 'AI27', 'AI28',
+		'AI29', 'AI30', 'AI31', 'AI32', 'AI33',
+		'AI34', 'AI35', 'AI36', 'AI37', 'AI38',
+		'AI39',
 	]
 
-	for i, day in enumerate(east_chloramine_cl2):
-		day.value = west_chloramine_cl2[i]
+	try:
+		for i, day in enumerate(east_cells):
+			e_active[day].value = w_active[west_cells[i]].value
 
-	return west_chloramine_cl2
+		print(f'{ok_block()}Chloramine data successfully transfered\n')
+		return west_cells
 
+	except:
+		print(f'{error_block()}Error transferring chloramine data\n')
+
+
+#Tranfers the meter reading from the West Operations Report to the East Chemical Treatment Record
+def transfer_meters_west(w_active, w_chem):
+	#cells from the West operations report
+	op_meter_cells = [
+		'B9', 'B10', 'B11', 'B12', 'B13',
+		'B14', 'B15', 'B16', 'B17','B18',
+		'B19', 'B20', 'B21', 'B22', 'B23',
+		'B24', 'B25', 'B26', 'B27', 'B28',
+		'B29', 'B30', 'B31', 'B32', 'B33',
+		'B34', 'B35', 'B36', 'B37', 'B38',
+		'B39',
+	]
+
+	op_flow_cells = [
+		'D9', 'D10', 'D11', 'D12', 'D13',
+		'D14', 'D15', 'D16', 'D17','D18',
+		'D19', 'D20', 'D21', 'D22', 'D23',
+		'D24', 'D25', 'D26', 'D27', 'D28',
+		'D29', 'D30', 'D31', 'D32', 'D33',
+		'D34', 'D35', 'D36', 'D37', 'D38',
+		'D39',
+	]
+
+	op_chlorine_cells = [
+		'J9', 'J10', 'J11', 'J12', 'J13',
+		'J14', 'J15', 'J16', 'J17','J18',
+		'J19', 'J20', 'J21', 'J22', 'J23',
+		'J24', 'J25', 'J26', 'J27', 'J28',
+		'J29', 'J30', 'J31', 'J32', 'J33',
+		'J34', 'J35', 'J36', 'J37', 'J38',
+		'J39',
+	]
+
+	ct_meter_cells = [
+		'A10', 'A11', 'A12', 'A13','A14', 
+		'A15', 'A16', 'A17','A18', 'A19', 
+		'A20', 'A21', 'A22', 'A23', 'A24', 
+		'A25', 'A26', 'A27', 'A28', 'A29', 
+		'A30', 'A31', 'A32', 'A33', 'A34', 
+		'A35', 'A36', 'A37', 'A38', 'A39',
+		'A40'
+	]
+
+	try:
+		for i, day in enumerate(op_meter_cells):
+			w_chem[ct_meter_cells[i]].value = w_active[day].value 
+		print(f'{ok_block()}Meter data successfully transfered from West Operations Report to West Chemical Treatment Record\n')
+		return ct_meter_cells
+	except:
+		print(f'{error_block()}Error transfering West meter data\n')
+
+
+#Transfers the meter readings from the East Operations Report to the East Chemical Treatment Record
+def transfer_meters_east(e_active, e_chem):
+	#cells from the East operations report
+	op_meter_cells = [
+		'B9', 'B10', 'B11', 'B12', 'B13',
+		'B14', 'B15', 'B16', 'B17','B18',
+		'B19', 'B20', 'B21', 'B22', 'B23',
+		'B24', 'B25', 'B26', 'B27', 'B28',
+		'B29', 'B30', 'B31', 'B32', 'B33',
+		'B34', 'B35', 'B36', 'B37', 'B38',
+		'B39',
+	]
+
+	op_chlorine_cells = [
+		'J9', 'J10', 'J11', 'J12', 'J13',
+		'J14', 'J15', 'J16', 'J17','J18',
+		'J19', 'J20', 'J21', 'J22', 'J23',
+		'J24', 'J25', 'J26', 'J27', 'J28',
+		'J29', 'J30', 'J31', 'J32', 'J33',
+		'J34', 'J35', 'J36', 'J37', 'J38',
+		'J39',
+	]
+
+	ct_meter_cells = [
+		'A10', 'A11', 'A12', 'A13','A14', 
+		'A15', 'A16', 'A17','A18', 'A19', 
+		'A20', 'A21', 'A22', 'A23', 'A24', 
+		'A25', 'A26', 'A27', 'A28', 'A29', 
+		'A30', 'A31', 'A32', 'A33', 'A34', 
+		'A35', 'A36', 'A37', 'A38', 'A39',
+		'A40'
+	]
+
+	try:
+		for i, day in enumerate(op_meter_cells):
+			e_chem[ct_meter_cells[i]].value = e_active[day].value 
+		print(f'{ok_block()}Meter data successfully transfered from East Operations Report to East Chemical Treatment Record\n')
+		return ct_meter_cells
+	except:
+		print(f'{error_block()}Error transfering West meter data\n')
+
+
+#Transfers the flow readings(in MGD) from the West Operations Report to the West Chemical Treatment Record
+def transfer_flow_west(w_active, w_chem):
+	op_flow_cells = [
+		'D9', 'D10', 'D11', 'D12', 'D13',
+		'D14', 'D15', 'D16', 'D17','D18',
+		'D19', 'D20', 'D21', 'D22', 'D23',
+		'D24', 'D25', 'D26', 'D27', 'D28',
+		'D29', 'D30', 'D31', 'D32', 'D33',
+		'D34', 'D35', 'D36', 'D37', 'D38',
+		'D39',
+	]
+	
+	ct_flow_cells = [
+		'C10', 'C11', 'C12', 'C13','C14', 
+		'C15', 'C16', 'C17','C18', 'C19', 
+		'C20', 'C21', 'C22', 'C23', 'C24', 
+		'C25', 'C26', 'C27', 'C28', 'C29', 
+		'C30', 'C31', 'C32', 'C33', 'C34', 
+		'C35', 'C36', 'C37', 'C38', 'C39',
+		'C40'
+	]
+
+	try:
+		for i, day in enumerate(op_flow_cells):
+			w_chem[ct_flow_cells[i]].value = w_active[day].value
+		print(f'{ok_block()}Total Raw data successfully transfered from West Operations Report to West Chemical Treatment Record\n')
+		return ct_flow_cells		
+	except:
+		print(f'{error_block()}Error transfering West meter data\n')
+
+
+#Transfers the flow(in MGD) from the East Operations Report to the East Chemical Treatment Record
+def transfer_flow_east(e_active, e_chem):
+	op_flow_cells = [
+		'D9', 'D10', 'D11', 'D12', 'D13',
+		'D14', 'D15', 'D16', 'D17','D18',
+		'D19', 'D20', 'D21', 'D22', 'D23',
+		'D24', 'D25', 'D26', 'D27', 'D28',
+		'D29', 'D30', 'D31', 'D32', 'D33',
+		'D34', 'D35', 'D36', 'D37', 'D38',
+		'D39',
+	]
+
+	ct_flow_cells = [
+		'C10', 'C11', 'C12', 'C13','C14', 
+		'C15', 'C16', 'C17','C18', 'C19', 
+		'C20', 'C21', 'C22', 'C23', 'C24', 
+		'C25', 'C26', 'C27', 'C28', 'C29', 
+		'C30', 'C31', 'C32', 'C33', 'C34', 
+		'C35', 'C36', 'C37', 'C38', 'C39',
+		'C40'
+	]
+
+	try:
+		for i, day in enumerate(op_flow_cells):
+			e_chem[ct_flow_cells[i]].value = e_active[day].value
+		print(f'{ok_block()}Total Raw data successfully transfered from East Operations Report to East Chemical Treatment Record\n')
+		return ct_flow_cells		
+	except:
+		print(f'{error_block()}Error transfering East flow data\n')
+
+
+#Transfers the chlorine readings (in PPD) from the West Operations Report to the West Chemical Treatment Record
+def transfer_chlorine_west(w_active, w_chem):
+	op_chlorine_cells = [
+		'J9', 'J10', 'J11', 'J12', 'J13',
+		'J14', 'J15', 'J16', 'J17','J18',
+		'J19', 'J20', 'J21', 'J22', 'J23',
+		'J24', 'J25', 'J26', 'J27', 'J28',
+		'J29', 'J30', 'J31', 'J32', 'J33',
+		'J34', 'J35', 'J36', 'J37', 'J38',
+		'J39',
+	]
+	
+	ct_chlorine_cells = [
+		'D10', 'D11', 'D12', 'D13','D14', 
+		'D15', 'D16', 'D17','D18', 'D19', 
+		'D20', 'D21', 'D22', 'D23', 'D24', 
+		'D25', 'D26', 'D27', 'D28', 'D29', 
+		'D30', 'D31', 'D32', 'D33', 'D34', 
+		'D35', 'D36', 'D37', 'D38', 'D39',
+		'D40'
+	]
+
+	try:
+		for i, day in enumerate(op_chlorine_cells):
+			w_chem[ct_chlorine_cells[i]].value = w_active[day].value
+		print(f'{ok_block()}Chlorine data successfully transfered from West Operations Report to West Chemical Treatment Record\n')
+		return ct_chlorine_cells		
+	except:
+		print(f'{error_block()}Error transfering West Chlorine data\n')
+
+
+#Transers the chlorine readings (in PPD) from the East Operations Report to the West Chemical Treatment Record
+def transfer_chlorine_East(e_active, e_chem):
+	op_chlorine_cells = [
+		'J9', 'J10', 'J11', 'J12', 'J13',
+		'J14', 'J15', 'J16', 'J17','J18',
+		'J19', 'J20', 'J21', 'J22', 'J23',
+		'J24', 'J25', 'J26', 'J27', 'J28',
+		'J29', 'J30', 'J31', 'J32', 'J33',
+		'J34', 'J35', 'J36', 'J37', 'J38',
+		'J39',
+	]
+	
+	ct_chlorine_cells = [
+		'D10', 'D11', 'D12', 'D13','D14', 
+		'D15', 'D16', 'D17','D18', 'D19', 
+		'D20', 'D21', 'D22', 'D23', 'D24', 
+		'D25', 'D26', 'D27', 'D28', 'D29', 
+		'D30', 'D31', 'D32', 'D33', 'D34', 
+		'D35', 'D36', 'D37', 'D38', 'D39',
+		'D40'
+	]
+
+	try:
+		for i, day in enumerate(op_chlorine_cells):
+			e_chem[ct_chlorine_cells[i]].value = e_active[day].value
+		print(f'{ok_block()}Chlorine data successfully transfered from East Operations Report to East Chemical Treatment Record\n')
+		return ct_chlorine_cells		
+	except:
+		print(f'{error_block()}Error transfering East Chlorine data\n')
+
+
+
+
+#Data from the Health Department website is passed to this function as an array of dictionaries, and writes the data to the BMR
 def log_bmr(bmr_wb, data_objs):
-	dates = [
-		'A11',
-		'A12',
-		'A13',
-		'A14',
-		'A15',
-		'A16',
-		'A17',
-		'A18',
-	]
+	dates =             [ 'A11', 'A12', 'A13', 'A14', 'A15', 'A16', 'A17', 'A18', ]
 
-	sample_sites = [
-		'B11',
-		'B12',
-		'B13',
-		'B14',
-		'B15',
-		'B16',
-		'B17',
-		'B18'
-	]
+	sample_sites =      [ 'B11', 'B12', 'B13', 'B14', 'B15', 'B16', 'B17', 'B18' ]
 
-	sample_type = [
-		'C11',
-		'C12',
-		'C13',
-		'C14',
-		'C15',
-		'C16',
-		'C17',
-		'C18'
-	]
+	sample_type =       [ 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18' ]
 
-	chlorine_res = [
-		'D11',
-		'D12',
-		'D13',
-		'D14',
-		'D15',
-		'D16',
-		'D17',
-		'D18'
-	]
+	chlorine_res =      [ 'D11', 'D12', 'D13', 'D14', 'D15', 'D16', 'D17', 'D18' ]
 
-	lab_results = [
-		'E11',
-		'E12',
-		'E13',
-		'E14',
-		'E15',
-		'E16',
-		'E17',
-		'E18'
-	]
+	lab_results =       [ 'E11', 'E12', 'E13', 'E14', 'E15', 'E16', 'E17', 'E18' ]
 
-	lab_num = [
-		'F11',
-		'F12',
-		'F13',
-		'F14',
-		'F15',
-		'F16',
-		'F17',
-		'F18'
-	]
+	lab_num =           [ 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18' ]
 
-	date_results_recv = [
-		'H11',
-		'H12',
-		'H13',
-		'H14',
-		'H15',
-		'H16',
-		'H17',
-		'H18'
-	]
+	date_results_recv = [ 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18' ]
 
 	#TODO add try and except block
-	bmr_wb['H5'].value = 'Carroll'
-	for i, data in enumerate(data_objs):
-		# print(bmr_wb[dates[i]].value)
-		# print(data['date_collected'])
-		bmr_wb[dates[i]].value = data['date_collected']
-		bmr_wb[sample_sites[i]].value = data['location_id']
-		bmr_wb[sample_type[i]].value = data['sample_type']
-		bmr_wb[chlorine_res[i]].value = data['chlorine']
-		bmr_wb[lab_results[i]].value = data['result']
-		bmr_wb[lab_num[i]].value = data['lab_no']
-		bmr_wb[date_results_recv[i]] = data['date_recv']
-	print(f'{ok_block()}BMR saved\n')
+	try:
+		bmr_wb['H5'].value = 'Carroll'
+		for i, data in enumerate(data_objs):
+			# print(bmr_wb[dates[i]].value)
+			# print(data['date_collected'])
+			bmr_wb[dates[i]].value = data['date_collected']
+			bmr_wb[sample_sites[i]].value = data['location_id']
+			bmr_wb[sample_type[i]].value = data['sample_type']
+			bmr_wb[chlorine_res[i]].value = data['chlorine']
+			bmr_wb[lab_results[i]].value = data['result']
+			bmr_wb[lab_num[i]].value = data['lab_no']
+			bmr_wb[date_results_recv[i]] = data['date_recv']
+		print(f'{ok_block()}BMR saved\n')
+	except:
+		print(f'{error_block()}Error completing BMR\n')
+
