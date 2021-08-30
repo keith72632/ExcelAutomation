@@ -6,7 +6,6 @@ from filelib import get_file_from_date
 from workbooks import *
 from soups import scan_health_dep, display_list_of_dicks
 from colorama import init
-from colors import bcolors, ok_block
 from time import sleep
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
@@ -47,8 +46,6 @@ def main():
 
 	#TODO change dates for BMR because it uses previous month
 	log_bmr(bmr_wb, locations_data)
-
-	# print(bmr_wb['A11'].value)
 
 	save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path)
 

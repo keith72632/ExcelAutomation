@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import sys
 import requests
-from colors import ok_block, error_block, warning_block
+from colors import Prompts
 
 def display_list_of_dicks(dick_list):
 	print('\n' + '*' * 50)
@@ -15,6 +15,7 @@ def display_list_of_dicks(dick_list):
 
 
 def scan_health_dep():
+	p = Prompts()
 	URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
 	p = requests.get(URL)
 	soup = BeautifulSoup(p.content, "html.parser")
@@ -28,7 +29,7 @@ def scan_health_dep():
 	i = 1
 	for line in data[1:]:
 		if line.td.text == sys.argv[1]:
-			print(f'{ok_block()}{i} Entries for {sys.argv[1]} found\n')
+			print(f'{p.ok()}{i} Entries for {sys.argv[1]} found\n')
 			i += 1
 			items = line.text.split('\n')
 			locations.append(
