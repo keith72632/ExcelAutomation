@@ -29,7 +29,7 @@ def scan_health_dep():
 	i = 1
 	for line in data[1:]:
 		if line.td.text == sys.argv[1]:
-			print(f'{p.ok()}{i} Entries for {sys.argv[1]} found\n')
+			print(f'{i} Entries for {sys.argv[1]} found\n')
 			i += 1
 			items = line.text.split('\n')
 			locations.append(
