@@ -1,11 +1,14 @@
 from datetime import datetime
 import os
+from colors import Prompts
 
 west_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\West_Plant_Operations_Reports\\"
 east_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\East_Plant_Operations_Reports\\"
 chem_treat_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Chemical_Treatment_Records\\"
+mango_meters = "C:\\Users\\Carroll Boone Water\\Documents\\keith's\\MangoLogs\\"
 
 def get_file_from_date():
+	p = Prompts()
 	months = {
 		"01": "January",
 		"02": "February",
@@ -21,11 +24,11 @@ def get_file_from_date():
 		"12": "December"
 	}
 	#get month number to use as prefix
-	monthnum = str(datetime.today()).split('-')
-	month = monthnum[1]
+	# monthnum = str(datetime.today()).split('-')
+	# month = monthnum[1]
 	
-	#use this below for previous month
-	#month = '0' + str((datetime.now().month) - 1)
+	# use this below for previous month
+	month = '0' + str((datetime.now().month) - 1)
 	print(f'Month: {months[month]}')
 
 
@@ -34,14 +37,34 @@ def get_file_from_date():
 	west_list = os.listdir(west_dir)
 	east_list = os.listdir(east_dir)
 	chem_list = os.listdir(chem_treat_dir)
+	meter_list = os.listdir(mango_meters)
 
 	#sort through directory for file corresponding with the current month
-	west_file = [file for file in west_list if file.startswith(month)]
-	east_file = [file for file in east_list if file.startswith(month)]
-	chem_file = [file for file in chem_list if file.startswith(month)]
-	print(f'West file: {west_file[0]}')
-	print(f'East file: {east_file[0]}')
-	print(f'Chem file: {chem_file[0]}')
+	try:
+		west_file =  [file for file in west_list if file.startswith(month)]
+		print(f'{p.ok()}West file: {west_file[0]}')
+	except:
+		print(f'{p.warn()}No file found')
+
+	try:
+		east_file =  [file for file in east_list if file.startswith(month)]
+		print(f'{p.ok()}East file: {east_file[0]}')
+	except:
+		print(f'{p.warn()}No file found')
+
+	try:
+		chem_file =  [file for file in chem_list if file.startswith(month)]
+		print(f'{p.ok()}Chem file: {chem_file[0]}')
+	except:
+		print(f'{p.warn()}No file found')
+
+	try:
+		meter_file = [file for file in meter_list if file.startswith(month)]
+		print(f'{p.ok()}Meter file {meter_file[0]}')
+	except:
+		print(f'{p.warn()}No file found')
+
+
 
 
 	west_path = west_dir + west_file[0]
