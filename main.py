@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from loggers import *
 from filelib import get_file_from_date
-from workbooks import *
+from workbooks import load_workbooks, save_workbooks, get_sub_workbooks, activate_workbooks
 from soups import scan_health_dep, display_list_of_dicks
 from colorama import init
 from time import sleep
@@ -18,13 +18,12 @@ def main():
 
 	west_path, east_path, chem_path = get_file_from_date()
 
-	west_wb, east_wb, chem_wb = activate_workbooks(west_path, east_path, chem_path)
-	w_active = west_wb.active
-	e_active = east_wb.active
-	c_active = chem_wb.active
-	bmr_wb = west_wb['BMR']
-	w_chem = chem_wb['West']
-	e_chem = chem_wb['East']
+	west_wb, east_wb, chem_wb = load_workbooks(west_path, east_path, chem_path)
+
+	bmr_wb, w_chem, e_chem = get_sub_workbooks(west_wb, chem_wb)
+
+	w_active, e_active, c_active = activate_workbooks(west_wb, east_wb, chem_wb)
+
 
 	#scan of the health department website for the BMR data
 	locations_data = scan_health_dep()
