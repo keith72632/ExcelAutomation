@@ -44,25 +44,25 @@ def get_file_from_date():
 		west_file =  [file for file in west_list if file.startswith(month)]
 		print(f'{p.ok()}West file: {west_file[0]}')
 	except:
-		print(f'{p.warn()}No file found')
+		print(f'{p.warn()}West Operations Report Not Found\n')
 
 	try:
 		east_file =  [file for file in east_list if file.startswith(month)]
 		print(f'{p.ok()}East file: {east_file[0]}')
 	except:
-		print(f'{p.warn()}No file found')
+		print(f'{p.warn()}East Operations Report Not Found\n')
 
 	try:
 		chem_file =  [file for file in chem_list if file.startswith(month)]
 		print(f'{p.ok()}Chem file: {chem_file[0]}')
 	except:
-		print(f'{p.warn()}No file found')
+		print(f'{p.warn()}Chemical Reatment Record Not Found\n')
 
 	try:
 		meter_file = [file for file in meter_list if file.startswith(month)]
 		print(f'{p.ok()}Meter file {meter_file[0]}')
 	except:
-		print(f'{p.warn()}No file found')
+		print(f'{p.warn()}Meter Reading File Not Found\n')
 
 
 

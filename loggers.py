@@ -234,16 +234,6 @@ def transfer_meters_east(e_active, e_chem):
 		'B39',
 	)
 
-	op_chlorine_cells = (
-		'J9', 'J10', 'J11', 'J12', 'J13',
-		'J14', 'J15', 'J16', 'J17','J18',
-		'J19', 'J20', 'J21', 'J22', 'J23',
-		'J24', 'J25', 'J26', 'J27', 'J28',
-		'J29', 'J30', 'J31', 'J32', 'J33',
-		'J34', 'J35', 'J36', 'J37', 'J38',
-		'J39',
-	)
-
 	ct_meter_cells = (
 		'A10', 'A11', 'A12', 'A13','A14', 
 		'A15', 'A16', 'A17','A18', 'A19', 
@@ -262,67 +252,30 @@ def transfer_meters_east(e_active, e_chem):
 	except:
 		print(f'{p.err()}Error transfering West meter data\n')
 
-
-#Transfers the flow readings(in MGD) from the West Operations Report to the West Chemical Treatment Record
+#The values in total raw water flow on the Operations Report are calculated via formula, which openpyxl cannot transfer
+#this function calculates the first flow value in the Chemical treatment record and fills the rest with a formula within excel
 def transfer_flow_west(w_active, w_chem):
-	op_flow_cells = (
-		'D9', 'D10', 'D11', 'D12', 'D13',
-		'D14', 'D15', 'D16', 'D17','D18',
-		'D19', 'D20', 'D21', 'D22', 'D23',
-		'D24', 'D25', 'D26', 'D27', 'D28',
-		'D29', 'D30', 'D31', 'D32', 'D33',
-		'D34', 'D35', 'D36', 'D37', 'D38',
-		'D39',
-	)
-	
-	ct_flow_cells = (
-		'C10', 'C11', 'C12', 'C13','C14', 
-		'C15', 'C16', 'C17','C18', 'C19', 
-		'C20', 'C21', 'C22', 'C23', 'C24', 
-		'C25', 'C26', 'C27', 'C28', 'C29', 
-		'C30', 'C31', 'C32', 'C33', 'C34', 
-		'C35', 'C36', 'C37', 'C38', 'C39',
-		'C40'
-	)
 
 	try:
-		for i, day in enumerate(op_flow_cells):
-			w_chem[ct_flow_cells[i]].value = w_active[day].value
+		root_reading = (w_active['B9'].value - w_active['B5'].value) / 1000
+		w_chem['C10'].value = root_reading
 		print(f'{p.ok()}Total Raw data successfully transfered from West Operations Report to West Chemical Treatment Record\n')
-		return ct_flow_cells		
 	except:
 		print(f'{p.err()}Error transfering West meter data\n')
 
 
-#Transfers the flow(in MGD) from the East Operations Report to the East Chemical Treatment Record
-def transfer_flow_east(e_active, e_chem):
-	op_flow_cells = (
-		'D9', 'D10', 'D11', 'D12', 'D13',
-		'D14', 'D15', 'D16', 'D17','D18',
-		'D19', 'D20', 'D21', 'D22', 'D23',
-		'D24', 'D25', 'D26', 'D27', 'D28',
-		'D29', 'D30', 'D31', 'D32', 'D33',
-		'D34', 'D35', 'D36', 'D37', 'D38',
-		'D39',
-	)
 
-	ct_flow_cells = (
-		'C10', 'C11', 'C12', 'C13','C14', 
-		'C15', 'C16', 'C17','C18', 'C19', 
-		'C20', 'C21', 'C22', 'C23', 'C24', 
-		'C25', 'C26', 'C27', 'C28', 'C29', 
-		'C30', 'C31', 'C32', 'C33', 'C34', 
-		'C35', 'C36', 'C37', 'C38', 'C39',
-		'C40'
-	)
+#The values in total raw water flow on the Operations Report are calculated via formula, which openpyxl cannot transfer
+#this function calculates the first flow value in the Chemical treatment record and fills the rest with a formula within excel
+def transfer_flow_east(e_active, e_chem):
 
 	try:
-		for i, day in enumerate(op_flow_cells):
-			e_chem[ct_flow_cells[i]].value = e_active[day].value
+		root_reading = (e_active['B9'].value - e_active['B5'].value) / 1000
+		e_chem['C10'].value = root_reading
 		print(f'{p.ok()}Total Raw data successfully transfered from East Operations Report to East Chemical Treatment Record\n')
-		return ct_flow_cells		
 	except:
-		print(f'{p.err()}Error transfering East flow data\n')
+		print(f'{p.err()}Error transfering East meter data\n')
+
 
 
 #Transfers the chlorine readings (in PPD) from the West Operations Report to the West Chemical Treatment Record
