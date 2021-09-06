@@ -1,5 +1,5 @@
 from colors import Prompts
-
+from filelib import get_month, get_prev_month, get_year
 p = Prompts()
 #Transfers rainfall data from West Operations Report to East Operations Report
 def log_rainfall(w_active, e_active):
@@ -182,26 +182,6 @@ def transfer_meters_west(w_active, w_chem):
 		'B39',
 	)
 
-	op_flow_cells = (
-		'D9', 'D10', 'D11', 'D12', 'D13',
-		'D14', 'D15', 'D16', 'D17','D18',
-		'D19', 'D20', 'D21', 'D22', 'D23',
-		'D24', 'D25', 'D26', 'D27', 'D28',
-		'D29', 'D30', 'D31', 'D32', 'D33',
-		'D34', 'D35', 'D36', 'D37', 'D38',
-		'D39',
-	)
-
-	op_chlorine_cells = (
-		'J9', 'J10', 'J11', 'J12', 'J13',
-		'J14', 'J15', 'J16', 'J17','J18',
-		'J19', 'J20', 'J21', 'J22', 'J23',
-		'J24', 'J25', 'J26', 'J27', 'J28',
-		'J29', 'J30', 'J31', 'J32', 'J33',
-		'J34', 'J35', 'J36', 'J37', 'J38',
-		'J39',
-	)
-
 	ct_meter_cells = (
 		'A10', 'A11', 'A12', 'A13','A14', 
 		'A15', 'A16', 'A17','A18', 'A19', 
@@ -250,7 +230,7 @@ def transfer_meters_east(e_active, e_chem):
 		print(f'{p.ok()}Meter data successfully transfered from East Operations Report to East Chemical Treatment Record\n')
 		return ct_meter_cells
 	except:
-		print(f'{p.err()}Error transfering West meter data\n')
+		print(f'{p.err()}Error transfering East meter data\n')
 
 #The values in total raw water flow on the Operations Report are calculated via formula, which openpyxl cannot transfer
 #this function calculates the first flow value in the Chemical treatment record and fills the rest with a formula within excel
@@ -374,4 +354,54 @@ def log_bmr(bmr_wb, data_objs):
 		print(f'{p.ok()}BMR saved\n')
 	except:
 		print(f'{p.err()}Error completing BMR\n')
+
+
+
+def log_ifmrs(west_ifmr, east_ifmr):
+	month = get_prev_month()
+	year = get_year()
+	west_ifmr['O4'].value = month
+	east_ifmr['O4'].value = month
+
+	west_ifmr['H7'].value = 4
+	east_ifmr['H7'].value = 4
+
+	west_ifmr['S7'].value = 4
+	east_ifmr['S7'].value = 4
+
+	west_ifmr['L9'].value = "1, 2, 3, 4"
+	east_ifmr['L9'].value = "1, 2, 3, 4"
+
+	west_ifmr['N12'].value = 'X'
+	east_ifmr['N12'].value = 'X'
+
+	west_ifmr['K17'].value = 4
+	east_ifmr['K17'].value = 4
+
+	west_ifmr['O60'].value = 'General Manager'
+	east_ifmr['O60'].value = 'General Manager'
+
+	west_ifmr['O65'].value = month
+	east_ifmr['O65'].value = month
+
+	west_ifmr['S65'].value = year
+	east_ifmr['S65'].value = year
+
+
+	west_ifmr['F65'].value = 'Carroll Boone Water District'
+	east_ifmr['F65'].value = 'Carroll Boone Water District'
+
+	west_ifmr['D66'].value = '675'
+	east_ifmr['D66'].value = '675'
+
+	west_ifmr['M66'].value = 'Freeman-Raney Water Treatment Facility'
+	east_ifmr['M66'].value = 'East Plant'
+
+	west_ifmr['O111'].value = 'General Manager'
+	east_ifmr['O111'].value = 'General Manager'
+
+
+
+
+
 

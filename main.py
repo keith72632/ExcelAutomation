@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from loggers import *
 from filelib import get_file_from_date
-from workbooks import load_workbooks, save_workbooks, get_sub_workbooks, activate_workbooks
+from workbooks import load_workbooks, save_workbooks
 from soups import scan_health_dep, display_list_of_dicks
 from colorama import init
 from time import sleep
@@ -20,32 +20,37 @@ def main():
 
 	west_wb, east_wb, chem_wb = load_workbooks(west_path, east_path, chem_path)
 
-	bmr_wb, w_chem, e_chem = get_sub_workbooks(west_wb, chem_wb)
+	bmr_wb = west_wb['BMR']
+	w_chem = chem_wb['West']
+	e_chem = chem_wb['East']
+	west_swor = west_wb['SWO&R Front Side']
+	east_swor = east_wb['SWO&R Front Side']
+	west_ifmr = west_wb['IFMR >10,000']
+	east_ifmr = east_wb['IFMR >10,000']
 
-	w_active, e_active, c_active = activate_workbooks(west_wb, east_wb, chem_wb)
-
+	w_active, e_active, c_active = west_wb.active, east_wb.active, chem_wb.active
 
 	#scan of the health department website for the BMR data
 	locations_data = scan_health_dep()
 	display_list_of_dicks(locations_data)
 
-	log_rainfall(w_active, e_active)
-	log_fluoride(w_active, e_active)
-	log_finish_pH(w_active, e_active)
-	log_total(w_active, e_active)
-	log_chloramine(w_active, e_active)
+	log_rainfall(west_swor, east_swor)
+	log_fluoride(west_swor, east_swor)
+	log_finish_pH(west_swor, east_swor)
+	log_total(west_swor, east_swor)
+	log_chloramine(west_swor, east_swor)
 
-	transfer_meters_west(w_active, w_chem)
-	transfer_meters_east(e_active, e_chem)
-	transfer_flow_west(w_active, w_chem)
-	transfer_flow_east(e_active, e_chem)
-	transfer_chlorine_west(w_active, w_chem)
-	transfer_chlorine_East(e_active, e_chem)
+	transfer_meters_west(west_swor, w_chem)
+	transfer_meters_east(east_swor, e_chem)
+	transfer_flow_west(west_swor, w_chem)
+	transfer_flow_east(east_swor, e_chem)
+	transfer_chlorine_west(west_swor, w_chem)
+	transfer_chlorine_East(east_swor, e_chem)
 
 
 	#TODO change dates for BMR because it uses previous month
 	log_bmr(bmr_wb, locations_data)
-
+	log_ifmrs(west_ifmr, east_ifmr)
 	save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path)
 
 	os.system('pause')

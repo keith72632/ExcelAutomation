@@ -6,6 +6,55 @@ west_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\West_Plan
 east_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\East_Plant_Operations_Reports\\"
 chem_treat_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Chemical_Treatment_Records\\"
 mango_meters = "C:\\Users\\Carroll Boone Water\\Documents\\keith's\\MangoLogs\\"
+def get_year():
+	#get month number to use as prefix
+	date_list = str(datetime.today()).split('-')
+	year = date_list[0]
+	return year
+
+def get_month():
+	months = {
+		"01": "January",
+		"02": "February",
+		"03": "March",
+		"04": "April",
+		"05": "May",
+		"06": "June",
+		"07": "July",
+		"08": "August",
+		"09": "September",
+		"10": "October",
+		"11": "November",
+		"12": "December"
+	}
+	#get month number to use as prefix
+	monthnum = str(datetime.today()).split('-')
+	month = monthnum[1]
+	return months[month]
+
+def get_prev_month():
+	months = {
+		"01": "January",
+		"02": "February",
+		"03": "March",
+		"04": "April",
+		"05": "May",
+		"06": "June",
+		"07": "July",
+		"08": "August",
+		"09": "September",
+		"10": "October",
+		"11": "November",
+		"12": "December"
+	}
+	#get month number to use as prefix
+	# monthnum = str(datetime.today()).split('-')
+	# month = monthnum[1]
+	
+	# use this below for previous month
+	month = '0' + str((datetime.now().month) - 1)
+	return months[month]
+
 
 def get_file_from_date():
 	p = Prompts()
