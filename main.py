@@ -7,6 +7,7 @@ from workbooks import load_workbooks, save_workbooks
 from soups import scan_health_dep, display_list_of_dicks
 from colorama import init
 from time import sleep
+from weather import get_temp
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
 
@@ -53,6 +54,7 @@ def main():
 	log_ifmrs(west_ifmr, east_ifmr)
 	save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path)
 
+	get_temp()
 	os.system('pause')
 
 if __name__ == '__main__':
