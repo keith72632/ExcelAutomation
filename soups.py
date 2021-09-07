@@ -4,14 +4,15 @@ import requests
 from colors import Prompts
 
 def display_list_of_dicks(dick_list):
-	print('\n' + '*' * 50)
+	p = Prompts()
+	print(str(p.OK) + '\n' + '*' * 50 + str(p.RESET))
 	print('Entries for BMR from Health Departement Website')
 	for i, dick in enumerate(dick_list):
-		print(f'{i} entry:\n')
+		print(f'entry #{i + 1} \n')
 		for key, value in dick.items():
 			print(f'\t{key}: {value}')
 		print('\n')
-	print('\n' + '*' * 50)
+	print(str(p.OK) + '\n' + '*' * 50 + str(p.RESET))
 
 
 def scan_health_dep():
@@ -21,15 +22,11 @@ def scan_health_dep():
 	soup = BeautifulSoup(p.content, "html.parser")
 	data = soup.find_all('tr')
 	fir = data[1]
-	# print(f'Data = {fir}')
-	# print(f'attrs = {fir.attrs}')
-	# print(f'td = {fir.td.text}')
 
 	locations = []
-	i = 1
+	i = 0
 	for line in data[1:]:
 		if line.td.text == sys.argv[1]:
-			print(f'{i} Entries for {sys.argv[1]} found\n')
 			i += 1
 			items = line.text.split('\n')
 			locations.append(
@@ -47,5 +44,6 @@ def scan_health_dep():
 				}
 			)
 
+	print(f'{i} Entries for {sys.argv[1]} found\n')
+
 	return locations
-	# cleaned = [x for x in data if x[0].text == "CARROLL-BOONE WATER DISTRICT"]

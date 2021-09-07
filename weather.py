@@ -13,12 +13,12 @@ def get_temp():
 		Data=Weather.get_weather()                   # get out data in the mentioned location
 
 	except AttributeError:
-		print(f'{p.err()}Could not fetch temperatures. Check API key\n')
+		print(f'{p.warn()}Could not fetch temperatures. Check API key\n')
 
 	try:
 		stuff = requests.get(f'api.openweathermap.org/data/2.5/weather?q={CITY}&appid={APIKEY}')
 	except:
-		print(f'{p.err()}Could not fetch URL\n')
+		print(f'{p.warn()}Could not fetch URL\n')
 
 
 

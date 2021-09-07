@@ -1,7 +1,23 @@
 from openpyxl import Workbook, load_workbook
 import os
 from datetime import datetime
-from loggers import *
+from loggers import (
+	log_rainfall,
+	log_fluoride,
+	log_finish_pH,
+	log_total,
+	log_chloramine,
+	log_bmr,
+	log_ifmrs
+)
+from transfers import (
+	transfer_flow_east,
+	transfer_flow_west, 
+	transfer_meters_east, 
+	transfer_meters_west, 
+	transfer_chlorine_East, 
+	transfer_chlorine_west
+)
 from filelib import get_file_from_date
 from workbooks import load_workbooks, save_workbooks
 from soups import scan_health_dep, display_list_of_dicks

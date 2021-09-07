@@ -2,17 +2,19 @@ from datetime import datetime
 import os
 from colors import Prompts
 
-west_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\West_Plant_Operations_Reports\\"
-east_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\East_Plant_Operations_Reports\\"
-chem_treat_dir = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Chemical_Treatment_Records\\"
-mango_meters = "C:\\Users\\Carroll Boone Water\\Documents\\keith's\\MangoLogs\\"
+WEST_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\West_Plant_Operations_Reports\\"
+EAST_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\East_Plant_Operations_Reports\\"
+CHEM_TREAT_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Chemical_Treatment_Records\\"
+MANGO_METERS = "C:\\Users\\Carroll Boone Water\\Documents\\keith's\\MangoLogs\\"
+
+
 def get_year():
 	#get month number to use as prefix
 	date_list = str(datetime.today()).split('-')
 	year = date_list[0]
 	return year
 
-def get_month():
+def get_month_str():
 	months = {
 		"01": "January",
 		"02": "February",
@@ -32,7 +34,7 @@ def get_month():
 	month = monthnum[1]
 	return months[month]
 
-def get_prev_month():
+def get_prev_month_str():
 	months = {
 		"01": "January",
 		"02": "February",
@@ -47,46 +49,35 @@ def get_prev_month():
 		"11": "November",
 		"12": "December"
 	}
-	#get month number to use as prefix
-	# monthnum = str(datetime.today()).split('-')
-	# month = monthnum[1]
-	
-	# use this below for previous month
+
 	month = '0' + str((datetime.now().month) - 1)
 	return months[month]
+
+def  get_month_dec():
+	return '0' + str((datetime.now().month))
+
+def get_prev_month_dec():
+	return '0' + str((datetime.now().month) - 1)
 
 
 def get_file_from_date():
 	p = Prompts()
-	months = {
-		"01": "January",
-		"02": "February",
-		"03": "March",
-		"04": "April",
-		"05": "May",
-		"06": "June",
-		"07": "July",
-		"08": "August",
-		"09": "September",
-		"10": "October",
-		"11": "November",
-		"12": "December"
-	}
+
 	#get month number to use as prefix
 	# monthnum = str(datetime.today()).split('-')
 	# month = monthnum[1]
 	
 	# use this below for previous month
-	month = '0' + str((datetime.now().month) - 1)
-	print(f'Month: {months[month]}')
+	month = get_prev_month_dec()
+	print(f'Month: {get_prev_month_str()}')
 
 
 
 	#list of files in 2021 directory
-	west_list = os.listdir(west_dir)
-	east_list = os.listdir(east_dir)
-	chem_list = os.listdir(chem_treat_dir)
-	meter_list = os.listdir(mango_meters)
+	west_list = os.listdir(WEST_DIR)
+	east_list = os.listdir(EAST_DIR)
+	chem_list = os.listdir(CHEM_TREAT_DIR)
+	meter_list = os.listdir(MANGO_METERS)
 
 	#sort through directory for file corresponding with the current month
 	try:
@@ -116,9 +107,9 @@ def get_file_from_date():
 
 
 
-	west_path = west_dir + west_file[0]
-	east_path = east_dir + east_file[0]
-	chem_path = chem_treat_dir + chem_file[0]
+	west_path = WEST_DIR + west_file[0]
+	east_path = EAST_DIR + east_file[0]
+	chem_path = CHEM_TREAT_DIR + chem_file[0]
 
 	return west_path, east_path, chem_path
 
