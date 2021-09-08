@@ -2,10 +2,13 @@ from datetime import datetime
 import os
 from colors import Prompts
 
-WEST_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\West_Plant_Operations_Reports\\"
-EAST_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\East_Plant_Operations_Reports\\"
-CHEM_TREAT_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Chemical_Treatment_Records\\"
-MANGO_METERS = "C:\\Users\\Carroll Boone Water\\Documents\\keith's\\MangoLogs\\"
+WORKING_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Working_Directory\\"
+
+WEST_DIR = WORKING_DIR + "West_Plant_Operations_Reports\\"
+EAST_DIR = WORKING_DIR + "East_Plant_Operations_Reports\\"
+CHEM_TREAT_DIR = WORKING_DIR + "Chemical_Treatment_Records\\"
+CHLORINE_TABLES = WORKING_DIR + "Chemical_Treatment_Records\\Chlorine_Tables\\"
+MANGO_METERS = WORKING_DIR + "MangoLogs\\"
 
 
 def get_year():
@@ -78,6 +81,7 @@ def get_file_from_date():
 	east_list = os.listdir(EAST_DIR)
 	chem_list = os.listdir(CHEM_TREAT_DIR)
 	meter_list = os.listdir(MANGO_METERS)
+	chlorine_tables_list = os.listdir(CHLORINE_TABLES)
 
 	#sort through directory for file corresponding with the current month
 	try:
@@ -104,14 +108,19 @@ def get_file_from_date():
 	except:
 		print(f'{p.warn()}Meter Reading File Not Found\n')
 
-
+	try:
+		tables_file = [file for file in chlorine_tables_list if file.startswith(month)]
+		print(f'{p.ok()}Tables file {tables_file[0]}')
+	except:
+		print(f'{p.warn()}Chlorine Table not found\n')
 
 
 	west_path = WEST_DIR + west_file[0]
 	east_path = EAST_DIR + east_file[0]
 	chem_path = CHEM_TREAT_DIR + chem_file[0]
+	table_path = CHLORINE_TABLES + tables_file[0]
 
-	return west_path, east_path, chem_path
+	return west_path, east_path, chem_path, table_path
 
 def create_files(west_dir, east_dir):
 	year = str(datetime.today()).split('-')

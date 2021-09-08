@@ -154,3 +154,129 @@ def transfer_chlorine_East(e_active, e_chem):
 	except:
 		print(f'{p.err()}Error transfering East Chlorine data\n')
 
+
+def transfer_chlorine_res_east(east_chem, east_table):
+	free_cells = (
+		'F10', 'F11', 'F12', 'F13','F14', 
+		'F15', 'F16', 'F17','F18', 'F19', 
+		'F20', 'F21', 'F22', 'F23', 'F24', 
+		'F25', 'F26', 'F27', 'F28', 'F29', 
+		'F30', 'F31', 'F32', 'F33', 'F34', 
+		'F35', 'F36', 'F37', 'F38', 'F39',
+		'F40'
+	)
+
+	total_cells = (
+		'G10', 'G11', 'G12', 'G13','G14', 
+		'G15', 'G16', 'G17','G18', 'G19', 
+		'G20', 'G21', 'G22', 'G23', 'G24', 
+		'G25', 'G26', 'G27', 'G28', 'G29', 
+		'G30', 'G31', 'G32', 'G33', 'G34', 
+		'G35', 'G36', 'G37', 'G38', 'G39',
+		'G40'
+	)
+
+	free_table = (
+		'A2', 'A3', 'A4', 'A5', 'A6',
+		'A7', 'A8', 'A9', 'A10', 'A11', 
+		'A12', 'A13', 'A14', 'A15', 'A16', 
+		'A17', 'A18', 'A19', 'A20', 'A21', 
+		'A22', 'A23', 'A24', 'A25', 'A26', 
+		'A27', 'A28', 'A29', 'A30', 'A31', 
+		'A32'
+	)
+
+	total_table = (
+		'A36', 'A37', 'A38', 'A39', 'A40',
+		'A41', 'A42', 'A43', 'A44', 'A45',
+		'A46', 'A47', 'A48', 'A49', 'A50',
+		'A51', 'A52', 'A53', 'A54', 'A55',
+		'A56', 'A57', 'A58', 'A59', 'A60',
+		'A61', 'A62', 'A63', 'A64', 'A65',
+		'A66'
+	)
+
+	try:
+		for i, day in enumerate(free_cells):
+			east_chem[day].value = east_table[free_table[i]].value
+		print(f'{p.ok()}Free Chlorine residual data successfully transfered from East Chlorine Table to East Chemical Treatment Record\n')
+	except:
+		print(f'{p.err()}Error transfering east residuals\n')
+
+	try:
+		for i, day in enumerate(total_cells):
+			east_chem[day].value = east_table[total_table[i]].value
+		print(f'{p.ok()}Total Chlorine residual data successfully transfered from East Chlorine Table to East Chemical Treatment Record\n')
+	except:
+		print(f'{p.err()}Error transfering east residuals\n')
+
+
+def transfer_chlorine_res_west(west_chem, west_table):
+	free_cells = (
+		'F10', 'F11', 'F12', 'F13','F14', 
+		'F15', 'F16', 'F17','F18', 'F19', 
+		'F20', 'F21', 'F22', 'F23', 'F24', 
+		'F25', 'F26', 'F27', 'F28', 'F29', 
+		'F30', 'F31', 'F32', 'F33', 'F34', 
+		'F35', 'F36', 'F37', 'F38', 'F39',
+		'F40'
+	)
+
+	total_cells = (
+		'G10', 'G11', 'G12', 'G13','G14', 
+		'G15', 'G16', 'G17','G18', 'G19', 
+		'G20', 'G21', 'G22', 'G23', 'G24', 
+		'G25', 'G26', 'G27', 'G28', 'G29', 
+		'G30', 'G31', 'G32', 'G33', 'G34', 
+		'G35', 'G36', 'G37', 'G38', 'G39',
+		'G40'
+	)
+
+	free_table = (
+		'A2', 'A3', 'A4', 'A5', 'A6',
+		'A7', 'A8', 'A9', 'A10', 'A11', 
+		'A12', 'A13', 'A14', 'A15', 'A16', 
+		'A17', 'A18', 'A19', 'A20', 'A21', 
+		'A22', 'A23', 'A24', 'A25', 'A26', 
+		'A27', 'A28', 'A29', 'A30', 'A31', 
+		'A32'
+	)
+
+	total_table = (
+		'A36', 'A37', 'A38', 'A39', 'A40',
+		'A41', 'A42', 'A43', 'A44', 'A45',
+		'A46', 'A47', 'A48', 'A49', 'A50',
+		'A51', 'A52', 'A53', 'A54', 'A55',
+		'A56', 'A57', 'A58', 'A59', 'A60',
+		'A61', 'A62', 'A63', 'A64', 'A65',
+		'A66'
+	)
+
+	try:
+		for i, day in enumerate(free_cells):
+			west_chem[day].value = west_table[free_table[i]].value
+		print(f'{p.ok()}Free Chlorine residual data successfully transfered from West Chlorine Table to West Chemical Treatment Record\n')
+	except:
+		print(f'{p.err()}Error transfering West residuals\n')
+
+	try:
+		for i, day in enumerate(total_cells):
+			west_chem[day].value = west_table[total_table[i]].value
+		print(f'{p.ok()}Total Chlorine residual data successfully transfered from West Chlorine Table to West Chemical Treatment Record\n')
+	except:
+		print(f'{p.err()}Error transfering West residuals\n')
+
+
+def transfer_distribution(west_chem, east_chem):
+	cells = (
+		'I10', 'I12', 'I14', 'I16', 'I18',
+		'I20', 'I22', 'I24', 'I26', 'I28'
+	)
+
+	try:
+		for day in cells:
+			east_chem[day].value = west_chem[day].value
+		print(f'{p.ok()}Distribution Meters readings transfer successfully\n')
+	except:
+		print(f'{p.err()}Error transfering Distribution Meter Readings\n')
+

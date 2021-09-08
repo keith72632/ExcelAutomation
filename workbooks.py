@@ -1,7 +1,7 @@
 from openpyxl import Workbook, load_workbook
 from colors import Prompts
 
-def load_workbooks(west_file, east_file, chem_file):
+def load_workbooks(west_file, east_file, chem_file, table_file):
 	p = Prompts()
 	west_wb = load_workbook(west_file)
 	print(f'{p.ok()}West Workbook loaded from:\n\t{west_file}\n')
@@ -12,7 +12,10 @@ def load_workbooks(west_file, east_file, chem_file):
 	chem_wb = load_workbook(chem_file)
 	print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n\t{chem_file}\n')
 
-	return west_wb, east_wb, chem_wb
+	table_wb = load_workbook(table_file)
+	print(f'{p.ok()}Chlorine Table Workbook loaded from:\n\t{table_file}\n')
+
+	return west_wb, east_wb, chem_wb, table_wb
 
 
 def activate_workbooks(west_wb, east_wb, chem_wb):
@@ -23,10 +26,11 @@ def get_sub_workbooks(west_wb, chem_wb):
 	return west_wb['BMR'], chem_wb['West'], chem_wb['East']
 
 
-def save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path):
+def save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path):
 	p = Prompts()
 	west_wb.save(west_path)
 	east_wb.save(east_path)
 	chem_wb.save(chem_path)
+	table_wb.save(table_path)
 	print(p.ok() + 'workbooks saved\n')
 
