@@ -3,6 +3,8 @@ class Prompts:
 	WARNING = '\033[33m'
 	FAIL = '\033[31m'
 	RESET = '\033[0m'
+	DEV = '\033[35m'
+	PROD = '\033[34m'
 	def __init__(self):
 		pass
 	def ok(self):
