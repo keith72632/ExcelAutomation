@@ -71,6 +71,8 @@ class Transfer:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering East meter data\n')
+			traceback.print_exc()
+
 
 	#The values in total raw water flow on the Operations Report are calculated via formula, which openpyxl cannot transfer
 	#this function calculates the first flow value in the Chemical treatment record and fills the rest with a formula within excel
@@ -99,6 +101,39 @@ class Transfer:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering East meter data\n')
 
+
+	#Transfers fluoride residual data from West Operations Report to the East Operations Report
+	def transfer_fluoride(self, w_active, e_active):
+		p = Prompts()
+		west_cells = (
+			'O9', 'O10', 'O11', 'O12', 'O13',
+			'O14', 'O15', 'O16', 'O17', 'O18',
+			'O19', 'O20', 'O21', 'O22', 'O23',
+			'O24', 'O25', 'O26', 'O27', 'O28',
+			'O29', 'O30', 'O31', 'O32', 'O33',
+			'O34', 'O35', 'O36', 'O37', 'O38',
+			'O39',
+		)
+
+		east_cells = (
+			'O9', 'O10', 'O11', 'O12', 'O13',
+			'O14', 'O15', 'O16', 'O17', 'O18',
+			'O19', 'O20', 'O21', 'O22', 'O23',
+			'O24', 'O25', 'O26', 'O27', 'O28',
+			'O29', 'O30', 'O31', 'O32', 'O33',
+			'O34', 'O35', 'O36', 'O37', 'O38',
+			'O39',
+		)
+
+		try:
+			for i, day in enumerate(east_cells):
+				e_active[day].value = w_active[west_cells[i]].value
+			
+			return west_cells
+
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error transferring fluroide data\n')
 
 
 	#Transfers the chlorine readings (in PPD) from the West Operations Report to the West Chemical Treatment Record

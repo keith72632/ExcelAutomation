@@ -90,7 +90,7 @@ class Directories:
 		west_list = os.listdir(self.WEST_DIR)
 		east_list = os.listdir(self.EAST_DIR)
 		chem_list = os.listdir(self.CHEM_TREAT_DIR)
-		meter_list = os.listdir(self.MANGO_METERS)
+		midnight_list = os.listdir(self.MANGO_METERS)
 		chlorine_tables_list = os.listdir(self.CHLORINE_TABLES)
 
 		#sort through directory for file corresponding with the current month
@@ -116,8 +116,8 @@ class Directories:
 			print(f'{p.warn()}Chemical Reatment Record Not Found\n')
 
 		try:
-			meter_file = [file for file in meter_list if file.startswith(month)]
-			print(f'{p.ok()}Meter file {meter_file[0]}')
+			midnight_file = [file for file in midnight_list if file.startswith(month)]
+			print(f'{p.ok()}Midnight file: {midnight_file[0]}')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.warn()}Meter Reading File Not Found\n')
@@ -134,8 +134,8 @@ class Directories:
 		east_path = self.EAST_DIR + east_file[0]
 		chem_path = self.CHEM_TREAT_DIR + chem_file[0]
 		table_path = self.CHLORINE_TABLES + tables_file[0]
-		meter_path = self.MANGO_METERS + meter_file[0]
-		return west_path, east_path, chem_path, table_path, meter_path
+		midnight_path = self.MANGO_METERS + midnight_file[0]
+		return west_path, east_path, chem_path, table_path, midnight_path
 
 	def create_files(self, west_dir, east_dir):
 		year = str(datetime.today()).split('-')
