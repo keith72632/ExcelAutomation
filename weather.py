@@ -1,7 +1,7 @@
 import pyowm
 from colors import Prompts
 
-APIKEY = '86e41ebe7e76283de2204d4105653608'
+APIKEY = 'You Fucking Thought Bitch'
 CITY = 'London'
 
 def get_temp():
