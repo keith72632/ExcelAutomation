@@ -4,7 +4,7 @@ import traceback
 
 d = Directories()
 
-
+#Logs data to spreadsheets from various sources
 class Logger:
 	def __init__(self):
 		pass
@@ -34,6 +34,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Raw Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 		try:
 			for i, day in enumerate(east_swor_raw):
@@ -42,6 +43,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Raw Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 	#logs ammonia readings from midnight sheet to SWOR
 	def log_ammonia(self, west_swor, east_swor, midnight):
@@ -66,6 +68,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Ammonia Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 		try:
 			for i, day in enumerate(east_swor_ammonia):
@@ -74,144 +77,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Ammonia Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-
-	#Transfers rainfall data from West Operations Report to East Operations Report
-	def log_rainfall(self, w_active, e_active):
-		p = Prompts()
-		west_cells = (
-			'G9', 'G10', 'G11', 'G12', 'G13',
-			'G14', 'G15', 'G16', 'G17', 'G18',
-			'G19', 'G20', 'G21', 'G22', 'G23',
-			'G24', 'G25', 'G26', 'G27', 'G28',
-			'G29', 'G30', 'G31', 'G32', 'G33',
-			'G34', 'G35', 'G36', 'G37', 'G38',
-			'G39',
-		)
-
-		east_cells = (
-			'G9', 'G10', 'G11', 'G12', 'G13',
-			'G14', 'G15', 'G16', 'G17', 'G18',
-			'G19', 'G20', 'G21', 'G22', 'G23',
-			'G24', 'G25', 'G26', 'G27', 'G28',
-			'G29', 'G30', 'G31', 'G32', 'G33',
-			'G34', 'G35', 'G36', 'G37', 'G38',
-			'G39',
-		)
-
-		try:
-			for i, day in enumerate(east_cells):
-				e_active[day].value = w_active[west_cells[i]].value
-
-			return west_cells
-
-		except:
-			self.EXCEPTIONS += 1
-			print(f'{p.err()}Error transferring rainfall data\n')
-
-
-
-	#Transfers Finish pH data from the West Operations report to the East Operations Report
-	def log_finish_pH(self, w_active, e_active):
-		p = Prompts()
-		west_cells = (
-			'S9', 'S10', 'S11', 'S12', 'S13',
-			'S14', 'S15', 'S16', 'S17', 'S18',
-			'S19', 'S20', 'S21', 'S22', 'S23', 
-			'S24', 'S25', 'S26', 'S27', 'S28',
-			'S29', 'S30', 'S31', 'S32', 'S33',
-			'S34', 'S35', 'S36', 'S37', 'S38',
-			'S39',
-		)
-
-		east_cells = (
-			'R9', 'R10', 'R11', 'R12', 'R13',
-			'R14', 'R15', 'R16', 'R17', 'R18',
-			'R19', 'R20', 'R21', 'R22', 'R23',
-			'R24', 'R25', 'R26', 'R27', 'R28',
-			'R29', 'R30', 'R31', 'R32', 'R33',
-			'R34', 'R35', 'R36', 'R37', 'R38',
-			'R39',
-		)
-
-		try:
-			for i, day in enumerate(east_cells):
-				e_active[day].value = w_active[west_cells[i]].value
-
-			return west_cells
-
-		except:
-			self.EXCEPTIONS += 1
-			print(f'{p.err()}Error transferring finish pH data\n')
-
-
-
-	#Transfer total chlorine data from the West Operations Report to the East Operations Report
-	def log_total(self, w_active, e_active):
-		p = Prompts()
-		west_cells = (
-			'AI9', 'AI10', 'AI11', 'AI12', 'AI13',
-			'AI14', 'AI15', 'AI16', 'AI17', 'AI18',
-			'AI19', 'AI20', 'AI21', 'AI22', 'AI23',
-			'AI24', 'AI25', 'AI26', 'AI27', 'AI28',
-			'AI29', 'AI30', 'AI31', 'AI32', 'AI33',
-			'AI34', 'AI35', 'AI36', 'AI37', 'AI38',
-			'AI39',
-		)
-
-		east_cells = (
-			'AH9', 'AH10', 'AH11', 'AH12', 'AH13',
-			'AH14', 'AH15', 'AH16', 'AH17', 'AH18',
-			'AH19', 'AH20', 'AH21', 'AH22', 'AH23',
-			'AH24', 'AH25', 'AH26', 'AH27', 'AH28',
-			'AH29', 'AH30', 'AH31', 'AH32', 'AH33',
-			'AH34', 'AH35', 'AH36', 'AH37', 'AH38',
-			'AH39'
-		)
-
-		try:
-			for i, day in enumerate(east_cells):
-				e_active[day].value = w_active[west_cells[i]].value
-
-			return west_cells
-		except:
-			self.EXCEPTIONS += 1
-			print(f'{p.err()}Error transferring total chlorine data\n')
-
-
-
-	#Copies Chloramine Data from the West Operations Report to the East Operation Report
-	def log_chloramine(self, w_active, e_active):
-		p = Prompts()
-		west_cells = (
-			'AJ9', 'AJ10', 'AJ11', 'AJ12', 'AJ13',
-			'AJ14', 'AJ15', 'AJ16', 'AJ17', 'AJ18', 
-			'AJ19', 'AJ20', 'AJ21', 'AJ22', 'AJ23',
-			'AJ24', 'AJ25', 'AJ26', 'AJ27', 'AJ28',
-			'AJ29', 'AJ30', 'AJ31', 'AJ32', 'AJ33',
-			'AJ34', 'AJ35', 'AJ36', 'AJ37', 'AJ38',
-			'AJ39',
-		)
-
-		east_cells = (
-			'AI9', 'AI10', 'AI11', 'AI12', 'AI13',
-			'AI14', 'AI15', 'AI16', 'AI17','AI18',
-			'AI19', 'AI20', 'AI21', 'AI22', 'AI23',
-			'AI24', 'AI25', 'AI26', 'AI27', 'AI28',
-			'AI29', 'AI30', 'AI31', 'AI32', 'AI33',
-			'AI34', 'AI35', 'AI36', 'AI37', 'AI38',
-			'AI39',
-		)
-
-		try:
-			for i, day in enumerate(east_cells):
-				e_active[day].value = w_active[west_cells[i]].value
-
-			return west_cells
-
-		except:
-			self.EXCEPTIONS += 1
-			print(f'{p.err()}Error transferring chloramine data\n')
-
+			os.system('pause')
 
 
 
@@ -248,6 +114,7 @@ class Logger:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error completing BMR\n')
+			os.system('pause')
 
 
 
@@ -342,6 +209,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Raw Peak numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 		#log raw peak numbers to East SWOR
 		try:
@@ -351,6 +219,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Raw Peak numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 		#log finish peak numbers to West SWOR
 		try:
@@ -359,6 +228,7 @@ class Logger:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Finish Peak numbers from Midnight spread sheet transfer unsuccessful\n')
+			os.system('pause')
 
 		#log finish peak numbers to East SWOR
 		try:
@@ -367,6 +237,7 @@ class Logger:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Finish Peak numbers from Midnight spread sheet transfer unsuccessful\n')
+			os.system('pause')
 
 	#Logs lowest clearwell levels from Midnight sheet to SWOR
 	def log_clearwells(self, west_swor, east_swor, midnight):
@@ -401,6 +272,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Clearwell numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 		#log raw peak numbers to East SWOR
 		try:
@@ -410,6 +282,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Clear numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 	#logs free chlorine from midnight sheet to SWOR
 	def log_free_chlorine(self, west_swor, east_swor, midnight):
@@ -444,6 +317,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Free Chlorine numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
 		#log raw peak numbers to East SWOR
 		try:
@@ -453,7 +327,84 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Free Chlorine numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
+			os.system('pause')
 
+
+	#Logs chlorine fed in pounds to West and East SWOR\
+	def log_chlorine_used(self, west_front, east_front, midnight):
+		p = Prompts()
+
+		w_cl_cols = west_front['J']
+		w_cl = w_cl_cols[9:39]
+
+		e_cl_cols = east_front['J']
+		e_cl = e_cl_cols[9:39]
+
+		w_midnight_cols = midnight['R']
+		w_midnight = w_midnight_cols[6:36]
+
+		e_midnight_cols = midnight['S']
+		e_midnight = e_midnight_cols[6:36]
+
+		#midnight west chlorine usage -> west swor
+		try:
+			for i, day in enumerate(w_cl):
+				day.value = w_midnight[i].value
+			print("West chlorine usage logged")
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}West Chlorine usage could not be logged\n')
+			traceback.print_exc()
+			os.system('pause')
+
+		#midnight west chlorine usage -> west swor
+		try:
+			for i, day in enumerate(e_cl):
+				day.value = e_midnight[i].value
+			print("East chlorine usage logged")
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}East Chlorine usage could not be logged\n')
+			traceback.print_exc()
+			os.system('pause')
+
+	#logs hours run from midnight sheet -> SWORs
+	def log_hours(self, west_front, east_front, midnight):
+		p = Prompts()
+
+		w_hours_cols = west_front['F']
+		w_hours = w_hours_cols[9:39]
+
+		e_hours_cols = east_front['F']
+		e_hours = e_hours_cols[9:39]
+
+		w_midnight_cols = midnight['P']
+		w_midnight = w_midnight_cols[6:36]
+
+		e_midnight_cols = midnight['Q']
+		e_midnight = e_midnight_cols[6:36]
+
+		#midnight west chlorine usage -> west swor
+		try:
+			for i, day in enumerate(w_hours):
+				day.value = w_midnight[i].value
+			print("West hours logged")
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}West hours could not be logged\n')
+			traceback.print_exc()
+			os.system('pause')
+
+		#midnight west chlorine usage -> west swor
+		try:
+			for i, day in enumerate(e_hours):
+				day.value = e_midnight[i].value
+			print("East hours logged")
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}East hours could not be logged\n')
+			traceback.print_exc()
+			os.system('pause')
 
 	def get_exceptions(self):
 		return self.EXCEPTIONS

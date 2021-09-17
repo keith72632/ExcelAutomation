@@ -50,17 +50,20 @@ def main():
 	# display_list_of_dicks(locations_data)
 
 	l.log_meters(west_swor_front, east_swor_front, midnight_readings)
-	l.log_rainfall(west_swor_front, east_swor_front)
 	l.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
-	l.log_finish_pH(west_swor_front, east_swor_front)
-	l.log_total(west_swor_front, east_swor_front)
-	l.log_chloramine(west_swor_front, east_swor_front)
 	l.log_peaks(west_swor_back, east_swor_back, midnight_readings)
 	l.log_clearwells(west_swor_back, east_swor_back, midnight_readings)
 	l.log_free_chlorine(west_swor_back, east_swor_back, midnight_readings)
+	l.log_chlorine_used(west_swor_front, east_swor_front, midnight_readings)
+	l.log_hours(west_swor_front, east_swor_front, midnight_readings)
 
 	t.transfer_meters_west(west_swor_front, w_chem)
 	t.transfer_meters_east(east_swor_front, e_chem)
+	t.transfer_rainfall(west_swor_front, east_swor_front)
+	t.transfer_finish_pH(west_swor_front, east_swor_front)
+	t.transfer_total(west_swor_front, east_swor_front)
+	t.transfer_chloramine(west_swor_front, east_swor_front)
+
 	t.transfer_flow_west(west_swor_front, w_chem)
 	t.transfer_flow_east(east_swor_front, e_chem)
 	t.transfer_chlorine_west(west_swor_front, w_chem)
@@ -72,7 +75,6 @@ def main():
 
 	t.transfer_distribution(w_chem, e_chem)
 
-	#TODO change dates for BMR because it uses previous month
 	l.log_bmr(bmr_wb, locations_data)
 	l.log_ifmrs(west_ifmr, east_ifmr)
 	b.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
