@@ -16,13 +16,16 @@ from colors import Prompts
 
 def main():
 
+	#constants
+	#url for bact sample data
+	URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
+
 	#needed to change text colors in terminal
 	init()
 
 	b = Books()
 	l = Logger()
 	t = Transfer()
-	s = BmrScraper()
 	d = Directories()
 	p = Prompts()
 
@@ -46,7 +49,8 @@ def main():
 	w_active, e_active, c_active, table_active, midnight_active = west_wb.active, east_wb.active, chem_wb.active, table_wb.active, midnight_wb.active
 
 	#scan of the health department website for the BMR data
-	locations_data = s.scan_health_dep()
+	hd_scraper = BmrScraper(URL)
+	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
 
 	l.log_meters(west_swor_front, east_swor_front, midnight_readings)
@@ -79,7 +83,7 @@ def main():
 	l.log_ifmrs(west_ifmr, east_ifmr)
 	b.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
 
-	total_exceptions = b.get_exceptions() + l.get_exceptions() + t.get_exceptions() + s.get_exceptions() + d.get_exceptions()
+	total_exceptions = b.get_exceptions() + l.get_exceptions() + t.get_exceptions() + hd_scraper.get_exceptions() + d.get_exceptions()
 
 	if total_exceptions > 0:
 		print(f'{p.err()}Errors: {total_exceptions}\n')

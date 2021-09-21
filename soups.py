@@ -4,8 +4,9 @@ import requests
 from colors import Prompts
 
 class BmrScraper:
-	def __init__(self):
-		pass
+	url = None
+	def __init__(self, url=None):
+		self.url = url
 
 	EXCEPTIONS = 0
 
@@ -23,11 +24,9 @@ class BmrScraper:
 
 	def scan_health_dep(self):
 		P = Prompts()
-		URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
-		p = requests.get(URL)
+		p = requests.get(self.url)
 		soup = BeautifulSoup(p.content, "html.parser")
 		data = soup.find_all('tr')
-		fir = data[1]
 
 		locations = []
 		i = 0

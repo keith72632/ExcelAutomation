@@ -1,7 +1,7 @@
 from colors import Prompts
 from filelib import Directories
 import traceback
-
+import os
 d = Directories()
 
 #Logs data to spreadsheets from various sources
@@ -16,16 +16,17 @@ class Logger:
 		p = Prompts()
 
 		west_raw_cols = midnight['B']
-		west_raw = west_raw_cols[6:36]
+		west_raw = west_raw_cols[5:35]
+		print(west_raw[0])
 
 		west_swor_meter_cols = west_swor['B']
-		west_swor_raw = west_swor_meter_cols[9:39]
-
+		west_swor_raw = west_swor_meter_cols[8:38]
+		print(west_swor_raw[0])
 		east_raw_cols = midnight['I']
-		east_raw = east_raw_cols[6:36]
+		east_raw = east_raw_cols[5:35]
 
 		east_swor_meter_cols = east_swor['B']
-		east_swor_raw = east_swor_meter_cols[9:36]
+		east_swor_raw = east_swor_meter_cols[8:38]
 		
 		try:
 			for i, day in enumerate(west_swor_raw):
@@ -50,16 +51,16 @@ class Logger:
 		p = Prompts()
 
 		west_ammonia_cols = midnight['G']
-		west_ammonia = west_ammonia_cols[6:36]
+		west_ammonia = west_ammonia_cols[5:35]
 
 		west_swor_ammonia_cols = west_swor['M']
-		west_swor_ammonia = west_swor_ammonia_cols[9:39]
+		west_swor_ammonia = west_swor_ammonia_cols[8:38]
 
 		east_ammonia_cols = midnight['N']
-		east_ammonia = east_ammonia_cols[6:36]
+		east_ammonia = east_ammonia_cols[5:35]
 
 		east_swor_ammonia_cols = east_swor['M']
-		east_swor_ammonia = east_swor_ammonia_cols[9:36]
+		east_swor_ammonia = east_swor_ammonia_cols[8:38]
 		
 		try:
 			for i, day in enumerate(west_swor_ammonia):
@@ -168,17 +169,17 @@ class Logger:
 
 		#Raw Peak data from the Midnight Spreadsheet
 		west_raw_cols = midnight['C']
-		west_raw_peaks = west_raw_cols[6:36]
+		west_raw_peaks = west_raw_cols[5:35]
 
 		east_raw_cols = midnight['J']
-		east_raw_peaks = east_raw_cols[6:36]
+		east_raw_peaks = east_raw_cols[5:35]
 
 		#High Service Peak data from the Midnight Spreadsheet
 		west_fin_cols = midnight['D']
-		west_fin_peaks = west_fin_cols[6:36]
+		west_fin_peaks = west_fin_cols[5:35]
 
 		east_fin_cols = midnight['K']
-		east_fin_peaks = east_fin_cols[6:36]
+		east_fin_peaks = east_fin_cols[5:35]
 
 		#Hardcoded cells because spreadsheet cells on the SWOR are not sequential
 		swor_raw_peaks = [
@@ -245,10 +246,10 @@ class Logger:
 
 		#Raw Peak data from the Midnight Spreadsheet
 		west_cw_cols = midnight['E']
-		west_clearwell = west_cw_cols[6:36]
+		west_clearwell = west_cw_cols[5:35]
 
 		east_cw_cols = midnight['L']
-		east_clearwell = east_cw_cols[6:36]
+		east_clearwell = east_cw_cols[5:35]
 
 
 		#Hardcoded cells because spreadsheet cells on the SWOR are not sequential
@@ -290,10 +291,10 @@ class Logger:
 
 		#Raw Peak data from the Midnight Spreadsheet
 		west_cl_cols = midnight['F']
-		west_cl = west_cl_cols[6:36]
+		west_cl = west_cl_cols[5:35]
 
 		east_cl_cols = midnight['M']
-		east_cl = east_cl_cols[6:36]
+		east_cl = east_cl_cols[5:35]
 
 
 		#Hardcoded cells because spreadsheet cells on the SWOR are not sequential
@@ -335,16 +336,16 @@ class Logger:
 		p = Prompts()
 
 		w_cl_cols = west_front['J']
-		w_cl = w_cl_cols[9:39]
+		w_cl = w_cl_cols[8:38]
 
 		e_cl_cols = east_front['J']
-		e_cl = e_cl_cols[9:39]
+		e_cl = e_cl_cols[8:38]
 
 		w_midnight_cols = midnight['R']
-		w_midnight = w_midnight_cols[6:36]
+		w_midnight = w_midnight_cols[5:35]
 
 		e_midnight_cols = midnight['S']
-		e_midnight = e_midnight_cols[6:36]
+		e_midnight = e_midnight_cols[5:35]
 
 		#midnight west chlorine usage -> west swor
 		try:
@@ -373,16 +374,16 @@ class Logger:
 		p = Prompts()
 
 		w_hours_cols = west_front['F']
-		w_hours = w_hours_cols[9:39]
+		w_hours = w_hours_cols[8:38]
 
 		e_hours_cols = east_front['F']
-		e_hours = e_hours_cols[9:39]
+		e_hours = e_hours_cols[8:38]
 
 		w_midnight_cols = midnight['P']
-		w_midnight = w_midnight_cols[6:36]
+		w_midnight = w_midnight_cols[5:35]
 
 		e_midnight_cols = midnight['Q']
-		e_midnight = e_midnight_cols[6:36]
+		e_midnight = e_midnight_cols[5:35]
 
 		#midnight west chlorine usage -> west swor
 		try:

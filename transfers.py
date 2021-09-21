@@ -1,5 +1,6 @@
 from colors import Prompts
 from filelib import Directories
+import os
 
 d = Directories()
 
@@ -13,10 +14,10 @@ class Transfer:
 		p = Prompts()
 		#cells from the West operations report
 		op_meter_cols = w_active['B']
-		op_meters = op_meter_cols[9:39]
+		op_meters = op_meter_cols[8:38]
 
 		ct_meter_cols = w_chem['A']
-		ct_meters = ct_meter_cols[10:40]
+		ct_meters = ct_meter_cols[9:39]
 
 		try:
 			for i, day in enumerate(op_meters):
@@ -35,10 +36,10 @@ class Transfer:
 		#cells from the East operations report
 		
 		op_meter_cols = e_active['B']
-		op_meters = op_meter_cols[9:39]
+		op_meters = op_meter_cols[8:38]
 
 		ct_meter_cols = e_chem['A']
-		ct_meters = ct_meter_cols[10:40]
+		ct_meters = ct_meter_cols[9:39]
 		
 		try:
 			for i, day in enumerate(op_meters):
@@ -87,10 +88,10 @@ class Transfer:
 		p = Prompts()
 
 		west_cols = w_active['G']
-		west = west_cols[9:39]
+		west = west_cols[8:38]
 
 		east_cols = e_active['G']
-		east = east_cols[9:39]
+		east = east_cols[8:38]
 
 		try:
 			for i, day in enumerate(west):
@@ -107,10 +108,10 @@ class Transfer:
 		p = Prompts()
 
 		west_cols = w_active['S']
-		west = west_cols[9:39]
+		west = west_cols[8:38]
 
 		east_cols = e_active['R']
-		east = east_cols[9:39]
+		east = east_cols[8:38]
 
 		try:
 			for i, day in enumerate(west):
@@ -130,9 +131,9 @@ class Transfer:
 		p = Prompts()
 
 		west_cols = w_active['AI']
-		west = west_cols[9:39]
+		west = west_cols[8:38]
 		east_cols = e_active['AH']
-		east = east_cols[9:39]
+		east = east_cols[8:38]
 
 		try:
 			for i, day in enumerate(west):
@@ -150,9 +151,9 @@ class Transfer:
 		p = Prompts()
 
 		west_cols = w_active['AJ']
-		west = west_cols[9:39]
+		west = west_cols[8:38]
 		east_cols = e_active['AI']
-		east = east_cols[9:39]
+		east = east_cols[8:38]
 
 		try:
 			for i, day in enumerate(west):
@@ -170,9 +171,9 @@ class Transfer:
 		p = Prompts()
 
 		west_cols = w_active['O']
-		west = west_cols[9:39]
+		west = west_cols[8:38]
 		east_cols = e_active['O']
-		east = east_cols[9:39]
+		east = east_cols[8:38]
 
 		try:
 			for i, day in enumerate(west):
@@ -189,9 +190,9 @@ class Transfer:
 		p = Prompts()
 
 		op_cols = w_active['J']
-		op = op_cols[9:39]
+		op = op_cols[8:38]
 		ct_cols = w_chem['D']
-		ct = ct_cols[10:40]
+		ct = ct_cols[9:39]
 
 		try:
 			for i, day in enumerate(op):
@@ -208,9 +209,9 @@ class Transfer:
 		p = Prompts()
 
 		op_cols = e_active['J']
-		op = op_cols[9:39]
+		op = op_cols[8:38]
 		ct_cols = e_chem['D']
-		ct = ct_cols[10:40]
+		ct = ct_cols[9:39]
 
 		try:
 			for i, day in enumerate(op):
@@ -227,10 +228,10 @@ class Transfer:
 		p = Prompts()
 
 		ct_free_cols = east_chem['F']
-		ct_free = ct_free_cols[10:40]
+		ct_free = ct_free_cols[9:39]
 
 		ct_total_cols = east_chem['G']
-		ct_total = ct_total_cols[10:40]
+		ct_total = ct_total_cols[9:39]
 
 		table_free_cols = east_table['A']
 		table_free = table_free_cols[2:32]
@@ -261,10 +262,10 @@ class Transfer:
 		p = Prompts()
 
 		ct_free_cols = west_chem['F']
-		ct_free = ct_free_cols[10:40]
+		ct_free = ct_free_cols[9:39]
 
 		ct_total_cols = west_chem['G']
-		ct_total = ct_total_cols[10:40]
+		ct_total = ct_total_cols[9:39]
 
 		table_free_cols = west_table['A']
 		table_free = table_free_cols[2:32]
