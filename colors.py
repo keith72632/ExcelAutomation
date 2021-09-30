@@ -13,3 +13,5 @@ class Prompts:
 		return self.FAIL + '[  X  ]' + self.RESET
 	def warn(self):
 		return self.WARNING + '[  !  ]' + self.RESET
+	def note(self):
+		return self.OK + '@' + self.RESET

@@ -22,7 +22,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(op_meters):
 				ct_meters[i].value = day.value
-			print("West Raw meter values transfered from West SWOR to West Chemical Treatment Record") 
+			print(f'{p.note()}West Raw meter values transfered from West SWOR to West Chemical Treatment Record') 
 			return ct_meters
 		except:
 			self.EXCEPTIONS += 1
@@ -44,7 +44,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(op_meters):
 				ct_meters[i].value = day.value
-			print("East Raw meter values transfered from East SWOR to East Chemical Treatment Record") 
+			print(f'{p.note()}East Raw meter values transfered from East SWOR to East Chemical Treatment Record') 
 			return ct_meters
 		except:
 			self.EXCEPTIONS += 1
@@ -62,7 +62,7 @@ class Transfer:
 			if w_active['B9'].value:
 				root_reading = (w_active['B9'].value - w_active['B5'].value) / 1000
 				w_chem['C10'].value = root_reading
-			print("West Raw Flow root value transfered from West SWOR to West Chemical Treatment Record") 
+			print(f'{p.note()}West Raw Flow root value transfered from West SWOR to West Chemical Treatment Record') 
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering West flow data\n')
@@ -77,7 +77,7 @@ class Transfer:
 		try:
 			root_reading = (e_active['B9'].value - e_active['B5'].value) / 1000
 			e_chem['C10'].value = root_reading
-			print("East Raw Flow root value transfered from East SWOR to East Chemical Treatment Record") 
+			print(f'{p.note()}East Raw Flow root value transfered from East SWOR to East Chemical Treatment Record') 
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering East meter data\n')
@@ -96,7 +96,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(west):
 				east[i].value = day.value
-			print("West Rainfall values copied from West SWOR to East SWOR")
+			print(f'{p.note()}West Rainfall values copied from West SWOR to East SWOR')
 
 		except:
 			self.EXCEPTIONS += 1
@@ -116,7 +116,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(west):
 				east[i].value = day.value
-			print("West Finish pH values copied from West SWOR to East SWOR")
+			print(f'{p.note()}West Finish pH values copied from West SWOR to East SWOR')
 			return west
 
 		except:
@@ -138,7 +138,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(west):
 				east[i].value = day.value
-			print("West Total Chlorine values copied from West SWOR to East SWOR")
+			print(f'{p.note()}West Total Chlorine values copied from West SWOR to East SWOR')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transferring total chlorine data\n')
@@ -158,7 +158,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(west):
 				east[i].value = day.value
-			print("West Chloramine values copied from West SWOR to East SWOR")
+			print(f'{p.note()}West Chloramine values copied from West SWOR to East SWOR')
 
 		except:
 			self.EXCEPTIONS += 1
@@ -178,7 +178,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(west):
 				east[i].value = day.value
-			print("West Fluoride value copied from West SWOR to East SWOR")
+			print(f'{p.note()}West Fluoride value copied from West SWOR to East SWOR')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transferring fluroide data\n')
@@ -197,7 +197,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(op):
 				ct[i].value = day.value
-			print("West Chlorine lbs used value transfered from West SWOR to West Chemical Treatment Record")
+			print(f'{p.note()}West Chlorine lbs used value transfered from West SWOR to West Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering West Chlorine data\n')
@@ -216,7 +216,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(op):
 				ct[i].value = day.value
-			print("East Chlorine lbs used value transfered from East SWOR to East Chemical Treatment Record")
+			print(f'{p.note()}East Chlorine lbs used value transfered from East SWOR to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering East Chlorine data\n')
@@ -242,7 +242,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(ct_free):
 				day.value = table_free[i].value
-			print("Free Chlorine Table values transfered to East Chemical Treatment Record")
+			print(f'{p.note()}Free Chlorine Table values transfered to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering east free residuals\n')
@@ -251,7 +251,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(ct_total):
 				day.value = table_total[i].value
-			print("Total Chlorine Table values transfered to East Chemical Treatment Record")
+			print(f'{p.note()}Total Chlorine Table values transfered to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering east residuals\n')
@@ -276,7 +276,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(ct_free):
 				day.value = table_free[i].value
-			print("Free Chlorine Table values transfered to West Chemical Treatment Record")
+			print(f'{p.note()}Free Chlorine Table values transfered to West Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering West Free residuals\n')
@@ -285,7 +285,7 @@ class Transfer:
 		try:
 			for i, day in enumerate(ct_total):
 				day.value = table_total[i].value
-			print("Total Chlorine Table values transfered to West Chemical Treatment Record")
+			print(f'{p.note()}Total Chlorine Table values transfered to West Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering West Total residuals\n')
@@ -302,7 +302,7 @@ class Transfer:
 		try:
 			for day in cells:
 				east_chem[day].value = west_chem[day].value
-			print("Distribution Meter Values transfered from West Chemical Treatment Record to East Chemical Treatment Record")
+			print(f'{p.note()}Distribution Meter Values transfered from West Chemical Treatment Record to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering Distribution Meter Readings\n')

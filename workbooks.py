@@ -90,7 +90,7 @@ class Books:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Meter Workbook could not save\n')
 
-		print(p.ok() + 'workbooks saved\n')
+		print(p.ok() + 'workbooks saved')
 
 
 	def get_exceptions(self):

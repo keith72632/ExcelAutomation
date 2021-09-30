@@ -17,11 +17,9 @@ class Logger:
 
 		west_raw_cols = midnight['B']
 		west_raw = west_raw_cols[5:35]
-		print(west_raw[0])
 
 		west_swor_meter_cols = west_swor['B']
 		west_swor_raw = west_swor_meter_cols[8:38]
-		print(west_swor_raw[0])
 		east_raw_cols = midnight['I']
 		east_raw = east_raw_cols[5:35]
 
@@ -31,6 +29,7 @@ class Logger:
 		try:
 			for i, day in enumerate(west_swor_raw):
 				day.value = west_raw[i].value 
+			print(f'{p.note()}West meter numbers from Midnight readings successfully logged')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Raw Meter numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -40,6 +39,7 @@ class Logger:
 		try:
 			for i, day in enumerate(east_swor_raw):
 				day.value = east_raw[i].value 
+			print(f'{p.note()}East meter numbers from Midnight Readings successfully logged')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Raw Meter numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -65,6 +65,7 @@ class Logger:
 		try:
 			for i, day in enumerate(west_swor_ammonia):
 				day.value = west_ammonia[i].value 
+			print(f'{p.note()}West ammonia from Midnight Readings logged successfully')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Ammonia Meter numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -74,6 +75,7 @@ class Logger:
 		try:
 			for i, day in enumerate(east_swor_ammonia):
 				day.value = east_ammonia[i].value 
+			print(f'{p.note()}East ammonia from Midnight Readings logged successfully')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Ammonia Meter numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -101,7 +103,6 @@ class Logger:
 
 		date_results_recv = ( 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18' )
 
-		#TODO add try and except block
 		try:
 			bmr_wb['H5'].value = 'Carroll'
 			for i, data in enumerate(data_objs):
@@ -112,6 +113,7 @@ class Logger:
 				bmr_wb[lab_results[i]].value = data['result']
 				bmr_wb[lab_num[i]].value = data['lab_no']
 				bmr_wb[date_results_recv[i]] = data['date_recv']
+			print(f'{p.note()}Data logged to BMR')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error completing BMR\n')
@@ -121,47 +123,58 @@ class Logger:
 
 	def log_ifmrs(self, west_ifmr, east_ifmr):
 		p = Prompts()
-		month = d.get_prev_month_str()
-		year = d.get_year()
-		west_ifmr['O4'].value = month
-		east_ifmr['O4'].value = month
+		try:
+			month = d.get_prev_month_str()
+		except:
+			print(f'{p.err()}Could not get month in log_ifmrs function')
+		try:
+			year = d.get_year()
+		except:
+			print(f'{p.err()}Could not get year in log_ifms functions')
+		try:
+			west_ifmr['O4'].value = month
+			east_ifmr['O4'].value = month
 
-		west_ifmr['H7'].value = 4
-		east_ifmr['H7'].value = 4
+			west_ifmr['H7'].value = 4
+			east_ifmr['H7'].value = 4
 
-		west_ifmr['S7'].value = 4
-		east_ifmr['S7'].value = 4
+			west_ifmr['S7'].value = 4
+			east_ifmr['S7'].value = 4
 
-		west_ifmr['L9'].value = "1, 2, 3, 4"
-		east_ifmr['L9'].value = "1, 2, 3, 4"
+			west_ifmr['L9'].value = "1, 2, 3, 4"
+			east_ifmr['L9'].value = "1, 2, 3, 4"
 
-		west_ifmr['N12'].value = 'X'
-		east_ifmr['N12'].value = 'X'
+			west_ifmr['N12'].value = 'X'
+			east_ifmr['N12'].value = 'X'
 
-		west_ifmr['K17'].value = 4
-		east_ifmr['K17'].value = 4
+			west_ifmr['K17'].value = 4
+			east_ifmr['K17'].value = 4
 
-		west_ifmr['O60'].value = 'General Manager'
-		east_ifmr['O60'].value = 'General Manager'
+			west_ifmr['O60'].value = 'General Manager'
+			east_ifmr['O60'].value = 'General Manager'
 
-		west_ifmr['O65'].value = month
-		east_ifmr['O65'].value = month
+			west_ifmr['O65'].value = month
+			east_ifmr['O65'].value = month
 
-		west_ifmr['S65'].value = year
-		east_ifmr['S65'].value = year
+			west_ifmr['S65'].value = year
+			east_ifmr['S65'].value = year
 
 
-		west_ifmr['F65'].value = 'Carroll Boone Water District'
-		east_ifmr['F65'].value = 'Carroll Boone Water District'
+			west_ifmr['F65'].value = 'Carroll Boone Water District'
+			east_ifmr['F65'].value = 'Carroll Boone Water District'
 
-		west_ifmr['D66'].value = '675'
-		east_ifmr['D66'].value = '675'
+			west_ifmr['D66'].value = '675'
+			east_ifmr['D66'].value = '675'
 
-		west_ifmr['M66'].value = 'Freeman-Raney Water Treatment Facility'
-		east_ifmr['M66'].value = 'East Plant'
+			west_ifmr['M66'].value = 'Freeman-Raney Water Treatment Facility'
+			east_ifmr['M66'].value = 'East Plant'
 
-		west_ifmr['O111'].value = 'General Manager'
-		east_ifmr['O111'].value = 'General Manager'
+			west_ifmr['O111'].value = 'General Manager'
+			east_ifmr['O111'].value = 'General Manager'
+
+			print(f'{p.note()}Info for IFMRs complete')
+		except:
+			print(f'{p.err()}Could not complete IFMR')
 
 	#logs peak flow levels from midnight sheet to SWOR
 	def log_peaks(self, west_swor, east_swor, midnight):
@@ -206,6 +219,7 @@ class Logger:
 		try:
 			for i, day in enumerate(west_raw_peaks):
 				west_swor[swor_raw_peaks[i]].value = day.value 
+			print(f'{p.note()}West Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Raw Peak numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -216,6 +230,7 @@ class Logger:
 		try:
 			for i, day in enumerate(east_raw_peaks):
 				east_swor[swor_raw_peaks[i]].value = day.value 
+			print(f'{p.note()}East Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Raw Peak numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -226,6 +241,8 @@ class Logger:
 		try:
 			for i, day in enumerate(west_fin_peaks):
 				west_swor[swor_fin_peaks[i]].value = day.value
+			print(f'{p.note()}West High Service Peaks logged successfully')
+
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Finish Peak numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -235,6 +252,7 @@ class Logger:
 		try:
 			for i, day in enumerate(east_fin_peaks):
 				east_swor[swor_fin_peaks[i]].value = day.value
+			print(f'{p.note()}East High Service Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Finish Peak numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -265,20 +283,24 @@ class Logger:
 
 
 
-		#log raw peak numbers to West SWOR
+		#log lowest clearwell reading for west plant
 		try:
 			for i, day in enumerate(west_clearwell):
 				west_swor[swor_cw[i]].value = day.value 
+			print(f'{p.note()}Lowest Clearwell reading for West Plant logged successfully')
+
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Clearwell numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
 			os.system('pause')
 
-		#log raw peak numbers to East SWOR
+		#log lowest clearwell reading for east plat
 		try:
 			for i, day in enumerate(east_clearwell):
 				east_swor[swor_cw[i]].value = day.value 
+			print(f'{p.note()}Lowest Clearwell reading for East Plant logged successfully')
+
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Clear numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -310,20 +332,24 @@ class Logger:
 
 
 
-		#log raw peak numbers to West SWOR
+		#log free chlorine for west
 		try:
 			for i, day in enumerate(west_cl):
 				west_swor[swor_cl[i]].value = day.value 
+			print(f'{p.note()}Lowest Free Chlorine for West Plant logged successfully logged successfully')
+
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Free Chlorine numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
 			os.system('pause')
 
-		#log raw peak numbers to East SWOR
+		#log free chlorine for eat
 		try:
 			for i, day in enumerate(east_cl):
 				east_swor[swor_cl[i]].value = day.value 
+			print(f'{p.note()}Lowest Free Chlorine for East Plant logged successfully')
+
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Free Chlorine numbers from Midnight spread sheet transfer unsuccessful\n')
@@ -351,18 +377,18 @@ class Logger:
 		try:
 			for i, day in enumerate(w_cl):
 				day.value = w_midnight[i].value
-			print("West chlorine usage logged")
+			print(f'{p.note()}West chlorine usage logged')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Chlorine usage could not be logged\n')
 			traceback.print_exc()
 			os.system('pause')
 
-		#midnight west chlorine usage -> west swor
+		#midnight east chlorine usage -> west swor
 		try:
 			for i, day in enumerate(e_cl):
 				day.value = e_midnight[i].value
-			print("East chlorine usage logged")
+			print(f'{p.note()}East chlorine usage logged')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Chlorine usage could not be logged\n')
@@ -389,7 +415,7 @@ class Logger:
 		try:
 			for i, day in enumerate(w_hours):
 				day.value = w_midnight[i].value
-			print("West hours logged")
+			print(f'{p.note()}Hours run for West Plant')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West hours could not be logged\n')
@@ -400,7 +426,7 @@ class Logger:
 		try:
 			for i, day in enumerate(e_hours):
 				day.value = e_midnight[i].value
-			print("East hours logged")
+			print(f'{p.note()}Hours run for West Plant')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East hours could not be logged\n')

@@ -23,15 +23,15 @@ def main():
 	#needed to change text colors in terminal
 	init()
 
-	b = Books()
-	l = Logger()
-	t = Transfer()
-	d = Directories()
+	wbooks = Books()
+	loggers = Logger()
+	transfers = Transfer()
+	dirs = Directories()
 	p = Prompts()
 
-	west_path, east_path, chem_path, table_path, midnight_path = d.get_file_from_date()
+	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date()
 
-	west_wb, east_wb, chem_wb, table_wb, midnight_wb = b.load_workbooks(west_path, east_path, chem_path, table_path, midnight_path)
+	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks(west_path, east_path, chem_path, table_path, midnight_path)
 
 	bmr_wb = west_wb['BMR']
 	w_chem = chem_wb['West']
@@ -53,42 +53,46 @@ def main():
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
 
-	l.log_meters(west_swor_front, east_swor_front, midnight_readings)
-	l.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
-	l.log_peaks(west_swor_back, east_swor_back, midnight_readings)
-	l.log_clearwells(west_swor_back, east_swor_back, midnight_readings)
-	l.log_free_chlorine(west_swor_back, east_swor_back, midnight_readings)
-	l.log_chlorine_used(west_swor_front, east_swor_front, midnight_readings)
-	l.log_hours(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_peaks(west_swor_back, east_swor_back, midnight_readings)
+	loggers.log_clearwells(west_swor_back, east_swor_back, midnight_readings)
+	loggers.log_free_chlorine(west_swor_back, east_swor_back, midnight_readings)
+	loggers.log_chlorine_used(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_hours(west_swor_front, east_swor_front, midnight_readings)
 
-	t.transfer_meters_west(west_swor_front, w_chem)
-	t.transfer_meters_east(east_swor_front, e_chem)
-	t.transfer_rainfall(west_swor_front, east_swor_front)
-	t.transfer_finish_pH(west_swor_front, east_swor_front)
-	t.transfer_total(west_swor_front, east_swor_front)
-	t.transfer_chloramine(west_swor_front, east_swor_front)
+	transfers.transfer_meters_west(west_swor_front, w_chem)
+	transfers.transfer_meters_east(east_swor_front, e_chem)
+	transfers.transfer_rainfall(west_swor_front, east_swor_front)
+	transfers.transfer_finish_pH(west_swor_front, east_swor_front)
+	transfers.transfer_total(west_swor_front, east_swor_front)
+	transfers.transfer_chloramine(west_swor_front, east_swor_front)
 
-	t.transfer_flow_west(west_swor_front, w_chem)
-	t.transfer_flow_east(east_swor_front, e_chem)
-	t.transfer_chlorine_west(west_swor_front, w_chem)
-	t.transfer_chlorine_East(east_swor_front, e_chem)
-	t.transfer_fluoride(west_swor_front, east_swor_front)
+	transfers.transfer_flow_west(west_swor_front, w_chem)
+	transfers.transfer_flow_east(east_swor_front, e_chem)
+	transfers.transfer_chlorine_west(west_swor_front, w_chem)
+	transfers.transfer_chlorine_East(east_swor_front, e_chem)
+	transfers.transfer_fluoride(west_swor_front, east_swor_front)
 
-	t.transfer_chlorine_res_east(e_chem, east_table)
-	t.transfer_chlorine_res_west(w_chem, west_table)
+	transfers.transfer_chlorine_res_east(e_chem, east_table)
+	transfers.transfer_chlorine_res_west(w_chem, west_table)
 
-	t.transfer_distribution(w_chem, e_chem)
+	transfers.transfer_distribution(w_chem, e_chem)
 
-	l.log_bmr(bmr_wb, locations_data)
-	l.log_ifmrs(west_ifmr, east_ifmr)
-	b.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
+	loggers.log_bmr(bmr_wb, locations_data)
+	loggers.log_ifmrs(west_ifmr, east_ifmr)
+	wbooks.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
 
-	total_exceptions = b.get_exceptions() + l.get_exceptions() + t.get_exceptions() + hd_scraper.get_exceptions() + d.get_exceptions()
+	total_exceptions = wbooks.get_exceptions() + loggers.get_exceptions() + transfers.get_exceptions() + hd_scraper.get_exceptions() + dirs.get_exceptions()
 
 	if total_exceptions > 0:
 		print(f'{p.err()}Errors: {total_exceptions}\n')
 	else:
 		print(f'{p.ok()}Proccess complete with zero errors\n')
+	
+	print('\033[43m' + ('*' * 60))
+	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
+	print(('*' * 60) + '\033[0m')
 
 	os.system('pause')
 
