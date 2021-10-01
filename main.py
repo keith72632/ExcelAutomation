@@ -10,6 +10,7 @@ from soups import BmrScraper
 from colorama import init
 from time import sleep
 from colors import Prompts
+from graphics import graphical
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
 
@@ -22,6 +23,8 @@ def main():
 
 	#needed to change text colors in terminal
 	init()
+
+	graphical()
 
 	wbooks = Books()
 	loggers = Logger()
