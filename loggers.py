@@ -433,5 +433,108 @@ class Logger:
 			traceback.print_exc()
 			os.system('pause')
 
+	def log_pac(self, west_front, east_front, midnight):
+		p = Prompts()
+
+		w_pac_cols = west_front['K']
+		w_pac = w_pac_cols[8:39]
+
+		e_pac_cols = east_front['K']
+		e_pac = e_pac_cols[8:39]
+
+		mid_west_cols = midnight['X']
+		mid_west = mid_west_cols[5:36]
+
+		mid_east_cols = midnight['Y']
+		mid_east = mid_east_cols[5:36]
+
+		try:
+			for i, day in enumerate(w_pac):
+				day.value = mid_west[i].value
+			print(f'{p.note()}West pac successfully logged')
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error in logging west PAC')
+			traceback.print_exc()
+			os.system('pause')
+
+		try:
+			for i, day in enumerate(e_pac):
+				day.value = mid_east[i].value
+			print(f'{p.note()}East pac successfully logged')
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error in logging east PAC')
+			traceback.print_exc()
+			os.system('pause')
+
+	def log_lime(self, west_front, east_front, midnight):
+		p = Prompts()
+
+		west_lime_columns = west_front['L']
+		w_lime = west_lime_columns[8:38]
+
+		east_lime_columns = east_front['L']
+		e_lime = east_lime_columns[8:38]
+
+		mid_west_cols = midnight['T']
+		mid_west = mid_west_cols[5:36]
+
+		mid_east_cols = midnight['U']
+		mid_east = mid_east_cols[5:35]
+
+		try:
+			for i, day in enumerate(w_lime):
+				day.value = mid_west[i].value
+			print(f'{p.note()}West lime successfully logged')
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error logging west lime')
+			traceback.print_exc()
+			os.system('pause')
+		try:
+			for i, day in enumerate(e_lime):
+				day.value = mid_east[i].value
+			print(f'{p.note()}East lime successfully logged')
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error logging east lime')
+			traceback.print_exc()
+			os.system('pause')
+
+	def log_lime(self, west_front, east_front, midnight):
+		p = Prompts()
+
+		west_fl_columns = west_front['N']
+		w_fl = west_fl_columns[8:38]
+
+		east_fl_columns = east_front['N']
+		e_fl = east_fl_columns[8:38]
+
+		mid_west_cols = midnight['H']
+		mid_west = mid_west_cols[5:36]
+
+		mid_east_cols = midnight['O']
+		mid_east = mid_east_cols[5:35]
+
+		try:
+			for i, day in enumerate(w_fl):
+				day.value = mid_west[i].value
+			print(f'{p.note()}West fluoride successfully logged')
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error logging west fluoride')
+			traceback.print_exc()
+			os.system('pause')
+		try:
+			for i, day in enumerate(e_fl):
+				day.value = mid_east[i].value
+			print(f'{p.note()}East fluoride successfully logged')
+		except:
+			self.EXCEPTIONS += 1
+			print(f'{p.err()}Error logging east fluoride')
+			traceback.print_exc()
+			os.system('pause')
+
 	def get_exceptions(self):
 		return self.EXCEPTIONS

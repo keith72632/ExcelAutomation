@@ -14,38 +14,38 @@ class Books:
 		FAIL = p.FAIL
 		try:
 			west_wb = load_workbook(west_file)
-			print(f'{p.ok()}West Workbook loaded from:\n\t{COLOR}{west_file}{RESET}\n')
+			print(f'{p.ok()}West Workbook loaded from:\n{COLOR}{west_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}West Workbook loading failed from:\n\t{FAIL}{west_file}{RESET}\n')
+			print(f'{p.err()}West Workbook loading failed from:\n{FAIL}{west_file}{RESET}\n')
 
 		try:
 			east_wb = load_workbook(east_file)
-			print(f'{p.ok()}East Workbook loaded from:\n\t{COLOR}{east_file}{RESET}\n')
+			print(f'{p.ok()}East Workbook loaded from:\n{COLOR}{east_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}East Workbook loading failed from:\n\t{FAIL}{east_file}{RESET}\n')
+			print(f'{p.err()}East Workbook loading failed from:\n{FAIL}{east_file}{RESET}\n')
 
 		try:
 			chem_wb = load_workbook(chem_file)
-			print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n\t{COLOR}{chem_file}{RESET}\n')
+			print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n{COLOR}{chem_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Chemical Treatment Workbook loading failed from:\n\t{FAIL}{chem_file}{RESET}\n')
+			print(f'{p.err()}Chemical Treatment Workbook loading failed from:\n{FAIL}{chem_file}{RESET}\n')
 
 		try:
 			table_wb = load_workbook(table_file)
-			print(f'{p.ok()}Chlorine Table Workbook loaded from:\n\t{COLOR}{table_file}{RESET}\n')
+			print(f'{p.ok()}Chlorine Table Workbook loaded from:\n{COLOR}{table_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Chlorine Table Workbook loading failed from:\n\t{FAIL}{table_file}{RESET}\n')
+			print(f'{p.err()}Chlorine Table Workbook loading failed from:\n{FAIL}{table_file}{RESET}\n')
 
 		try:
 			meter_wb = load_workbook(meter_file)
-			print(f'{p.ok()}Meter Workbook loaded from:\n\t{COLOR}{meter_file}{RESET}\n')
+			print(f'{p.ok()}Meter Workbook loaded from:\n{COLOR}{meter_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Meter Workbook loading failed from:\n\t{FAIL}{meter_file}{RESET}\n')
+			print(f'{p.err()}Meter Workbook loading failed from:\n{FAIL}{meter_file}{RESET}\n')
 
 		return west_wb, east_wb, chem_wb, table_wb, meter_wb
 

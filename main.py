@@ -63,6 +63,8 @@ def main():
 	loggers.log_free_chlorine(west_swor_back, east_swor_back, midnight_readings)
 	loggers.log_chlorine_used(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_hours(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_pac(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_lime(west_swor_front, east_swor_front, midnight_readings)
 
 	transfers.transfer_meters_west(west_swor_front, w_chem)
 	transfers.transfer_meters_east(east_swor_front, e_chem)
