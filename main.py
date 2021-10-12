@@ -10,27 +10,52 @@ from soups import BmrScraper
 from colorama import init
 from time import sleep
 from colors import Prompts
-from graphics import graphical
+from tkinter import *
+from tkinter import filedialog
+def clicked():
+	global folder_select
+	folder_select = filedialog.askdirectory()
+	route = Label(text=str(folder_select))
+	route.grid(column=0, row=6)
+	print(f'Folder selected {folder_select}')
 
 # enable scripts with: Set-ExecutionPolicy RemoteSigned
 
+def gui_init():
+	root = Tk()
+
+	root.title("Excel Automator")
+	root.geometry('900x400')
+
+	lbl = Label(root, text="Select the working directory")
+	lbl.grid()
+
+	btn = Button(root, text="Browse", fg="red", command=clicked)
+	start = Button(root, text="Start", fg="red", command=main)
+
+	btn.grid(column=6, row=0)
+	start.grid(column=12, row=0)
+
+
+	root.mainloop()
 
 def main():
 
 	#constants
 	#url for bact sample data
 	URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
-
+	print(f'Workin dir {folder_select}')
 	#needed to change text colors in terminal
 	init()
-
-	graphical()
 
 	wbooks = Books()
 	loggers = Logger()
 	transfers = Transfer()
 	dirs = Directories()
 	p = Prompts()
+
+	dirs.set_working_dir(folder_select)
+	print(f'Getter test {dirs.get_working_dir()}')
 
 	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date()
 
@@ -99,8 +124,10 @@ def main():
 	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	print(('*' * 60) + '\033[0m')
 
-	os.system('pause')
+	done = Label(text="Done")
+	done.grid(column=0, row=20)
+
 
 if __name__ == '__main__':
-	main()
+	gui_init()
 

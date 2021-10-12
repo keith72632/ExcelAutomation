@@ -2,24 +2,44 @@ from datetime import datetime
 import os
 import sys
 from colors import Prompts
+from pathlib import Path
 
 
 class Directories:
+	working_dir = ' '
+	west_dir = ' '
+	east_dir = ' '
+	chem_treat_dir = ' '
+	chlorine_tables = ' '
+	mango_meter = ' '
 	def __init__(self):
 		pass
 
 	EXCEPTIONS = 0
 
-	WORKING_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Working_Directory\\"
+	STAGING = f'\\Production\\' if len(sys.argv) > 1 and sys.argv[2] == "PROD" else "\\Development\\"
 
-	STAGING = f'Production\\' if len(sys.argv) > 1 and sys.argv[2] == "PROD" else "Development\\"
+	# WORKING_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Working_Directory\\"
 
-	WEST_DIR = WORKING_DIR + STAGING + "West_Plant_Operations_Reports\\"
-	EAST_DIR = WORKING_DIR + STAGING + "East_Plant_Operations_Reports\\"
-	CHEM_TREAT_DIR = WORKING_DIR + STAGING + "Chemical_Treatment_Records\\"
-	CHLORINE_TABLES = WORKING_DIR + STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
-	MANGO_METERS = WORKING_DIR + STAGING + "MangoLogs\\"
 
+	# WEST_DIR = WORKING_DIR + STAGING + "West_Plant_Operations_Reports\\"
+	# EAST_DIR = WORKING_DIR + STAGING + "East_Plant_Operations_Reports\\"
+	# CHEM_TREAT_DIR = WORKING_DIR + STAGING + "Chemical_Treatment_Records\\"
+	# CHLORINE_TABLES = WORKING_DIR + STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
+	# MANGO_METERS = WORKING_DIR + STAGING + "MangoLogs\\"
+
+	def set_working_dir(self, working_dir):
+		self.working_dir = working_dir
+		pth = Path(self.working_dir)
+		self.west_dir = str(pth) + self.STAGING + "West_Plant_Operations_Reports\\"
+		self.east_dir = str(pth) + self.STAGING + "East_Plant_Operations_Reports\\"
+		self.chem_treat_dir = str(pth) + self.STAGING + "Chemical_Treatment_Records\\"
+		self.chlorine_tables = str(pth) + self.STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
+		self.mango_meter = str(pth) + self.STAGING + "MangoLogs\\"
+		print(f'Chlorine {self.chlorine_tables}')
+
+	def get_working_dir(self):
+		return self.working_dir
 
 	def get_year(self):
 		#get month number to use as prefix
@@ -87,11 +107,11 @@ class Directories:
 
 
 		#list of files in 2021 directory
-		west_list = os.listdir(self.WEST_DIR)
-		east_list = os.listdir(self.EAST_DIR)
-		chem_list = os.listdir(self.CHEM_TREAT_DIR)
-		midnight_list = os.listdir(self.MANGO_METERS)
-		chlorine_tables_list = os.listdir(self.CHLORINE_TABLES)
+		west_list = os.listdir(self.west_dir)
+		east_list = os.listdir(self.east_dir)
+		chem_list = os.listdir(self.chem_treat_dir)
+		midnight_list = os.listdir(self.mango_meter)
+		chlorine_tables_list = os.listdir(self.chlorine_tables)
 
 		#sort through directory for file corresponding with the current month
 		try:
@@ -130,11 +150,11 @@ class Directories:
 			print(f'{p.warn()}Chlorine Table not found\n')
 
 
-		west_path = self.WEST_DIR + west_file[0]
-		east_path = self.EAST_DIR + east_file[0]
-		chem_path = self.CHEM_TREAT_DIR + chem_file[0]
-		table_path = self.CHLORINE_TABLES + tables_file[0]
-		midnight_path = self.MANGO_METERS + midnight_file[0]
+		west_path = self.west_dir + west_file[0]
+		east_path = self.east_dir + east_file[0]
+		chem_path = self.chem_treat_dir + chem_file[0]
+		table_path = self.chlorine_tables + tables_file[0]
+		midnight_path = self.mango_meter + midnight_file[0]
 		return west_path, east_path, chem_path, table_path, midnight_path
 
 	def create_files(self, west_dir, east_dir):
