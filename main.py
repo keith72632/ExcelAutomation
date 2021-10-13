@@ -11,7 +11,12 @@ from colorama import init
 from time import sleep
 from colors import Prompts
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
+
+def program_finish():
+	messagebox.showinfo("Done", "Done")
+	root.destroy()
+
 def clicked():
 	global folder_select
 	folder_select = filedialog.askdirectory()
@@ -19,25 +24,8 @@ def clicked():
 	route.grid(column=0, row=6)
 	print(f'Folder selected {folder_select}')
 
-# enable scripts with: Set-ExecutionPolicy RemoteSigned
-
-def gui_init():
-	root = Tk()
-
-	root.title("Excel Automator")
-	root.geometry('900x400')
-
-	lbl = Label(root, text="Select the working directory")
-	lbl.grid()
-
-	btn = Button(root, text="Browse", fg="red", command=clicked)
-	start = Button(root, text="Start", fg="red", command=main)
-
-	btn.grid(column=6, row=0)
-	start.grid(column=12, row=0)
 
 
-	root.mainloop()
 
 def main():
 
@@ -124,10 +112,24 @@ def main():
 	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	print(('*' * 60) + '\033[0m')
 
-	done = Label(text="Done")
-	done.grid(column=0, row=20)
-
+	program_finish()
 
 if __name__ == '__main__':
-	gui_init()
+	root = Tk()
+
+	root.title("Excel Automator")
+	root.geometry('1100x500+100+100')
+
+	lbl = Label(root, text="Select the working directory")
+	lbl.grid()
+
+	btn = Button(root, text="Browse", fg="red", command=clicked)
+	start = Button(root, text="Start", fg="red", command=main)
+
+	btn.grid(column=6, row=0)
+	start.grid(column=12, row=0)
+
+	
+	root.mainloop()
+
 
