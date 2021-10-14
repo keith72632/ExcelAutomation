@@ -29,15 +29,17 @@ class Directories:
 	# MANGO_METERS = WORKING_DIR + STAGING + "MangoLogs\\"
 
 	def set_working_dir(self, working_dir):
-		self.working_dir = working_dir
-		pth = Path(self.working_dir)
-		self.west_dir = str(pth) + self.STAGING + "West_Plant_Operations_Reports\\"
-		self.east_dir = str(pth) + self.STAGING + "East_Plant_Operations_Reports\\"
-		self.chem_treat_dir = str(pth) + self.STAGING + "Chemical_Treatment_Records\\"
-		self.chlorine_tables = str(pth) + self.STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
-		self.mango_meter = str(pth) + self.STAGING + "MangoLogs\\"
-		print(f'Chlorine {self.chlorine_tables}')
-
+		p = Prompts()
+		if working_dir:
+			self.working_dir = working_dir
+			pth = Path(self.working_dir)
+			self.west_dir = str(pth) + self.STAGING + "West_Plant_Operations_Reports\\"
+			self.east_dir = str(pth) + self.STAGING + "East_Plant_Operations_Reports\\"
+			self.chem_treat_dir = str(pth) + self.STAGING + "Chemical_Treatment_Records\\"
+			self.chlorine_tables = str(pth) + self.STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
+			self.mango_meter = str(pth) + self.STAGING + "MangoLogs\\"
+		else:
+			print(f'{p.err()}No working directory selected')
 	def get_working_dir(self):
 		return self.working_dir
 

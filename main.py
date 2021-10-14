@@ -11,7 +11,13 @@ from colorama import init
 from time import sleep
 from colors import Prompts
 from tkinter import *
+from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
+from visuals import log_error
+
+def inc_status_bar():
+	root.update_idletasks()
+	pb1['value'] += 30
 
 def program_finish():
 	messagebox.showinfo("Done", "Done")
@@ -20,21 +26,23 @@ def program_finish():
 def clicked():
 	global folder_select
 	folder_select = filedialog.askdirectory()
-	route = Label(text=str(folder_select))
-	route.grid(column=0, row=6)
+	route = Label(text='Folder Selected (This needs to be your working directory):\n' + str(folder_select))
+	route.place(relx=0.30, rely=0.20)
 	print(f'Folder selected {folder_select}')
-
 
 
 
 def main():
 
+	inc_status_bar()
+
 	#constants
 	#url for bact sample data
 	URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
-	print(f'Workin dir {folder_select}')
 	#needed to change text colors in terminal
 	init()
+
+	inc_status_bar()
 
 	wbooks = Books()
 	loggers = Logger()
@@ -42,8 +50,13 @@ def main():
 	dirs = Directories()
 	p = Prompts()
 
-	dirs.set_working_dir(folder_select)
-	print(f'Getter test {dirs.get_working_dir()}')
+	try:
+		dirs.set_working_dir(folder_select)
+	except NameError:
+		print(f'{p.err()}Please select a working directory')
+
+
+	inc_status_bar()
 
 	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date()
 
@@ -62,12 +75,16 @@ def main():
 	west_table = table_wb['West']
 	midnight_readings = midnight_wb['Midnight']
 
+	inc_status_bar()
+
 	w_active, e_active, c_active, table_active, midnight_active = west_wb.active, east_wb.active, chem_wb.active, table_wb.active, midnight_wb.active
 
 	#scan of the health department website for the BMR data
 	hd_scraper = BmrScraper(URL)
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
+
+	inc_status_bar()
 
 	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
@@ -79,12 +96,16 @@ def main():
 	loggers.log_pac(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_lime(west_swor_front, east_swor_front, midnight_readings)
 
+	inc_status_bar()
+
 	transfers.transfer_meters_west(west_swor_front, w_chem)
 	transfers.transfer_meters_east(east_swor_front, e_chem)
 	transfers.transfer_rainfall(west_swor_front, east_swor_front)
 	transfers.transfer_finish_pH(west_swor_front, east_swor_front)
 	transfers.transfer_total(west_swor_front, east_swor_front)
 	transfers.transfer_chloramine(west_swor_front, east_swor_front)
+
+	inc_status_bar()
 
 	transfers.transfer_flow_west(west_swor_front, w_chem)
 	transfers.transfer_flow_east(east_swor_front, e_chem)
@@ -97,6 +118,8 @@ def main():
 
 	transfers.transfer_distribution(w_chem, e_chem)
 
+	inc_status_bar()
+
 	loggers.log_bmr(bmr_wb, locations_data)
 	loggers.log_ifmrs(west_ifmr, east_ifmr)
 	wbooks.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
@@ -107,11 +130,14 @@ def main():
 		print(f'{p.err()}Errors: {total_exceptions}\n')
 	else:
 		print(f'{p.ok()}Proccess complete with zero errors\n')
+
+	inc_status_bar()
 	
 	print('\033[43m' + ('*' * 60))
 	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	print(('*' * 60) + '\033[0m')
 
+	inc_status_bar()
 	program_finish()
 
 if __name__ == '__main__':
@@ -120,14 +146,19 @@ if __name__ == '__main__':
 	root.title("Excel Automator")
 	root.geometry('1100x500+100+100')
 
-	lbl = Label(root, text="Select the working directory")
-	lbl.grid()
+	lbl = Label(root, text="Select the working directory", font=('Arial', 14))
+	lbl.place(x=410, rely=0.0)
 
-	btn = Button(root, text="Browse", fg="red", command=clicked)
-	start = Button(root, text="Start", fg="red", command=main)
+	btn = Button(root, text="Browse", fg="white", command=clicked, bd=3, bg='grey')
+	start = Button(root, text="Start", fg="white", command=main, bd=3, bg='grey')
 
-	btn.grid(column=6, row=0)
-	start.grid(column=12, row=0)
+	btn.place(x=500, y=30)
+	start.place(x=385, y=150)
+	start.configure(width=40)
+
+	pb1 = Progressbar(root, orient=HORIZONTAL, length=293, mode='determinate')
+	pb1.pack(expand=True)
+	pb1.place(x=385, y=200)
 
 	
 	root.mainloop()
