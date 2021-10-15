@@ -14,27 +14,22 @@ from tkinter import *
 from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
 from visuals import log_error
+from visuals import *
 
-def inc_status_bar():
-	root.update_idletasks()
-	pb1['value'] += 30
-
-def program_finish():
-	messagebox.showinfo("Done", "Done")
-	root.destroy()
 
 def clicked():
 	global folder_select
 	folder_select = filedialog.askdirectory()
 	route = Label(text='Folder Selected (This needs to be your working directory):\n' + str(folder_select))
-	route.place(relx=0.30, rely=0.20)
+	route.place(relx=0.25, rely=0.20)
+	route.configure(font=(12))
 	print(f'Folder selected {folder_select}')
 
 
 
 def main():
 
-	inc_status_bar()
+	inc_status_bar("starting...")
 
 	#constants
 	#url for bact sample data
@@ -42,7 +37,7 @@ def main():
 	#needed to change text colors in terminal
 	init()
 
-	inc_status_bar()
+	inc_status_bar("terminal colors initialized")
 
 	wbooks = Books()
 	loggers = Logger()
@@ -56,7 +51,7 @@ def main():
 		print(f'{p.err()}Please select a working directory')
 
 
-	inc_status_bar()
+	inc_status_bar("working directory set")
 
 	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date()
 
@@ -75,7 +70,7 @@ def main():
 	west_table = table_wb['West']
 	midnight_readings = midnight_wb['Midnight']
 
-	inc_status_bar()
+	inc_status_bar("workbooks loaded")
 
 	w_active, e_active, c_active, table_active, midnight_active = west_wb.active, east_wb.active, chem_wb.active, table_wb.active, midnight_wb.active
 
@@ -84,7 +79,7 @@ def main():
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
 
-	inc_status_bar()
+	inc_status_bar("BMR data gathered from health department")
 
 	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
@@ -96,7 +91,7 @@ def main():
 	loggers.log_pac(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_lime(west_swor_front, east_swor_front, midnight_readings)
 
-	inc_status_bar()
+	inc_status_bar("data logged")
 
 	transfers.transfer_meters_west(west_swor_front, w_chem)
 	transfers.transfer_meters_east(east_swor_front, e_chem)
@@ -105,7 +100,7 @@ def main():
 	transfers.transfer_total(west_swor_front, east_swor_front)
 	transfers.transfer_chloramine(west_swor_front, east_swor_front)
 
-	inc_status_bar()
+	inc_status_bar("data transfered")
 
 	transfers.transfer_flow_west(west_swor_front, w_chem)
 	transfers.transfer_flow_east(east_swor_front, e_chem)
@@ -118,7 +113,7 @@ def main():
 
 	transfers.transfer_distribution(w_chem, e_chem)
 
-	inc_status_bar()
+	inc_status_bar("transfering complete")
 
 	loggers.log_bmr(bmr_wb, locations_data)
 	loggers.log_ifmrs(west_ifmr, east_ifmr)
@@ -131,22 +126,21 @@ def main():
 	else:
 		print(f'{p.ok()}Proccess complete with zero errors\n')
 
-	inc_status_bar()
+	inc_status_bar("exceptions counted")
 	
 	print('\033[43m' + ('*' * 60))
 	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	print(('*' * 60) + '\033[0m')
 
-	inc_status_bar()
+	inc_status_bar("finished")
 	program_finish()
 
 if __name__ == '__main__':
-	root = Tk()
 
 	root.title("Excel Automator")
 	root.geometry('1100x500+100+100')
 
-	lbl = Label(root, text="Select the working directory", font=('Arial', 14))
+	lbl = Label(root, text="Select the working directory", font=('Helvetica', 14))
 	lbl.place(x=410, rely=0.0)
 
 	btn = Button(root, text="Browse", fg="white", command=clicked, bd=3, bg='grey')
@@ -156,10 +150,7 @@ if __name__ == '__main__':
 	start.place(x=385, y=150)
 	start.configure(width=40)
 
-	pb1 = Progressbar(root, orient=HORIZONTAL, length=293, mode='determinate')
-	pb1.pack(expand=True)
-	pb1.place(x=385, y=200)
-
+	prog_bar()
 	
 	root.mainloop()
 
