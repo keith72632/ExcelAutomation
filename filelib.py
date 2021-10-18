@@ -3,6 +3,7 @@ import os
 import sys
 from colors import Prompts
 from pathlib import Path
+from visuals import inc_status_bar, root, log_error, INC_COUNT
 
 
 class Directories:
@@ -29,8 +30,10 @@ class Directories:
 	# MANGO_METERS = WORKING_DIR + STAGING + "MangoLogs\\"
 
 	def set_working_dir(self, working_dir):
+		global INC_COUNT
 		p = Prompts()
 		if working_dir:
+			INC_COUNT += inc_status_bar("Working directory validated")
 			self.working_dir = working_dir
 			pth = Path(self.working_dir)
 			self.west_dir = str(pth) + self.STAGING + "West_Plant_Operations_Reports\\"
@@ -40,6 +43,7 @@ class Directories:
 			self.mango_meter = str(pth) + self.STAGING + "MangoLogs\\"
 		else:
 			print(f'{p.err()}No working directory selected')
+			INC_COUNT += inc_status_bar("No working directory selected")
 	def get_working_dir(self):
 		return self.working_dir
 
@@ -88,6 +92,24 @@ class Directories:
 		month = '0' + str((datetime.now().month) - 1)
 		return months[month]
 
+	def convert_month_to_dec(self, monthstr):
+		months = {
+		"January": "01",
+		"February": "02",
+		"March": "03",
+		"April": "04",
+		"May": "05",
+		"June": "06",
+		"July": "07",
+		"August": "08",
+		"September": "09",
+		"October": "10",
+		"November": "11",
+		"December": "12"
+		}
+
+		return months[monthstr]
+
 	def  get_month_dec(self):
 		return '0' + str((datetime.now().month))
 
@@ -95,16 +117,20 @@ class Directories:
 		return '0' + str((datetime.now().month) - 1)
 
 
-	def get_file_from_date(self):
+	def get_file_from_date(self, month_menu):
 		p = Prompts()
-
+		global INC_COUNT
 		#get month number to use as prefix
 		# monthnum = str(datetime.today()).split('-')
 		# month = monthnum[1]
 		
 		# use this below for previous month
-		month = self.get_prev_month_dec()
-		print(f'Month: {self.get_prev_month_str()}')
+		month = self.convert_month_to_dec(month_menu)
+		if self.get_prev_month_str() != month_menu:
+			msg = "Month Selected is not the previous month. This could cause some issues. Continue?"
+			log_error(msg)
+		print(f'Month: {self.get_prev_month_str()}, Month from menu: {month_menu}')
+		INC_COUNT += inc_status_bar("Month Selected")
 
 
 
@@ -157,6 +183,9 @@ class Directories:
 		chem_path = self.chem_treat_dir + chem_file[0]
 		table_path = self.chlorine_tables + tables_file[0]
 		midnight_path = self.mango_meter + midnight_file[0]
+		
+		INC_COUNT += inc_status_bar("All files matched with coreresponding month")
+
 		return west_path, east_path, chem_path, table_path, midnight_path
 
 	def create_files(self, west_dir, east_dir):

@@ -21,15 +21,18 @@ def clicked():
 	global folder_select
 	folder_select = filedialog.askdirectory()
 	route = Label(text='Folder Selected (This needs to be your working directory):\n' + str(folder_select))
-	route.place(relx=0.25, rely=0.20)
-	route.configure(font=(12))
+	route.place(relx=0.25, y=350)
+	route.configure(font=(12), fg="green")
 	print(f'Folder selected {folder_select}')
 
 
 
 def main():
 
-	inc_status_bar("starting...")
+	global INC_COUNT
+	INC_COUNT += inc_status_bar("starting...")
+
+	print(month_menu.get())
 
 	#constants
 	#url for bact sample data
@@ -37,7 +40,7 @@ def main():
 	#needed to change text colors in terminal
 	init()
 
-	inc_status_bar("terminal colors initialized")
+	INC_COUNT += inc_status_bar("terminal colors initialized")
 
 	wbooks = Books()
 	loggers = Logger()
@@ -51,9 +54,9 @@ def main():
 		print(f'{p.err()}Please select a working directory')
 
 
-	inc_status_bar("working directory set")
+	INC_COUNT += inc_status_bar("working directory set")
 
-	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date()
+	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date(month_menu.get())
 
 	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks(west_path, east_path, chem_path, table_path, midnight_path)
 
@@ -70,7 +73,7 @@ def main():
 	west_table = table_wb['West']
 	midnight_readings = midnight_wb['Midnight']
 
-	inc_status_bar("workbooks loaded")
+	INC_COUNT += inc_status_bar("workbooks loaded")
 
 	w_active, e_active, c_active, table_active, midnight_active = west_wb.active, east_wb.active, chem_wb.active, table_wb.active, midnight_wb.active
 
@@ -79,7 +82,7 @@ def main():
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
 
-	inc_status_bar("BMR data gathered from health department")
+	INC_COUNT += inc_status_bar("BMR data gathered from health department")
 
 	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
@@ -91,7 +94,7 @@ def main():
 	loggers.log_pac(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_lime(west_swor_front, east_swor_front, midnight_readings)
 
-	inc_status_bar("data logged")
+	INC_COUNT += inc_status_bar("data logged")
 
 	transfers.transfer_meters_west(west_swor_front, w_chem)
 	transfers.transfer_meters_east(east_swor_front, e_chem)
@@ -100,7 +103,7 @@ def main():
 	transfers.transfer_total(west_swor_front, east_swor_front)
 	transfers.transfer_chloramine(west_swor_front, east_swor_front)
 
-	inc_status_bar("data transfered")
+	INC_COUNT += inc_status_bar("data transfered")
 
 	transfers.transfer_flow_west(west_swor_front, w_chem)
 	transfers.transfer_flow_east(east_swor_front, e_chem)
@@ -113,7 +116,7 @@ def main():
 
 	transfers.transfer_distribution(w_chem, e_chem)
 
-	inc_status_bar("transfering complete")
+	INC_COUNT += inc_status_bar("transfering complete")
 
 	loggers.log_bmr(bmr_wb, locations_data)
 	loggers.log_ifmrs(west_ifmr, east_ifmr)
@@ -126,31 +129,37 @@ def main():
 	else:
 		print(f'{p.ok()}Proccess complete with zero errors\n')
 
-	inc_status_bar("exceptions counted")
+	INC_COUNT += inc_status_bar("exceptions counted")
 	
 	print('\033[43m' + ('*' * 60))
 	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	print(('*' * 60) + '\033[0m')
 
-	inc_status_bar("finished")
+	INC_COUNT += inc_status_bar("finished")
 	program_finish()
+	print(f'Increment counter = {INC_COUNT}')
 
 if __name__ == '__main__':
 
 	root.title("Excel Automator")
 	root.geometry('1100x500+100+100')
 
-	lbl = Label(root, text="Select the working directory", font=('Helvetica', 14))
-	lbl.place(x=410, rely=0.0)
+	header()
 
-	btn = Button(root, text="Browse", fg="white", command=clicked, bd=3, bg='grey')
-	start = Button(root, text="Start", fg="white", command=main, bd=3, bg='grey')
-
-	btn.place(x=500, y=30)
-	start.place(x=385, y=150)
-	start.configure(width=40)
+	# lbl = Label(root, text="Select the working directory", font=('Helvetica', 12))
+	# lbl.place(x=15, rely=0.1)
 
 	prog_bar()
+	month_menu = menu()
+
+	btn = Button(root, text="Select Working Directory", fg="lime green", command=clicked, bd=3, bg='grey')
+	start = Button(root, text="Start", fg="lime green", command=main, bd=3, bg='grey')
+
+	btn.place(relx=0.4, rely=0.1)
+	btn.configure(width=25)
+	start.place(relx=0.355, y=410)
+	start.configure(width=40)
+
 	
 	root.mainloop()
 
