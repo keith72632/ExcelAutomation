@@ -9,7 +9,7 @@ class Books:
 
 	def load_workbooks(self, west_file, east_file, chem_file, table_file, meter_file):
 		p = Prompts()
-		COLOR = p.PROD if sys.argv[2] == "PROD" else p.DEV
+		COLOR = p.DEV
 		RESET = p.RESET
 		FAIL = p.FAIL
 		try:

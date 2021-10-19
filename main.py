@@ -13,21 +13,23 @@ from colors import Prompts
 from tkinter import *
 from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
-from visuals import log_error
 from visuals import *
 
 
-def clicked():
+def select_work_dir():
 	global folder_select
 	folder_select = filedialog.askdirectory()
 	route = Label(text='Folder Selected (This needs to be your working directory):\n' + str(folder_select))
 	route.place(relx=0.25, y=350)
 	route.configure(font=(12), fg="green")
 	print(f'Folder selected {folder_select}')
+	global month_menu
+	month_menu = menu()
 
 
 
-def main():
+
+def mainf():
 
 	global INC_COUNT
 	INC_COUNT += inc_status_bar("starting...")
@@ -142,24 +144,14 @@ def main():
 if __name__ == '__main__':
 
 	root.title("Excel Automator")
-	root.geometry('1100x500+100+100')
+	root.geometry('1100x500+375+225')
 
 	header()
-
-	# lbl = Label(root, text="Select the working directory", font=('Helvetica', 12))
-	# lbl.place(x=15, rely=0.1)
-
 	prog_bar()
-	month_menu = menu()
 
-	btn = Button(root, text="Select Working Directory", fg="lime green", command=clicked, bd=3, bg='grey')
-	start = Button(root, text="Start", fg="lime green", command=main, bd=3, bg='grey')
-
-	btn.place(relx=0.4, rely=0.1)
-	btn.configure(width=25)
-	start.place(relx=0.355, y=410)
-	start.configure(width=40)
-
+	#pass functions as argument to be used as commands in gui buttons
+	start_btn(mainf)
+	dir_btn(select_work_dir)
 	
 	root.mainloop()
 

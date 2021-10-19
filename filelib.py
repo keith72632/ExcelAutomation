@@ -18,17 +18,6 @@ class Directories:
 
 	EXCEPTIONS = 0
 
-	STAGING = f'\\Production\\' if len(sys.argv) > 1 and sys.argv[2] == "PROD" else "\\Development\\"
-
-	# WORKING_DIR = "C:\\Users\\Carroll Boone Water\\Desktop\\2021_ADH_Reports\\Working_Directory\\"
-
-
-	# WEST_DIR = WORKING_DIR + STAGING + "West_Plant_Operations_Reports\\"
-	# EAST_DIR = WORKING_DIR + STAGING + "East_Plant_Operations_Reports\\"
-	# CHEM_TREAT_DIR = WORKING_DIR + STAGING + "Chemical_Treatment_Records\\"
-	# CHLORINE_TABLES = WORKING_DIR + STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
-	# MANGO_METERS = WORKING_DIR + STAGING + "MangoLogs\\"
-
 	def set_working_dir(self, working_dir):
 		global INC_COUNT
 		p = Prompts()
@@ -36,11 +25,11 @@ class Directories:
 			INC_COUNT += inc_status_bar("Working directory validated")
 			self.working_dir = working_dir
 			pth = Path(self.working_dir)
-			self.west_dir = str(pth) + self.STAGING + "West_Plant_Operations_Reports\\"
-			self.east_dir = str(pth) + self.STAGING + "East_Plant_Operations_Reports\\"
-			self.chem_treat_dir = str(pth) + self.STAGING + "Chemical_Treatment_Records\\"
-			self.chlorine_tables = str(pth) + self.STAGING + "Chemical_Treatment_Records\\Chlorine_Tables\\"
-			self.mango_meter = str(pth) + self.STAGING + "MangoLogs\\"
+			self.west_dir = str(pth) + "\\West_Plant_Operations_Reports\\"
+			self.east_dir = str(pth) + "\\East_Plant_Operations_Reports\\"
+			self.chem_treat_dir = str(pth) + "\\Chemical_Treatment_Records\\"
+			self.chlorine_tables = str(pth) + "\\Chemical_Treatment_Records\\Chlorine_Tables\\"
+			self.mango_meter = str(pth) + "\\MangoLogs\\"
 		else:
 			print(f'{p.err()}No working directory selected')
 			INC_COUNT += inc_status_bar("No working directory selected")

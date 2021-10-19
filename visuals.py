@@ -8,6 +8,16 @@ INC_COUNT = 0
 root = Tk()
 pb1 = Progressbar(root, orient=HORIZONTAL, length=293, mode='determinate')
 
+def start_btn(cmd):
+	start = Button(root, text="Start", fg="lime green", command=cmd, bd=3, bg='grey')
+	start.place(relx=0.355, y=410)
+	start.configure(width=40)
+
+def dir_btn(cmd):
+	btn = Button(root, text="Select Working Directory", fg="lime green", command=cmd, bd=3, bg='grey')
+	btn.place(relx=0.4, rely=0.1)
+	btn.configure(width=25)
+
 def browse_button():
 	btn = Button(root, text="Browse", fg="white", command=clicked, bd=3, bg='grey')
 	btn.place(x=500, y=30)
