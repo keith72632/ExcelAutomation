@@ -15,7 +15,7 @@ from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
 from visuals import *
 
-
+#TODO: Move this function somewhere else
 def select_work_dir():
 	global folder_select
 	folder_select = filedialog.askdirectory()
@@ -27,16 +27,14 @@ def select_work_dir():
 	month_menu = menu()
 
 
-
-
 def mainf():
 
+	prog_bar()
+
 	global INC_COUNT
-	INC_COUNT += inc_status_bar("starting...")
+	#this is the number of progress bar increments before the try/excepts for month and working dir
+	inc_cnt = 30
 
-	print(month_menu.get())
-
-	#constants
 	#url for bact sample data
 	URL = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
 	#needed to change text colors in terminal
@@ -45,11 +43,20 @@ def mainf():
 	INC_COUNT += inc_status_bar("terminal colors initialized")
 
 	wbooks = Books()
+	INC_COUNT += inc_status_bar("Workbook instance created")
+
 	loggers = Logger()
+	INC_COUNT += inc_status_bar("Logger instance created")
+	
 	transfers = Transfer()
+	INC_COUNT += inc_status_bar("Transfer instance created")
+	
 	dirs = Directories()
+	INC_COUNT += inc_status_bar("Directories instance created")
+	
 	p = Prompts()
 
+	#takes folder selected in select_work_dir() filedialog
 	try:
 		dirs.set_working_dir(folder_select)
 	except NameError:
@@ -58,7 +65,19 @@ def mainf():
 
 	INC_COUNT += inc_status_bar("working directory set")
 
-	west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date(month_menu.get())
+	try:
+		west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date(month_menu.get())
+	except KeyError:
+		throw_error("No month selected. Please select month, then click Start again")
+		#resets the progress bar
+		pb1['value'] -= inc_cnt
+
+	except NameError:
+		throw_error("Please select the Working_Directory")
+		#resets the progress bar
+		inc_cnt += 10
+		pb1['value'] -= inc_cnt
+
 
 	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks(west_path, east_path, chem_path, table_path, midnight_path)
 
@@ -81,10 +100,14 @@ def mainf():
 
 	#scan of the health department website for the BMR data
 	hd_scraper = BmrScraper(URL)
+	INC_COUNT += inc_status_bar("BmrScraper instance created")
+
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
-
 	INC_COUNT += inc_status_bar("BMR data gathered from health department")
+	loggers.log_bmr(bmr_wb, locations_data)
+	INC_COUNT += inc_status_bar("BMR data logged to spreadsheet")
+
 
 	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
@@ -120,7 +143,6 @@ def mainf():
 
 	INC_COUNT += inc_status_bar("transfering complete")
 
-	loggers.log_bmr(bmr_wb, locations_data)
 	loggers.log_ifmrs(west_ifmr, east_ifmr)
 	wbooks.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
 
@@ -138,8 +160,8 @@ def mainf():
 	print(('*' * 60) + '\033[0m')
 
 	INC_COUNT += inc_status_bar("finished")
+	print(f'Inc count {INC_COUNT}')
 	program_finish()
-	print(f'Increment counter = {INC_COUNT}')
 
 if __name__ == '__main__':
 
@@ -147,9 +169,9 @@ if __name__ == '__main__':
 	root.geometry('1100x500+375+225')
 
 	header()
-	prog_bar()
 
 	#pass functions as argument to be used as commands in gui buttons
+	#Start button calls mainf
 	start_btn(mainf)
 	dir_btn(select_work_dir)
 	

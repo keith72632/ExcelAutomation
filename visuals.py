@@ -28,12 +28,15 @@ def prog_bar():
 
 def inc_status_bar(msg):
 	root.update_idletasks()
-	pb1['value'] += 12
+	pb1['value'] += 5
 	txt = Text(root)
 	txt.insert(INSERT, msg)
 	txt.configure(height=1, width=36)
 	txt.place(relx=0.355, y=320)
 	return 1
+
+def throw_error(msg):
+	messagebox.showerror(title="Error", message=msg)
 
 def get_inc_value(inc_count):
 	return 100/inc_count
