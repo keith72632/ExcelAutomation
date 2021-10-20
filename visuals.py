@@ -2,48 +2,57 @@ from tkinter import *
 from tkinter import filedialog, messagebox
 from tkinter.ttk import Progressbar, Menubutton
 import sys
+from documents import sign_all
 
 INC_COUNT = 0
 
 root = Tk()
-pb1 = Progressbar(root, orient=HORIZONTAL, length=293, mode='determinate')
+pb1 = Progressbar(root, orient=HORIZONTAL, length=373, mode='determinate')
+
+def background_image():
+	img = PhotoImage(file="./excel_logo.png")
+	canvas = Canvas(root, width=100, height=100)
+	canvas.pack(expand=True, fill=BOTH)
+	canvas.create_image(0, 0, image=img)
 
 def start_btn(cmd):
-	start = Button(root, text="Start", fg="lime green", command=cmd, bd=3, bg='grey')
-	start.place(relx=0.355, y=410)
+	start = Button(root, text="Start", fg="green2", command=cmd, bd=3, bg='grey', font=12)
+	start.place(relx=0.315, y=410)
 	start.configure(width=40)
 
 def dir_btn(cmd):
-	btn = Button(root, text="Select Working Directory", fg="lime green", command=cmd, bd=3, bg='grey')
-	btn.place(relx=0.4, rely=0.1)
+	btn = Button(root, text="Select Working Directory", fg="green2", command=cmd, bd=3, bg='grey', font=12)
+	btn.place(relx=0.375, rely=0.1)
 	btn.configure(width=25)
 
-def browse_button():
-	btn = Button(root, text="Browse", fg="white", command=clicked, bd=3, bg='grey')
-	btn.place(x=500, y=30)
+
+def sign_btn(cmd):
+	btn = Button(root, text="Sign Documents", fg="white", command=cmd, bd=3, bg='grey')
+	btn.place(relx=0.893, rely=0.001)
+	btn.configure(width=15)
 
 def prog_bar():
 	pb1.pack(expand=True)
-	pb1.place(relx=0.355, y=450)
+	pb1.place(relx=0.315, y=450)
 
 def inc_status_bar(msg):
 	root.update_idletasks()
-	pb1['value'] += 5
+	pb1['value'] += 7
 	txt = Text(root)
 	txt.insert(INSERT, msg)
 	txt.configure(height=1, width=36)
 	txt.place(relx=0.355, y=320)
 	return 1
 
-def throw_error(msg):
+def prompt_error(msg):
 	messagebox.showerror(title="Error", message=msg)
 
 def get_inc_value(inc_count):
 	return 100/inc_count
 
 def program_finish():
-	messagebox.showinfo("Done", "Done")
-	root.destroy()
+	messagebox.showinfo("Spreadsheet", "Done")
+	pb1['value'] = 0
 
 
 def log_error(message):
@@ -52,7 +61,6 @@ def log_error(message):
 		sys.exit()
 	if res == 'no':
 		sys.exit()
-
 
 def menu():
 	MONTHS = [
@@ -72,10 +80,22 @@ def menu():
 	month.set("Select Month")
 
 	om = OptionMenu(root, month, *MONTHS)
-	om.place(relx=0.4, rely=0.20)
-	om.configure(width=24)
+	om.place(relx=0.25, rely=0.20)
+	om.configure(width=33)
 
 	return month
+
+def bmr_plant_name():
+	NAMES = [
+	"CARROLL-BOONE WATER DISTRICT",
+	]
+	name = StringVar(root)
+	name.set("Choose BMR")
+
+	om = OptionMenu(root, name, *NAMES)
+	om.place(relx=0.5, rely=0.20)
+	om.configure(width=33)
+	return name
 
 
 def header():

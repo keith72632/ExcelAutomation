@@ -14,6 +14,9 @@ from tkinter import *
 from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
 from visuals import *
+from documents import sign_all
+
+
 
 #TODO: Move this function somewhere else
 def select_work_dir():
@@ -25,9 +28,18 @@ def select_work_dir():
 	print(f'Folder selected {folder_select}')
 	global month_menu
 	month_menu = menu()
+	global plant_name
+	plant_name = bmr_plant_name()
+	sign_btn()
 
+#TODO: Move this function somewhere else
+def sign_btn():
+	btn = Button(root, text="Sign Documents", fg="white", bd=3, bg='grey' ,command=lambda: sign_all(folder_select))
+	btn.place(relx=0.893, rely=0.001)
+	btn.configure(width=15)
 
 def mainf():
+	print("folder_select in main: " + folder_select)
 
 	prog_bar()
 
@@ -40,19 +52,19 @@ def mainf():
 	#needed to change text colors in terminal
 	init()
 
-	INC_COUNT += inc_status_bar("terminal colors initialized")
+	INC_COUNT += inc_status_bar(msg="terminal colors initialized")
 
 	wbooks = Books()
-	INC_COUNT += inc_status_bar("Workbook instance created")
+	INC_COUNT += inc_status_bar(msg="Workbook instance created")
 
 	loggers = Logger()
-	INC_COUNT += inc_status_bar("Logger instance created")
+	INC_COUNT += inc_status_bar(msg="Logger instance created")
 	
 	transfers = Transfer()
-	INC_COUNT += inc_status_bar("Transfer instance created")
+	INC_COUNT += inc_status_bar(msg="Transfer instance created")
 	
 	dirs = Directories()
-	INC_COUNT += inc_status_bar("Directories instance created")
+	INC_COUNT += inc_status_bar(msg="Directories instance created")
 	
 	p = Prompts()
 
@@ -63,23 +75,24 @@ def mainf():
 		print(f'{p.err()}Please select a working directory')
 
 
-	INC_COUNT += inc_status_bar("working directory set")
+	INC_COUNT += inc_status_bar(msg="working directory set")
 
 	try:
-		west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date(month_menu.get())
+		west_path, east_path, chem_path, table_path, midnight_path = dirs.get_file_from_date(month_menu=month_menu.get())
 	except KeyError:
-		throw_error("No month selected. Please select month, then click Start again")
+		prompt_error("No month selected. Please select month, then click Start again")
 		#resets the progress bar
 		pb1['value'] -= inc_cnt
 
 	except NameError:
-		throw_error("Please select the Working_Directory")
+		prompt_error("Please select the Working_Directory")
 		#resets the progress bar
 		inc_cnt += 10
 		pb1['value'] -= inc_cnt
 
 
-	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks(west_path, east_path, chem_path, table_path, midnight_path)
+	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks(west_file=west_path, east_file=east_path, chem_file=chem_path,
+		table_file=table_path, meter_file=midnight_path)
 
 	bmr_wb = west_wb['BMR']
 	w_chem = chem_wb['West']
@@ -94,19 +107,19 @@ def mainf():
 	west_table = table_wb['West']
 	midnight_readings = midnight_wb['Midnight']
 
-	INC_COUNT += inc_status_bar("workbooks loaded")
+	INC_COUNT += inc_status_bar(msg="workbooks loaded")
 
 	w_active, e_active, c_active, table_active, midnight_active = west_wb.active, east_wb.active, chem_wb.active, table_wb.active, midnight_wb.active
 
 	#scan of the health department website for the BMR data
-	hd_scraper = BmrScraper(URL)
-	INC_COUNT += inc_status_bar("BmrScraper instance created")
+	hd_scraper = BmrScraper(url=URL, name=plant_name.get())
+	INC_COUNT += inc_status_bar(msg="BmrScraper instance created")
 
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
-	INC_COUNT += inc_status_bar("BMR data gathered from health department")
+	INC_COUNT += inc_status_bar(msg="BMR data gathered from health department")
 	loggers.log_bmr(bmr_wb, locations_data)
-	INC_COUNT += inc_status_bar("BMR data logged to spreadsheet")
+	INC_COUNT += inc_status_bar(msg="BMR data logged to spreadsheet")
 
 
 	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
@@ -118,8 +131,9 @@ def mainf():
 	loggers.log_hours(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_pac(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_lime(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_fluoride(west_swor_front, east_swor_front, midnight_readings)
 
-	INC_COUNT += inc_status_bar("data logged")
+	INC_COUNT += inc_status_bar(msg="data logged")
 
 	transfers.transfer_meters_west(west_swor_front, w_chem)
 	transfers.transfer_meters_east(east_swor_front, e_chem)
@@ -128,7 +142,7 @@ def mainf():
 	transfers.transfer_total(west_swor_front, east_swor_front)
 	transfers.transfer_chloramine(west_swor_front, east_swor_front)
 
-	INC_COUNT += inc_status_bar("data transfered")
+	INC_COUNT += inc_status_bar(msg="data transfered")
 
 	transfers.transfer_flow_west(west_swor_front, w_chem)
 	transfers.transfer_flow_east(east_swor_front, e_chem)
@@ -141,9 +155,9 @@ def mainf():
 
 	transfers.transfer_distribution(w_chem, e_chem)
 
-	INC_COUNT += inc_status_bar("transfering complete")
+	INC_COUNT += inc_status_bar(msg="transfering complete")
 
-	loggers.log_ifmrs(west_ifmr, east_ifmr)
+	loggers.log_ifmrs(west_ifmr, east_ifmr, month=month_menu.get())
 	wbooks.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
 
 	total_exceptions = wbooks.get_exceptions() + loggers.get_exceptions() + transfers.get_exceptions() + hd_scraper.get_exceptions() + dirs.get_exceptions()
@@ -153,18 +167,17 @@ def mainf():
 	else:
 		print(f'{p.ok()}Proccess complete with zero errors\n')
 
-	INC_COUNT += inc_status_bar("exceptions counted")
+	INC_COUNT += inc_status_bar(msg="exceptions counted")
 	
 	print('\033[43m' + ('*' * 60))
 	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	print(('*' * 60) + '\033[0m')
 
-	INC_COUNT += inc_status_bar("finished")
+	INC_COUNT += inc_status_bar(msg="finished")
 	print(f'Inc count {INC_COUNT}')
 	program_finish()
 
 if __name__ == '__main__':
-
 	root.title("Excel Automator")
 	root.geometry('1100x500+375+225')
 
@@ -172,8 +185,9 @@ if __name__ == '__main__':
 
 	#pass functions as argument to be used as commands in gui buttons
 	#Start button calls mainf
-	start_btn(mainf)
-	dir_btn(select_work_dir)
+	start_btn(cmd=mainf)
+	dir_btn(cmd=select_work_dir)
+
 	
 	root.mainloop()
 

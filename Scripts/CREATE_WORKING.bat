@@ -22,5 +22,14 @@ If not exist "C:\Users\Carroll Boone Water\Documents\Working_Directory\West_Plan
 If not exist "C:\Users\Carroll Boone Water\Documents\Working_Directory\Chemical_Treatment_Records\Chlorine_Tables" (
 	mkdir "C:\Users\Carroll Boone Water\Documents\Working_Directory\Chemical_Treatment_Records\Chlorine_Tables" && echo "Chlorine_Tables created"
 ) Else echo "C:\Users\Carroll Boone Water\Documents\Working_Directory\Chemical_Treatment_Records\Chlorine_Tables already exists"
+
+If not exist "C:\Users\Carroll Boone Water\Documents\Working_Directory\DocumentsPDFS\files" (
+	mkdir "C:\Users\Carroll Boone Water\Documents\Working_Directory\DocumentsPDFS\files" && echo "Files created"
+) Else echo "C:\Users\Carroll Boone Water\Documents\Working_Directory\DocumentsPDFS\files already exists"
+
+If not exist "C:\Users\Carroll Boone Water\Documents\Working_Directory\DocumentsPDFS\finals" (
+	mkdir "C:\Users\Carroll Boone Water\Documents\Working_Directory\DocumentsPDFS\finals" && echo "Finals created"
+) Else echo "C:\Users\Carroll Boone Water\Documents\Working_Directory\DocumentsPDFS\finals already exists"
+
 echo "finished"
 pause

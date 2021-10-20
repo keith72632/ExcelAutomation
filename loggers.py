@@ -2,6 +2,7 @@ from colors import Prompts
 from filelib import Directories
 import traceback
 import os
+from visuals import prompt_error
 d = Directories()
 
 #Logs data to spreadsheets from various sources
@@ -34,7 +35,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Raw Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error reading West Raw Meter value from Midnight Spreadsheet")
 
 		try:
 			for i, day in enumerate(east_swor_raw):
@@ -44,7 +45,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Raw Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error reading Easr Raw Meter value from Midnight Spreadsheet")
+			
 
 	#logs ammonia readings from midnight sheet to SWOR
 	def log_ammonia(self, west_swor, east_swor, midnight):
@@ -70,7 +72,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Ammonia Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error reading West Ammonia value from Midnight Spreadsheet")
+			
 
 		try:
 			for i, day in enumerate(east_swor_ammonia):
@@ -80,7 +83,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Ammonia Meter numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error reading East Ammonia value from Midnight Spreadsheet")
+			
 
 
 
@@ -117,16 +121,13 @@ class Logger:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error completing BMR\n')
-			os.system('pause')
+			prompt_error("Error logging BMR data")
 
 
 
-	def log_ifmrs(self, west_ifmr, east_ifmr):
+	def log_ifmrs(self, west_ifmr, east_ifmr, month):
 		p = Prompts()
-		try:
-			month = d.get_prev_month_str()
-		except:
-			print(f'{p.err()}Could not get month in log_ifmrs function')
+		if month != d.get_prev_month_str(): prompt_error("The month being logged in the IFMR is not the previous month")
 		try:
 			year = d.get_year()
 		except:
@@ -175,6 +176,7 @@ class Logger:
 			print(f'{p.note()}Info for IFMRs complete')
 		except:
 			print(f'{p.err()}Could not complete IFMR')
+			prompt_error("Could not complete IFMR")
 
 	#logs peak flow levels from midnight sheet to SWOR
 	def log_peaks(self, west_swor, east_swor, midnight):
@@ -222,22 +224,23 @@ class Logger:
 			print(f'{p.note()}West Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}West Raw Peak numbers from Midnight spread sheet transfer unsuccessful\n')
+			print(f'{p.err()}West Raw Peak values from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Raw Peak values from Midnight readings")
 
-		#log raw peak numbers to East SWOR
+		#log raw peak values to East SWOR
 		try:
 			for i, day in enumerate(east_raw_peaks):
 				east_swor[swor_raw_peaks[i]].value = day.value 
 			print(f'{p.note()}East Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}East Raw Peak numbers from Midnight spread sheet transfer unsuccessful\n')
+			print(f'{p.err()}East Raw Peak values from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East Raw Peak values from Midnight readings")
+			
 
-		#log finish peak numbers to West SWOR
+		#log finish peak values to West SWOR
 		try:
 			for i, day in enumerate(west_fin_peaks):
 				west_swor[swor_fin_peaks[i]].value = day.value
@@ -245,18 +248,20 @@ class Logger:
 
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}West Finish Peak numbers from Midnight spread sheet transfer unsuccessful\n')
-			os.system('pause')
+			print(f'{p.err()}West Finish Peak values from Midnight spread sheet transfer unsuccessful\n')
+			prompt_error("Error while logging West Finish Peak values from Midnight readings")
+			
 
-		#log finish peak numbers to East SWOR
+		#log finish peak values to East SWOR
 		try:
 			for i, day in enumerate(east_fin_peaks):
 				east_swor[swor_fin_peaks[i]].value = day.value
 			print(f'{p.note()}East High Service Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}East Finish Peak numbers from Midnight spread sheet transfer unsuccessful\n')
-			os.system('pause')
+			print(f'{p.err()}East Finish Peak values from Midnight spread sheet transfer unsuccessful\n')
+			prompt_error("Error while logging East Finish Peak values from Midnight readings")
+			
 
 	#Logs lowest clearwell levels from Midnight sheet to SWOR
 	def log_clearwells(self, west_swor, east_swor, midnight):
@@ -291,9 +296,10 @@ class Logger:
 
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}West Clearwell numbers from Midnight spread sheet transfer unsuccessful\n')
+			print(f'{p.err()}West Clearwell values from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Clearwell values from Midnight readings")
+			
 
 		#log lowest clearwell reading for east plat
 		try:
@@ -303,9 +309,10 @@ class Logger:
 
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}East Clear numbers from Midnight spread sheet transfer unsuccessful\n')
+			print(f'{p.err()}East Clear values from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East Clearwell values from Midnight readings")
+			
 
 	#logs free chlorine from midnight sheet to SWOR
 	def log_free_chlorine(self, west_swor, east_swor, midnight):
@@ -342,7 +349,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Free Chlorine numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Chlorine Low values from Midnight readings")
+			
 
 		#log free chlorine for eat
 		try:
@@ -354,7 +362,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Free Chlorine numbers from Midnight spread sheet transfer unsuccessful\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East Chlorine Low values from Midnight readings")
+			
 
 
 	#Logs chlorine fed in pounds to West and East SWOR\
@@ -382,7 +391,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West Chlorine usage could not be logged\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Chlorine Used (lbs) values from Midnight readings")
+			
 
 		#midnight east chlorine usage -> west swor
 		try:
@@ -393,7 +403,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East Chlorine usage could not be logged\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Chlorine Used (lbs) values from Midnight readings")
+			
 
 	#logs hours run from midnight sheet -> SWORs
 	def log_hours(self, west_front, east_front, midnight):
@@ -420,7 +431,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}West hours could not be logged\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Plant Hours ran")
+			
 
 		#midnight west chlorine usage -> west swor
 		try:
@@ -431,7 +443,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}East hours could not be logged\n')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East Plant Hours ran")
+			
 
 	def log_pac(self, west_front, east_front, midnight):
 		p = Prompts()
@@ -456,7 +469,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error in logging west PAC')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West PAC used")
+			
 
 		try:
 			for i, day in enumerate(e_pac):
@@ -466,7 +480,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error in logging east PAC')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East PAC used")
+			
 
 	def log_lime(self, west_front, east_front, midnight):
 		p = Prompts()
@@ -491,7 +506,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error logging west lime')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Lime used")
+			
 		try:
 			for i, day in enumerate(e_lime):
 				day.value = mid_east[i].value
@@ -500,9 +516,10 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error logging east lime')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East Lime used")
+			
 
-	def log_lime(self, west_front, east_front, midnight):
+	def log_fluoride(self, west_front, east_front, midnight):
 		p = Prompts()
 
 		west_fl_columns = west_front['N']
@@ -525,7 +542,8 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error logging west fluoride')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging West Fluoride used")
+			
 		try:
 			for i, day in enumerate(e_fl):
 				day.value = mid_east[i].value
@@ -534,7 +552,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error logging east fluoride')
 			traceback.print_exc()
-			os.system('pause')
+			prompt_error("Error while logging East Fluoride used")
 
 	def get_exceptions(self):
 		return self.EXCEPTIONS

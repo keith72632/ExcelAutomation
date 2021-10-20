@@ -5,8 +5,10 @@ from colors import Prompts
 
 class BmrScraper:
 	url = None
-	def __init__(self, url=None):
+	name = None
+	def __init__(self, url=None, name=None):
 		self.url = url
+		self.name = name
 
 	EXCEPTIONS = 0
 
@@ -31,7 +33,7 @@ class BmrScraper:
 		locations = []
 		i = 0
 		for line in data[1:]:
-			if line.td.text == sys.argv[1]:
+			if line.td.text == self.name:
 				i += 1
 				items = line.text.split('\n')
 				locations.append(
@@ -49,7 +51,7 @@ class BmrScraper:
 					}
 				)
 
-		print(f'{P.ok()}{i} BMR entries for {sys.argv[1]} found\n')
+		print(f'{P.ok()}{i} BMR entries for {self.name} found\n')
 
 		return locations
 
