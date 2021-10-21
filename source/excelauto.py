@@ -6,7 +6,7 @@ from spreadsheets.loggers import Logger
 from spreadsheets.transfers import Transfer
 from spreadsheets.filelib import Directories
 from spreadsheets.workbooks import Books
-from soups import BmrScraper
+from web.soups import BmrScraper
 from colorama import init
 from time import sleep
 from lib.colors import Prompts
@@ -14,7 +14,9 @@ from tkinter import *
 from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
 from gui.visuals import *
+from gui.buttons import *
 from documentlib.documents import sign_all
+from lib.dirtools import *
 
 
 
@@ -187,6 +189,7 @@ if __name__ == '__main__':
 	#Start button calls mainf
 	start_btn(cmd=mainf)
 	dir_btn(cmd=select_work_dir)
+	create_dirs_btn(cmd=create_directory_structure)
 
 	
 	root.mainloop()
