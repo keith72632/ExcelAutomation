@@ -26,7 +26,10 @@ def dir_btn(cmd):
 	btn.configure(width=25)
 
 
-
+def sign_btn(cmd):
+	btn = Button(root, text="Sign Documents", fg="white", command=cmd, bd=3, bg='grey')
+	btn.place(relx=0.893, rely=0.001)
+	btn.configure(width=15)
 
 def prog_bar():
 	pb1.pack(expand=True)
