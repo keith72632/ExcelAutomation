@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import sys
 import requests
-from colors import Prompts
+from lib.colors import Prompts
 
 class BmrScraper:
 	url = None

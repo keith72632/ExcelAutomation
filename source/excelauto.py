@@ -2,19 +2,19 @@ from openpyxl import Workbook, load_workbook
 import sys
 import os
 from datetime import datetime
-from loggers import Logger
-from transfers import Transfer
-from filelib import Directories
-from workbooks import Books
+from spreadsheets.loggers import Logger
+from spreadsheets.transfers import Transfer
+from spreadsheets.filelib import Directories
+from spreadsheets.workbooks import Books
 from soups import BmrScraper
 from colorama import init
 from time import sleep
-from colors import Prompts
+from lib.colors import Prompts
 from tkinter import *
 from tkinter.ttk import Progressbar
 from tkinter import filedialog, messagebox
-from visuals import *
-from documents import sign_all
+from gui.visuals import *
+from documentlib.documents import sign_all
 
 
 
@@ -23,7 +23,7 @@ def select_work_dir():
 	global folder_select
 	folder_select = filedialog.askdirectory()
 	route = Label(text='Folder Selected (This needs to be your working directory):\n' + str(folder_select))
-	route.place(relx=0.25, y=350)
+	route.place(relx=0.28, y=350)
 	route.configure(font=(12), fg="green")
 	print(f'Folder selected {folder_select}')
 	global month_menu

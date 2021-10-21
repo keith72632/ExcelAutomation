@@ -1,9 +1,9 @@
 from datetime import datetime
 import os
 import sys
-from colors import Prompts
+from lib.colors import Prompts
 from pathlib import Path
-from visuals import inc_status_bar, root, log_error, INC_COUNT
+from gui.visuals import inc_status_bar, root, log_error, INC_COUNT
 
 
 class Directories:

@@ -1,8 +1,8 @@
-from colors import Prompts
-from filelib import Directories
+from lib.colors import Prompts
+from spreadsheets.filelib import Directories
 import traceback
 import os
-from visuals import prompt_error
+from gui.visuals import prompt_error
 d = Directories()
 
 #Logs data to spreadsheets from various sources

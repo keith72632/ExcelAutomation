@@ -1,5 +1,5 @@
-from colors import Prompts
-from filelib import Directories
+from lib.colors import Prompts
+from spreadsheets.filelib import Directories
 import os
 
 d = Directories()

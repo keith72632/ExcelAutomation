@@ -1,6 +1,6 @@
 import sys
 from openpyxl import Workbook, load_workbook
-from colors import Prompts
+from lib.colors import Prompts
 
 class Books:
 	def __init__(self):

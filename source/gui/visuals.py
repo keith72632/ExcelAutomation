@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import filedialog, messagebox
 from tkinter.ttk import Progressbar, Menubutton
 import sys
-from documents import sign_all
+from documentlib.documents import sign_all
 
 INC_COUNT = 0
 
