@@ -17,6 +17,7 @@ from gui.visuals import *
 from gui.buttons import *
 from documentlib.documents import sign_all
 from lib.dirtools import *
+from lib.helpers import *
 
 
 
@@ -59,10 +60,7 @@ def mainf():
 	wbooks = Books()
 	INC_COUNT += inc_status_bar(msg="Workbook instance created")
 
-	loggers = Logger()
-	INC_COUNT += inc_status_bar(msg="Logger instance created")
 	
-
 	
 	dirs = Directories()
 	INC_COUNT += inc_status_bar(msg="Directories instance created")
@@ -108,6 +106,7 @@ def mainf():
 	west_table = table_wb['West']
 	midnight_readings = midnight_wb['Midnight']
 
+
 	INC_COUNT += inc_status_bar(msg="workbooks loaded")
 
 	w_active, e_active, c_active, table_active, midnight_active = west_wb.active, east_wb.active, chem_wb.active, table_wb.active, midnight_wb.active
@@ -119,65 +118,32 @@ def mainf():
 	locations_data = hd_scraper.scan_health_dep()
 	# display_list_of_dicks(locations_data)
 	INC_COUNT += inc_status_bar(msg="BMR data gathered from health department")
-	loggers.log_bmr(bmr_wb, locations_data)
-	INC_COUNT += inc_status_bar(msg="BMR data logged to spreadsheet")
-
-	transfers = Transfer(west_swor_front, east_swor_front, w_chem, e_chem, west_table, east_table)
+	loggers = Logger(west_front=west_swor_front, east_front=east_swor_front, west_back=west_swor_back, east_back=east_swor_back, midnight=midnight_readings)
+	INC_COUNT += inc_status_bar(msg="Logger instance created")
+	transfers = Transfer(west_front=west_swor_front, east_front=east_swor_front, w_chem=w_chem, e_chem=e_chem, west_table=west_table, east_table=east_table)
 	INC_COUNT += inc_status_bar(msg="Transfer instance created")
 
 
-	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
-	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
-	loggers.log_peaks(west_swor_back, east_swor_back, midnight_readings)
-	loggers.log_clearwells(west_swor_back, east_swor_back, midnight_readings)
-	loggers.log_free_chlorine(west_swor_back, east_swor_back, midnight_readings)
-	loggers.log_chlorine_used(west_swor_front, east_swor_front, midnight_readings)
-	loggers.log_hours(west_swor_front, east_swor_front, midnight_readings)
-	loggers.log_pac(west_swor_front, east_swor_front, midnight_readings)
-	loggers.log_lime(west_swor_front, east_swor_front, midnight_readings)
-	loggers.log_fluoride(west_swor_front, east_swor_front, midnight_readings)
+	loggers.log_all()
+	loggers.log_ifmrs(west_ifmr, east_ifmr, month=month_menu.get())
+	loggers.log_bmr(bmr_wb, locations_data)
+	INC_COUNT += inc_status_bar(msg="BMR data logged to spreadsheet")
+	INC_COUNT += inc_status_bar(msg="All data logged successfully")
 
-	INC_COUNT += inc_status_bar(msg="data logged")
 
-	transfers.transfer_meters_west()
-	transfers.transfer_meters_east()
-	transfers.transfer_rainfall()
-	transfers.transfer_finish_pH()
-	transfers.transfer_total()
-	transfers.transfer_chloramine()
-
-	INC_COUNT += inc_status_bar(msg="data transfered")
-
-	transfers.transfer_flow_west()
-	transfers.transfer_flow_east()
-	transfers.transfer_chlorine_west()
-	transfers.transfer_chlorine_east()
-	transfers.transfer_fluoride()
-
-	transfers.transfer_chlorine_res_east()
-	transfers.transfer_chlorine_res_west()
-
-	transfers.transfer_distribution()
+	transfers.transfer_all()
 
 	INC_COUNT += inc_status_bar(msg="transfering complete")
 
-	loggers.log_ifmrs(west_ifmr, east_ifmr, month=month_menu.get())
 	wbooks.save_workbooks(west_wb, east_wb, west_path, east_path, chem_wb, chem_path, table_wb, table_path, midnight_wb, midnight_path)
 
-	total_exceptions = wbooks.get_exceptions() + loggers.get_exceptions() + transfers.get_exceptions() + hd_scraper.get_exceptions() + dirs.get_exceptions()
-
-	if total_exceptions > 0:
-		print(f'{p.err()}Errors: {total_exceptions}\n')
-	else:
-		print(f'{p.ok()}Proccess complete with zero errors\n')
+	process_exceptions(wbooks.get_exceptions() + loggers.get_exceptions() + transfers.get_exceptions() + hd_scraper.get_exceptions() + dirs.get_exceptions())
 
 	INC_COUNT += inc_status_bar(msg="exceptions counted")
 	
-	print('\033[43m' + ('*' * 60))
-	print('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
-	print(('*' * 60) + '\033[0m')
-
+	cmd_banner('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	INC_COUNT += inc_status_bar(msg="finished")
+
 	print(f'Inc count {INC_COUNT}')
 	program_finish()
 
@@ -186,7 +152,6 @@ if __name__ == '__main__':
 	root.geometry('1100x500+375+225')
 
 	header()
-
 	#pass functions as argument to be used as commands in gui buttons
 	#Start button calls mainf
 	start_btn(cmd=mainf)

@@ -7,24 +7,28 @@ d = Directories()
 
 #Logs data to spreadsheets from various sources
 class Logger:
-	def __init__(self):
-		pass
+	def __init__(self, west_front, east_front, west_back, east_back, midnight):
+		self.west_front = west_front
+		self.east_front = east_front
+		self.west_back = west_back
+		self.east_back = east_back
+		self.midnight = midnight
 
 	EXCEPTIONS = 0
 
 	#logs meter numbers to SWOR from mango spreadshett
-	def log_meters(self, west_swor, east_swor, midnight):
+	def log_meters(self):
 		p = Prompts()
 
-		west_raw_cols = midnight['B']
+		west_raw_cols = self.midnight['B']
 		west_raw = west_raw_cols[5:35]
 
-		west_swor_meter_cols = west_swor['B']
+		west_swor_meter_cols = self.west_front['B']
 		west_swor_raw = west_swor_meter_cols[8:38]
-		east_raw_cols = midnight['I']
+		east_raw_cols = self.midnight['I']
 		east_raw = east_raw_cols[5:35]
 
-		east_swor_meter_cols = east_swor['B']
+		east_swor_meter_cols = self.east_front['B']
 		east_swor_raw = east_swor_meter_cols[8:38]
 		
 		try:
@@ -49,19 +53,19 @@ class Logger:
 			
 
 	#logs ammonia readings from midnight sheet to SWOR
-	def log_ammonia(self, west_swor, east_swor, midnight):
+	def log_ammonia(self):
 		p = Prompts()
 
-		west_ammonia_cols = midnight['G']
+		west_ammonia_cols = self.midnight['G']
 		west_ammonia = west_ammonia_cols[5:35]
 
-		west_swor_ammonia_cols = west_swor['M']
+		west_swor_ammonia_cols = self.west_front['M']
 		west_swor_ammonia = west_swor_ammonia_cols[8:38]
 
-		east_ammonia_cols = midnight['N']
+		east_ammonia_cols = self.midnight['N']
 		east_ammonia = east_ammonia_cols[5:35]
 
-		east_swor_ammonia_cols = east_swor['M']
+		east_swor_ammonia_cols = self.east_front['M']
 		east_swor_ammonia = east_swor_ammonia_cols[8:38]
 		
 		try:
@@ -122,6 +126,7 @@ class Logger:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error completing BMR\n')
 			prompt_error("Error logging BMR data")
+			traceback.print_exc()
 
 
 
@@ -179,21 +184,21 @@ class Logger:
 			prompt_error("Could not complete IFMR")
 
 	#logs peak flow levels from midnight sheet to SWOR
-	def log_peaks(self, west_swor, east_swor, midnight):
+	def log_peaks(self):
 		p = Prompts()
 
 		#Raw Peak data from the Midnight Spreadsheet
-		west_raw_cols = midnight['C']
+		west_raw_cols = self.midnight['C']
 		west_raw_peaks = west_raw_cols[5:35]
 
-		east_raw_cols = midnight['J']
+		east_raw_cols = self.midnight['J']
 		east_raw_peaks = east_raw_cols[5:35]
 
 		#High Service Peak data from the Midnight Spreadsheet
-		west_fin_cols = midnight['D']
+		west_fin_cols = self.midnight['D']
 		west_fin_peaks = west_fin_cols[5:35]
 
-		east_fin_cols = midnight['K']
+		east_fin_cols = self.midnight['K']
 		east_fin_peaks = east_fin_cols[5:35]
 
 		#Hardcoded cells because spreadsheet cells on the SWOR are not sequential
@@ -220,7 +225,7 @@ class Logger:
 		#log raw peak numbers to West SWOR
 		try:
 			for i, day in enumerate(west_raw_peaks):
-				west_swor[swor_raw_peaks[i]].value = day.value 
+				self.west_back[swor_raw_peaks[i]].value = day.value 
 			print(f'{p.note()}West Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
@@ -231,7 +236,7 @@ class Logger:
 		#log raw peak values to East SWOR
 		try:
 			for i, day in enumerate(east_raw_peaks):
-				east_swor[swor_raw_peaks[i]].value = day.value 
+				self.east_back[swor_raw_peaks[i]].value = day.value 
 			print(f'{p.note()}East Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
@@ -243,7 +248,7 @@ class Logger:
 		#log finish peak values to West SWOR
 		try:
 			for i, day in enumerate(west_fin_peaks):
-				west_swor[swor_fin_peaks[i]].value = day.value
+				self.west_back[swor_fin_peaks[i]].value = day.value
 			print(f'{p.note()}West High Service Peaks logged successfully')
 
 		except:
@@ -255,7 +260,7 @@ class Logger:
 		#log finish peak values to East SWOR
 		try:
 			for i, day in enumerate(east_fin_peaks):
-				east_swor[swor_fin_peaks[i]].value = day.value
+				self.east_back[swor_fin_peaks[i]].value = day.value
 			print(f'{p.note()}East High Service Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
@@ -264,14 +269,14 @@ class Logger:
 			
 
 	#Logs lowest clearwell levels from Midnight sheet to SWOR
-	def log_clearwells(self, west_swor, east_swor, midnight):
+	def log_clearwells(self):
 		p = Prompts()
 
 		#Raw Peak data from the Midnight Spreadsheet
-		west_cw_cols = midnight['E']
+		west_cw_cols = self.midnight['E']
 		west_clearwell = west_cw_cols[5:35]
 
-		east_cw_cols = midnight['L']
+		east_cw_cols = self.midnight['L']
 		east_clearwell = east_cw_cols[5:35]
 
 
@@ -291,7 +296,7 @@ class Logger:
 		#log lowest clearwell reading for west plant
 		try:
 			for i, day in enumerate(west_clearwell):
-				west_swor[swor_cw[i]].value = day.value 
+				self.west_back[swor_cw[i]].value = day.value 
 			print(f'{p.note()}Lowest Clearwell reading for West Plant logged successfully')
 
 		except:
@@ -304,7 +309,7 @@ class Logger:
 		#log lowest clearwell reading for east plat
 		try:
 			for i, day in enumerate(east_clearwell):
-				east_swor[swor_cw[i]].value = day.value 
+				self.east_back[swor_cw[i]].value = day.value 
 			print(f'{p.note()}Lowest Clearwell reading for East Plant logged successfully')
 
 		except:
@@ -315,14 +320,14 @@ class Logger:
 			
 
 	#logs free chlorine from midnight sheet to SWOR
-	def log_free_chlorine(self, west_swor, east_swor, midnight):
+	def log_free_chlorine(self):
 		p = Prompts()
 
 		#Raw Peak data from the Midnight Spreadsheet
-		west_cl_cols = midnight['F']
+		west_cl_cols = self.midnight['F']
 		west_cl = west_cl_cols[5:35]
 
-		east_cl_cols = midnight['M']
+		east_cl_cols = self.midnight['M']
 		east_cl = east_cl_cols[5:35]
 
 
@@ -342,7 +347,7 @@ class Logger:
 		#log free chlorine for west
 		try:
 			for i, day in enumerate(west_cl):
-				west_swor[swor_cl[i]].value = day.value 
+				self.west_back[swor_cl[i]].value = day.value 
 			print(f'{p.note()}Lowest Free Chlorine for West Plant logged successfully logged successfully')
 
 		except:
@@ -355,7 +360,7 @@ class Logger:
 		#log free chlorine for eat
 		try:
 			for i, day in enumerate(east_cl):
-				east_swor[swor_cl[i]].value = day.value 
+				self.east_back[swor_cl[i]].value = day.value 
 			print(f'{p.note()}Lowest Free Chlorine for East Plant logged successfully')
 
 		except:
@@ -367,19 +372,19 @@ class Logger:
 
 
 	#Logs chlorine fed in pounds to West and East SWOR\
-	def log_chlorine_used(self, west_front, east_front, midnight):
+	def log_chlorine_used(self):
 		p = Prompts()
 
-		w_cl_cols = west_front['J']
+		w_cl_cols = self.west_front['J']
 		w_cl = w_cl_cols[8:38]
 
-		e_cl_cols = east_front['J']
+		e_cl_cols = self.east_front['J']
 		e_cl = e_cl_cols[8:38]
 
-		w_midnight_cols = midnight['R']
+		w_midnight_cols = self.midnight['R']
 		w_midnight = w_midnight_cols[5:35]
 
-		e_midnight_cols = midnight['S']
+		e_midnight_cols = self.midnight['S']
 		e_midnight = e_midnight_cols[5:35]
 
 		#midnight west chlorine usage -> west swor
@@ -407,19 +412,19 @@ class Logger:
 			
 
 	#logs hours run from midnight sheet -> SWORs
-	def log_hours(self, west_front, east_front, midnight):
+	def log_hours(self):
 		p = Prompts()
 
-		w_hours_cols = west_front['F']
+		w_hours_cols = self.west_front['F']
 		w_hours = w_hours_cols[8:38]
 
-		e_hours_cols = east_front['F']
+		e_hours_cols = self.east_front['F']
 		e_hours = e_hours_cols[8:38]
 
-		w_midnight_cols = midnight['P']
+		w_midnight_cols = self.midnight['P']
 		w_midnight = w_midnight_cols[5:35]
 
-		e_midnight_cols = midnight['Q']
+		e_midnight_cols = self.midnight['Q']
 		e_midnight = e_midnight_cols[5:35]
 
 		#midnight west chlorine usage -> west swor
@@ -446,19 +451,19 @@ class Logger:
 			prompt_error("Error while logging East Plant Hours ran")
 			
 
-	def log_pac(self, west_front, east_front, midnight):
+	def log_pac(self):
 		p = Prompts()
 
-		w_pac_cols = west_front['K']
+		w_pac_cols = self.west_front['K']
 		w_pac = w_pac_cols[8:39]
 
-		e_pac_cols = east_front['K']
+		e_pac_cols = self.east_front['K']
 		e_pac = e_pac_cols[8:39]
 
-		mid_west_cols = midnight['X']
+		mid_west_cols = self.midnight['X']
 		mid_west = mid_west_cols[5:36]
 
-		mid_east_cols = midnight['Y']
+		mid_east_cols = self.midnight['Y']
 		mid_east = mid_east_cols[5:36]
 
 		try:
@@ -483,19 +488,19 @@ class Logger:
 			prompt_error("Error while logging East PAC used")
 			
 
-	def log_lime(self, west_front, east_front, midnight):
+	def log_lime(self):
 		p = Prompts()
 
-		west_lime_columns = west_front['L']
+		west_lime_columns = self.west_front['L']
 		w_lime = west_lime_columns[8:38]
 
-		east_lime_columns = east_front['L']
+		east_lime_columns = self.east_front['L']
 		e_lime = east_lime_columns[8:38]
 
-		mid_west_cols = midnight['T']
+		mid_west_cols = self.midnight['T']
 		mid_west = mid_west_cols[5:36]
 
-		mid_east_cols = midnight['U']
+		mid_east_cols = self.midnight['U']
 		mid_east = mid_east_cols[5:35]
 
 		try:
@@ -519,19 +524,19 @@ class Logger:
 			prompt_error("Error while logging East Lime used")
 			
 
-	def log_fluoride(self, west_front, east_front, midnight):
+	def log_fluoride(self):
 		p = Prompts()
 
-		west_fl_columns = west_front['N']
+		west_fl_columns = self.west_front['N']
 		w_fl = west_fl_columns[8:38]
 
-		east_fl_columns = east_front['N']
+		east_fl_columns = self.east_front['N']
 		e_fl = east_fl_columns[8:38]
 
-		mid_west_cols = midnight['H']
+		mid_west_cols = self.midnight['H']
 		mid_west = mid_west_cols[5:36]
 
-		mid_east_cols = midnight['O']
+		mid_east_cols = self.midnight['O']
 		mid_east = mid_east_cols[5:35]
 
 		try:
@@ -553,6 +558,18 @@ class Logger:
 			print(f'{p.err()}Error logging east fluoride')
 			traceback.print_exc()
 			prompt_error("Error while logging East Fluoride used")
+
+	def log_all(self):
+		self.log_meters()
+		self.log_ammonia()
+		self.log_peaks()
+		self.log_clearwells()
+		self.log_free_chlorine()
+		self.log_chlorine_used()
+		self.log_hours()
+		self.log_pac()
+		self.log_lime()
+		self.log_fluoride()
 
 	def get_exceptions(self):
 		return self.EXCEPTIONS

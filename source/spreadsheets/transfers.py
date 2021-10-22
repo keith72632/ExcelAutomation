@@ -6,9 +6,9 @@ d = Directories()
 
 #Transfers data from various spreadsheets
 class Transfer:
-	def __init__(self, west_swor_front, east_swor_front, w_chem, e_chem, west_table, east_table):
-		self.west_swor_front = west_swor_front
-		self.east_swor_front = east_swor_front
+	def __init__(self, west_front, east_front, w_chem, e_chem, west_table, east_table):
+		self.west_front = west_front
+		self.east_front = east_front
 		self.w_chem = w_chem
 		self.e_chem = e_chem
 		self.west_table = west_table
@@ -19,7 +19,7 @@ class Transfer:
 	def transfer_meters_west(self):
 		p = Prompts()
 		#cells from the West operations report
-		op_meter_cols = self.west_swor_front['B']
+		op_meter_cols = self.west_front['B']
 		op_meters = op_meter_cols[8:38]
 
 		ct_meter_cols = self.w_chem['A']
@@ -41,7 +41,7 @@ class Transfer:
 		p = Prompts()
 		#cells from the East operations report
 		
-		op_meter_cols = self.east_swor_front['B']
+		op_meter_cols = self.east_front['B']
 		op_meters = op_meter_cols[8:38]
 
 		ct_meter_cols = self.e_chem['A']
@@ -65,8 +65,8 @@ class Transfer:
 		p = Prompts()
 
 		try:
-			if self.west_swor_front['B9'].value:
-				root_reading = (self.west_swor_front['B9'].value - self.west_swor_front['B5'].value) / 1000
+			if self.west_front['B9'].value:
+				root_reading = (self.west_front['B9'].value - self.west_front['B5'].value) / 1000
 				self.w_chem['C10'].value = root_reading
 			print(f'{p.note()}West Raw Flow root value transfered from West SWOR to West Chemical Treatment Record') 
 		except:
@@ -81,7 +81,7 @@ class Transfer:
 		p = Prompts()
 
 		try:
-			root_reading = (self.east_swor_front['B9'].value - self.east_swor_front['B5'].value) / 1000
+			root_reading = (self.east_front['B9'].value - self.east_front['B5'].value) / 1000
 			self.e_chem['C10'].value = root_reading
 			print(f'{p.note()}East Raw Flow root value transfered from East SWOR to East Chemical Treatment Record') 
 		except:
@@ -93,10 +93,10 @@ class Transfer:
 	def transfer_rainfall(self):
 		p = Prompts()
 
-		west_cols = self.west_swor_front['G']
+		west_cols = self.west_front['G']
 		west = west_cols[8:38]
 
-		east_cols = self.east_swor_front['G']
+		east_cols = self.east_front['G']
 		east = east_cols[8:38]
 
 		try:
@@ -113,10 +113,10 @@ class Transfer:
 	def transfer_finish_pH(self):
 		p = Prompts()
 
-		west_cols = self.west_swor_front['S']
+		west_cols = self.west_front['S']
 		west = west_cols[8:38]
 
-		east_cols = self.east_swor_front['R']
+		east_cols = self.east_front['R']
 		east = east_cols[8:38]
 
 		try:
@@ -136,9 +136,9 @@ class Transfer:
 	def transfer_total(self):
 		p = Prompts()
 
-		west_cols = self.west_swor_front['AI']
+		west_cols = self.west_front['AI']
 		west = west_cols[8:38]
-		east_cols = self.east_swor_front['AH']
+		east_cols = self.east_front['AH']
 		east = east_cols[8:38]
 
 		try:
@@ -156,9 +156,9 @@ class Transfer:
 	def transfer_chloramine(self):
 		p = Prompts()
 
-		west_cols = self.west_swor_front['AJ']
+		west_cols = self.west_front['AJ']
 		west = west_cols[8:38]
-		east_cols = self.east_swor_front['AI']
+		east_cols = self.east_front['AI']
 		east = east_cols[8:38]
 
 		try:
@@ -176,9 +176,9 @@ class Transfer:
 	def transfer_fluoride(self):
 		p = Prompts()
 
-		west_cols = self.west_swor_front['O']
+		west_cols = self.west_front['O']
 		west = west_cols[8:38]
-		east_cols = self.east_swor_front['O']
+		east_cols = self.east_front['O']
 		east = east_cols[8:38]
 
 		try:
@@ -195,7 +195,7 @@ class Transfer:
 	def transfer_chlorine_west(self):
 		p = Prompts()
 
-		op_cols = self.west_swor_front['J']
+		op_cols = self.west_front['J']
 		op = op_cols[8:38]
 		ct_cols = self.w_chem['D']
 		ct = ct_cols[9:39]
@@ -214,7 +214,7 @@ class Transfer:
 	def transfer_chlorine_east(self):
 		p = Prompts()
 
-		op_cols = self.east_swor_front['J']
+		op_cols = self.east_front['J']
 		op = op_cols[8:38]
 		ct_cols = self.e_chem['D']
 		ct = ct_cols[9:39]
@@ -313,6 +313,22 @@ class Transfer:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering Distribution Meter Readings\n')
 			os.system('pause')
+
+	def transfer_all(self):
+		self.transfer_meters_west()
+		self.transfer_meters_east()
+		self.transfer_rainfall()
+		self.transfer_finish_pH()
+		self.transfer_total()
+		self.transfer_chloramine()
+		self.transfer_flow_west()
+		self.transfer_flow_east()
+		self.transfer_chlorine_west()
+		self.transfer_chlorine_east()
+		self.transfer_fluoride()
+		self.transfer_chlorine_res_east()
+		self.transfer_chlorine_res_west()
+		self.transfer_distribution()
 
 	def get_exceptions(self):
 		return self.EXCEPTIONS
