@@ -6,17 +6,23 @@ d = Directories()
 
 #Transfers data from various spreadsheets
 class Transfer:
-	def __init__(self):
-		pass
+	def __init__(self, west_swor_front, east_swor_front, w_chem, e_chem, west_table, east_table):
+		self.west_swor_front = west_swor_front
+		self.east_swor_front = east_swor_front
+		self.w_chem = w_chem
+		self.e_chem = e_chem
+		self.west_table = west_table
+		self.east_table = east_table
+		
 	EXCEPTIONS = 0
 	#Tranfers the meter reading from the West Operations Report to the East Chemical Treatment Record
-	def transfer_meters_west(self, w_active, w_chem):
+	def transfer_meters_west(self):
 		p = Prompts()
 		#cells from the West operations report
-		op_meter_cols = w_active['B']
+		op_meter_cols = self.west_swor_front['B']
 		op_meters = op_meter_cols[8:38]
 
-		ct_meter_cols = w_chem['A']
+		ct_meter_cols = self.w_chem['A']
 		ct_meters = ct_meter_cols[9:39]
 
 		try:
@@ -31,14 +37,14 @@ class Transfer:
 
 
 	#Transfers the meter readings from the East Operations Report to the East Chemical Treatment Record
-	def transfer_meters_east(self, e_active, e_chem):
+	def transfer_meters_east(self):
 		p = Prompts()
 		#cells from the East operations report
 		
-		op_meter_cols = e_active['B']
+		op_meter_cols = self.east_swor_front['B']
 		op_meters = op_meter_cols[8:38]
 
-		ct_meter_cols = e_chem['A']
+		ct_meter_cols = self.e_chem['A']
 		ct_meters = ct_meter_cols[9:39]
 		
 		try:
@@ -55,13 +61,13 @@ class Transfer:
 
 	#The values in total raw water flow on the Operations Report are calculated via formula, which openpyxl cannot transfer
 	#this function calculates the first flow value in the Chemical treatment record and fills the rest with a formula within excel
-	def transfer_flow_west(self, w_active, w_chem):
+	def transfer_flow_west(self):
 		p = Prompts()
 
 		try:
-			if w_active['B9'].value:
-				root_reading = (w_active['B9'].value - w_active['B5'].value) / 1000
-				w_chem['C10'].value = root_reading
+			if self.west_swor_front['B9'].value:
+				root_reading = (self.west_swor_front['B9'].value - self.west_swor_front['B5'].value) / 1000
+				self.w_chem['C10'].value = root_reading
 			print(f'{p.note()}West Raw Flow root value transfered from West SWOR to West Chemical Treatment Record') 
 		except:
 			self.EXCEPTIONS += 1
@@ -71,12 +77,12 @@ class Transfer:
 
 	#The values in total raw water flow on the Operations Report are calculated via formula, which openpyxl cannot transfer
 	#this function calculates the first flow value in the Chemical treatment record and fills the rest with a formula within excel
-	def transfer_flow_east(self, e_active, e_chem):
+	def transfer_flow_east(self):
 		p = Prompts()
 
 		try:
-			root_reading = (e_active['B9'].value - e_active['B5'].value) / 1000
-			e_chem['C10'].value = root_reading
+			root_reading = (self.east_swor_front['B9'].value - self.east_swor_front['B5'].value) / 1000
+			self.e_chem['C10'].value = root_reading
 			print(f'{p.note()}East Raw Flow root value transfered from East SWOR to East Chemical Treatment Record') 
 		except:
 			self.EXCEPTIONS += 1
@@ -84,13 +90,13 @@ class Transfer:
 			os.system('pause')
 
 	#Transfers rainfall data from West Operations Report to East Operations Report
-	def transfer_rainfall(self, w_active, e_active):
+	def transfer_rainfall(self):
 		p = Prompts()
 
-		west_cols = w_active['G']
+		west_cols = self.west_swor_front['G']
 		west = west_cols[8:38]
 
-		east_cols = e_active['G']
+		east_cols = self.east_swor_front['G']
 		east = east_cols[8:38]
 
 		try:
@@ -104,13 +110,13 @@ class Transfer:
 			os.system('pause')
 
 	#Transfers Finish pH data from the West Operations report to the East Operations Report
-	def transfer_finish_pH(self, w_active, e_active):
+	def transfer_finish_pH(self):
 		p = Prompts()
 
-		west_cols = w_active['S']
+		west_cols = self.west_swor_front['S']
 		west = west_cols[8:38]
 
-		east_cols = e_active['R']
+		east_cols = self.east_swor_front['R']
 		east = east_cols[8:38]
 
 		try:
@@ -127,12 +133,12 @@ class Transfer:
 
 
 	#Transfer total chlorine data from the West Operations Report to the East Operations Report
-	def transfer_total(self, w_active, e_active):
+	def transfer_total(self):
 		p = Prompts()
 
-		west_cols = w_active['AI']
+		west_cols = self.west_swor_front['AI']
 		west = west_cols[8:38]
-		east_cols = e_active['AH']
+		east_cols = self.east_swor_front['AH']
 		east = east_cols[8:38]
 
 		try:
@@ -147,12 +153,12 @@ class Transfer:
 
 
 	#Copies Chloramine Data from the West Operations Report to the East Operation Report
-	def transfer_chloramine(self, w_active, e_active):
+	def transfer_chloramine(self):
 		p = Prompts()
 
-		west_cols = w_active['AJ']
+		west_cols = self.west_swor_front['AJ']
 		west = west_cols[8:38]
-		east_cols = e_active['AI']
+		east_cols = self.east_swor_front['AI']
 		east = east_cols[8:38]
 
 		try:
@@ -167,12 +173,12 @@ class Transfer:
 
 
 	#Transfers fluoride residual data from West Operations Report to the East Operations Report
-	def transfer_fluoride(self, w_active, e_active):
+	def transfer_fluoride(self):
 		p = Prompts()
 
-		west_cols = w_active['O']
+		west_cols = self.west_swor_front['O']
 		west = west_cols[8:38]
-		east_cols = e_active['O']
+		east_cols = self.east_swor_front['O']
 		east = east_cols[8:38]
 
 		try:
@@ -186,12 +192,12 @@ class Transfer:
 
 
 	#Transfers the chlorine readings (in PPD) from the West Operations Report to the West Chemical Treatment Record
-	def transfer_chlorine_west(self, w_active, w_chem):
+	def transfer_chlorine_west(self):
 		p = Prompts()
 
-		op_cols = w_active['J']
+		op_cols = self.west_swor_front['J']
 		op = op_cols[8:38]
-		ct_cols = w_chem['D']
+		ct_cols = self.w_chem['D']
 		ct = ct_cols[9:39]
 
 		try:
@@ -205,12 +211,12 @@ class Transfer:
 
 
 	#Transers the chlorine readings (in PPD) from the East Operations Report to the West Chemical Treatment Record
-	def transfer_chlorine_East(self, e_active, e_chem):
+	def transfer_chlorine_east(self):
 		p = Prompts()
 
-		op_cols = e_active['J']
+		op_cols = self.east_swor_front['J']
 		op = op_cols[8:38]
-		ct_cols = e_chem['D']
+		ct_cols = self.e_chem['D']
 		ct = ct_cols[9:39]
 
 		try:
@@ -224,19 +230,19 @@ class Transfer:
 
 
 	#Transfer Chlrone residuals from Chlorine Table to East Chemical Treatment Record
-	def transfer_chlorine_res_east(self, east_chem, east_table):
+	def transfer_chlorine_res_east(self):
 		p = Prompts()
 
-		ct_free_cols = east_chem['F']
+		ct_free_cols = self.e_chem['F']
 		ct_free = ct_free_cols[9:39]
 
-		ct_total_cols = east_chem['G']
+		ct_total_cols = self.e_chem['G']
 		ct_total = ct_total_cols[9:39]
 
-		table_free_cols = east_table['A']
+		table_free_cols = self.east_table['A']
 		table_free = table_free_cols[2:32]
 
-		table_total_cols = east_table['A']
+		table_total_cols = self.east_table['A']
 		table_total = table_total_cols[36:66]
 
 		try:
@@ -258,19 +264,19 @@ class Transfer:
 			os.system('pause')
 
 
-	def transfer_chlorine_res_west(self, west_chem, west_table):
+	def transfer_chlorine_res_west(self):
 		p = Prompts()
 
-		ct_free_cols = west_chem['F']
+		ct_free_cols = self.w_chem['F']
 		ct_free = ct_free_cols[9:39]
 
-		ct_total_cols = west_chem['G']
+		ct_total_cols = self.w_chem['G']
 		ct_total = ct_total_cols[9:39]
 
-		table_free_cols = west_table['A']
+		table_free_cols = self.west_table['A']
 		table_free = table_free_cols[2:32]
 
-		table_total_cols = west_table['A']
+		table_total_cols = self.west_table['A']
 		table_total = table_total_cols[36:66]
 
 		try:
@@ -292,7 +298,7 @@ class Transfer:
 			os.system('pause')
 
 
-	def transfer_distribution(self, west_chem, east_chem):
+	def transfer_distribution(self):
 		p = Prompts()
 		cells = (
 			'I10', 'I12', 'I14', 'I16', 'I18',
@@ -301,7 +307,7 @@ class Transfer:
 
 		try:
 			for day in cells:
-				east_chem[day].value = west_chem[day].value
+				self.e_chem[day].value = self.w_chem[day].value
 			print(f'{p.note()}Distribution Meter Values transfered from West Chemical Treatment Record to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1

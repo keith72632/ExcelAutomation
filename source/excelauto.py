@@ -62,8 +62,7 @@ def mainf():
 	loggers = Logger()
 	INC_COUNT += inc_status_bar(msg="Logger instance created")
 	
-	transfers = Transfer()
-	INC_COUNT += inc_status_bar(msg="Transfer instance created")
+
 	
 	dirs = Directories()
 	INC_COUNT += inc_status_bar(msg="Directories instance created")
@@ -123,6 +122,9 @@ def mainf():
 	loggers.log_bmr(bmr_wb, locations_data)
 	INC_COUNT += inc_status_bar(msg="BMR data logged to spreadsheet")
 
+	transfers = Transfer(west_swor_front, east_swor_front, w_chem, e_chem, west_table, east_table)
+	INC_COUNT += inc_status_bar(msg="Transfer instance created")
+
 
 	loggers.log_meters(west_swor_front, east_swor_front, midnight_readings)
 	loggers.log_ammonia(west_swor_front, east_swor_front, midnight_readings)
@@ -137,25 +139,25 @@ def mainf():
 
 	INC_COUNT += inc_status_bar(msg="data logged")
 
-	transfers.transfer_meters_west(west_swor_front, w_chem)
-	transfers.transfer_meters_east(east_swor_front, e_chem)
-	transfers.transfer_rainfall(west_swor_front, east_swor_front)
-	transfers.transfer_finish_pH(west_swor_front, east_swor_front)
-	transfers.transfer_total(west_swor_front, east_swor_front)
-	transfers.transfer_chloramine(west_swor_front, east_swor_front)
+	transfers.transfer_meters_west()
+	transfers.transfer_meters_east()
+	transfers.transfer_rainfall()
+	transfers.transfer_finish_pH()
+	transfers.transfer_total()
+	transfers.transfer_chloramine()
 
 	INC_COUNT += inc_status_bar(msg="data transfered")
 
-	transfers.transfer_flow_west(west_swor_front, w_chem)
-	transfers.transfer_flow_east(east_swor_front, e_chem)
-	transfers.transfer_chlorine_west(west_swor_front, w_chem)
-	transfers.transfer_chlorine_East(east_swor_front, e_chem)
-	transfers.transfer_fluoride(west_swor_front, east_swor_front)
+	transfers.transfer_flow_west()
+	transfers.transfer_flow_east()
+	transfers.transfer_chlorine_west()
+	transfers.transfer_chlorine_east()
+	transfers.transfer_fluoride()
 
-	transfers.transfer_chlorine_res_east(e_chem, east_table)
-	transfers.transfer_chlorine_res_west(w_chem, west_table)
+	transfers.transfer_chlorine_res_east()
+	transfers.transfer_chlorine_res_west()
 
-	transfers.transfer_distribution(w_chem, e_chem)
+	transfers.transfer_distribution()
 
 	INC_COUNT += inc_status_bar(msg="transfering complete")
 
