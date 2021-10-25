@@ -106,7 +106,7 @@ class Directories:
 		return '0' + str((datetime.now().month) - 1)
 
 
-	def get_file_from_date(self, month_menu):
+	def get_file_from_date(self, monthmenu):
 		p = Prompts()
 		global INC_COUNT
 		#get month number to use as prefix
@@ -114,11 +114,11 @@ class Directories:
 		# month = monthnum[1]
 		
 		# use this below for previous month
-		month = self.convert_month_to_dec(month_menu)
-		if self.get_prev_month_str() != month_menu:
+		month = self.convert_month_to_dec(monthmenu)
+		if self.get_prev_month_str() != monthmenu:
 			msg = "Month Selected is not the previous month. This could cause some issues. Continue?"
 			log_error(msg)
-		print(f'Month: {self.get_prev_month_str()}, Month from menu: {month_menu}')
+		print(f'Month: {self.get_prev_month_str()}, Month from menu: {monthmenu}')
 		INC_COUNT += inc_status_bar("Month Selected")
 
 

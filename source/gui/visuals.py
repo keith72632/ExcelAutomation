@@ -14,7 +14,6 @@ def background_image():
 	canvas = Canvas(root, width=100, height=100)
 	canvas.pack(expand=True, fill=BOTH)
 	canvas.create_image(0, 0, image=img)
-
 	
 def prog_bar():
 	pb1.pack(expand=True)
@@ -38,7 +37,6 @@ def get_inc_value(inc_count):
 def program_finish():
 	messagebox.showinfo("Spreadsheet", "Done")
 	pb1['value'] = 0
-
 
 def log_error(message):
 	res = messagebox.askquestion('Yes|No', str(message))

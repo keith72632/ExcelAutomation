@@ -13,6 +13,9 @@ class Transfer:
 		self.e_chem = e_chem
 		self.west_table = west_table
 		self.east_table = east_table
+
+	def __del__(self):
+		print('Transfer destoyed')
 		
 	EXCEPTIONS = 0
 	#Tranfers the meter reading from the West Operations Report to the East Chemical Treatment Record

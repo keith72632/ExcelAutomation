@@ -14,6 +14,9 @@ class Logger:
 		self.east_back = east_back
 		self.midnight = midnight
 
+	def __del__(self):
+		print('Logger Destroyed')
+
 	EXCEPTIONS = 0
 
 	#logs meter numbers to SWOR from mango spreadshett

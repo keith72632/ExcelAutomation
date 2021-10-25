@@ -4,12 +4,14 @@ import requests
 from lib.colors import Prompts
 
 class BmrScraper:
-	url = None
+	url = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
 	name = None
-	def __init__(self, url=None, name=None):
-		self.url = url
+	def __init__(self, name=None):
 		self.name = name
 
+	def __del__(self):
+		print('BmrScraper Destroyed')
+		
 	EXCEPTIONS = 0
 
 	def display_list_of_dicks(self, dick_list):
@@ -26,6 +28,7 @@ class BmrScraper:
 
 	def scan_health_dep(self):
 		P = Prompts()
+		print(f'BMR url {self.url}')
 		p = requests.get(self.url)
 		soup = BeautifulSoup(p.content, "html.parser")
 		data = soup.find_all('tr')
