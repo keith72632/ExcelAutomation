@@ -3,52 +3,58 @@ from openpyxl import Workbook, load_workbook
 from lib.colors import Prompts
 
 class Books:
-	def __init__(self):
-		pass
+	def __init__(self, west_file, east_file, chem_file, table_file, meter_file):
+		self.west_file = west_file
+		self.east_file = east_file
+		self.chem_file = chem_file
+		self.table_file = table_file
+		self.meter_file = meter_file
 	EXCEPTIONS = 0
 
-	def load_workbooks(self, west_file, east_file, chem_file, table_file, meter_file):
+	def load_workbooks(self):
 		p = Prompts()
 		COLOR = p.DEV
 		RESET = p.RESET
 		FAIL = p.FAIL
 		try:
-			west_wb = load_workbook(west_file)
-			print(f'{p.ok()}West Workbook loaded from:\n{COLOR}{west_file}{RESET}\n')
+			west_wb = load_workbook(self.west_file)
+			print(f'{p.ok()}West Workbook loaded from:\n{COLOR}{self.west_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}West Workbook loading failed from:\n{FAIL}{west_file}{RESET}\n')
+			print(f'{p.err()}West Workbook loading failed from:\n{FAIL}{self.west_file}{RESET}\n')
 
 		try:
-			east_wb = load_workbook(east_file)
-			print(f'{p.ok()}East Workbook loaded from:\n{COLOR}{east_file}{RESET}\n')
+			east_wb = load_workbook(self.east_file)
+			print(f'{p.ok()}East Workbook loaded from:\n{COLOR}{self.east_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}East Workbook loading failed from:\n{FAIL}{east_file}{RESET}\n')
+			print(f'{p.err()}East Workbook loading failed from:\n{FAIL}{self.east_file}{RESET}\n')
 
 		try:
-			chem_wb = load_workbook(chem_file)
-			print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n{COLOR}{chem_file}{RESET}\n')
+			chem_wb = load_workbook(self.chem_file)
+			print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n{COLOR}{self.chem_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Chemical Treatment Workbook loading failed from:\n{FAIL}{chem_file}{RESET}\n')
+			print(f'{p.err()}Chemical Treatment Workbook loading failed from:\n{FAIL}{self.chem_file}{RESET}\n')
 
 		try:
-			table_wb = load_workbook(table_file)
-			print(f'{p.ok()}Chlorine Table Workbook loaded from:\n{COLOR}{table_file}{RESET}\n')
+			table_wb = load_workbook(self.table_file)
+			print(f'{p.ok()}Chlorine Table Workbook loaded from:\n{COLOR}{self.table_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Chlorine Table Workbook loading failed from:\n{FAIL}{table_file}{RESET}\n')
+			print(f'{p.err()}Chlorine Table Workbook loading failed from:\n{FAIL}{self.table_file}{RESET}\n')
 
 		try:
-			meter_wb = load_workbook(meter_file)
-			print(f'{p.ok()}Meter Workbook loaded from:\n{COLOR}{meter_file}{RESET}\n')
+			meter_wb = load_workbook(self.meter_file)
+			print(f'{p.ok()}Meter Workbook loaded from:\n{COLOR}{self.meter_file}{RESET}\n')
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Meter Workbook loading failed from:\n{FAIL}{meter_file}{RESET}\n')
+			print(f'{p.err()}Meter Workbook loading failed from:\n{FAIL}{self.meter_file}{RESET}\n')
 
 		return west_wb, east_wb, chem_wb, table_wb, meter_wb
 
+	def individual_pages_init(self):
+		pass
 
 	def activate_workbooks(self, west_wb, east_wb, chem_wb):
 		return west_wb.active, east_wb.active, chem_wb.active

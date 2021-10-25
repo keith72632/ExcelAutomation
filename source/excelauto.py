@@ -21,6 +21,7 @@ from lib.helpers import *
 
 
 
+
 #TODO: Move this function somewhere else
 def select_work_dir():
 	global folder_select
@@ -57,10 +58,6 @@ def mainf():
 
 	INC_COUNT += inc_status_bar(msg="terminal colors initialized")
 
-	wbooks = Books()
-	INC_COUNT += inc_status_bar(msg="Workbook instance created")
-
-	
 	
 	dirs = Directories()
 	INC_COUNT += inc_status_bar(msg="Directories instance created")
@@ -89,9 +86,12 @@ def mainf():
 		inc_cnt += 10
 		pb1['value'] -= inc_cnt
 
-
-	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks(west_file=west_path, east_file=east_path, chem_file=chem_path,
+	wbooks = Books(west_file=west_path, east_file=east_path, chem_file=chem_path,
 		table_file=table_path, meter_file=midnight_path)
+	INC_COUNT += inc_status_bar(msg="Workbook instance created")
+
+
+	west_wb, east_wb, chem_wb, table_wb, midnight_wb = wbooks.load_workbooks()
 
 	bmr_wb = west_wb['BMR']
 	w_chem = chem_wb['West']
