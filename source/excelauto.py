@@ -18,6 +18,8 @@ from gui.buttons import *
 from documentlib.documents import sign_all
 from lib.dirtools import *
 from lib.helpers import *
+from PIL import Image, ImageTk
+
 
 
 
@@ -27,8 +29,8 @@ def select_work_dir():
 	global folderselect
 	folderselect = filedialog.askdirectory()
 	route = Label(text='Folder Selected (This needs to be your working directory):\n' + str(folderselect))
-	route.place(relx=0.28, y=350)
-	route.configure(font=(12), fg="green")
+	route.place(relx=0.5, rely=0.13, anchor='center')
+	route.configure(font=(12), fg="white", bg='SpringGreen4', borderwidth=2, relief="raised")
 	print(f'Folder selected {folderselect}')
 	global monthmenu
 	monthmenu = menu()
@@ -39,8 +41,8 @@ def select_work_dir():
 #TODO: Move this function somewhere else
 def sign_btn():
 	btn = Button(root, text="Sign Documents", fg="white", bd=3, bg='grey' ,command=lambda: sign_all(folderselect))
-	btn.place(relx=0.893, rely=0.001)
-	btn.configure(width=15)
+	btn.place(relx=0.861, rely=0.07)
+	btn.configure(width=20)
 
 def mainf():
 	prog_bar()
@@ -160,17 +162,29 @@ def mainf():
 	program_finish()
 
 if __name__ == '__main__':
-	root.title("Excel Automator")
+	root.title("ExcelAuto")
 	root.geometry('1100x500+375+225')
-
-	header()
+	iconpath='C:\\Users\\Carroll Boone Water\\Documents\\Projects\\Python\\ExcelAuto\\Photos\\excelicon.ico'
+	imgpath = 'C:\\Users\\Carroll Boone Water\\Documents\\Projects\\Python\\ExcelAuto\\Photos\\excelimg.png'
+	logopath = 'C:\\Users\\Carroll Boone Water\\Documents\\Projects\\Python\\ExcelAuto\\Photos\\black_python.png'
+	# header()
 	#pass functions as argument to be used as commands in gui buttons
 	#Start button calls mainf
 	start_btn(cmd=mainf)
 	dir_btn(cmd=select_work_dir)
 	create_dirs_btn(cmd=create_directory_structure)
-
+	create_icon(path=iconpath)
 	
+	myimg = ImageTk.PhotoImage(Image.open(imgpath))
+	mylabel= Label(root, image=myimg)
+	mylabel.configure(width=220, height=220)
+	mylabel.place(relx=.5, rely=.525, anchor='center')
+
+	pimg = ImageTk.PhotoImage(Image.open(logopath))
+	lbl = Label(root, image=pimg)
+	lbl.place(relx=0, rely=0)	
+
+
 	root.mainloop()
 
 
