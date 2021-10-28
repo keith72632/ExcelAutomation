@@ -7,12 +7,14 @@ d = Directories()
 
 #Logs data to spreadsheets from various sources
 class Logger:
-	def __init__(self, west_front, east_front, west_back, east_back, midnight):
+	def __init__(self, west_front, east_front, west_back, east_back, midnight, prevwest, preveast):
 		self.west_front = west_front
 		self.east_front = east_front
 		self.west_back = west_back
 		self.east_back = east_back
 		self.midnight = midnight
+		self.prevwest = prevwest
+		self.preveast = preveast
 
 	def __del__(self):
 		print('Logger Destroyed')
@@ -28,11 +30,23 @@ class Logger:
 
 		west_swor_meter_cols = self.west_front['B']
 		west_swor_raw = west_swor_meter_cols[8:38]
+
 		east_raw_cols = self.midnight['I']
 		east_raw = east_raw_cols[5:35]
 
 		east_swor_meter_cols = self.east_front['B']
 		east_swor_raw = east_swor_meter_cols[8:38]
+
+		#east 492,328			
+		#west 980338
+		try:
+			self.west_front['B5'].value = self.prevwest
+			self.east_front['B5'].value = self.preveast
+		except:
+			print(f'{p.err()}Could not log previous meter numbers')
+			traceback.print_exc()
+			prompt_error("Could not log previous meter number")
+
 		
 		try:
 			for i, day in enumerate(west_swor_raw):

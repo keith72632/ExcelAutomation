@@ -1,6 +1,7 @@
 from lib.colors import Prompts
 from spreadsheets.filelib import Directories
 import os
+import traceback
 
 d = Directories()
 
@@ -36,7 +37,6 @@ class Transfer:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering West meter data from Operations Report to Chemical Treatment\n')
-		os.system('pause')
 
 
 	#Transfers the meter readings from the East Operations Report to the East Chemical Treatment Record
@@ -75,6 +75,7 @@ class Transfer:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.err()}Error transfering West flow data\n')
+			print((self.west_front['B9'].value - self.west_front['B5'].value) / 1000)
 			os.system('pause')
 
 
@@ -89,9 +90,8 @@ class Transfer:
 			print(f'{p.note()}East Raw Flow root value transfered from East SWOR to East Chemical Treatment Record') 
 		except:
 			self.EXCEPTIONS += 1
-			print(f'{p.err()}Error transfering East meter data\n')
-			os.system('pause')
-
+			print(f'{p.err()}Error transfering East flow data\n')
+			traceback.print_exc()
 	#Transfers rainfall data from West Operations Report to East Operations Report
 	def transfer_rainfall(self):
 		p = Prompts()

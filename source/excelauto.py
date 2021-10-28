@@ -37,6 +37,9 @@ def select_work_dir():
 	global plantname
 	plantname = bmr_plant_name()
 	sign_btn()
+	global west, east
+	west, east = meter_fields()
+
 
 #TODO: Move this function somewhere else
 def sign_btn():
@@ -46,7 +49,8 @@ def sign_btn():
 
 def mainf():
 	prog_bar()
-
+	
+	# check_meter_fields(west.get(), east.get())
 	global INC_COUNT
 	int_cnt = 30
 	#url for bact sample data
@@ -117,7 +121,7 @@ def mainf():
 	#################            LOGGER INIT                                            ################
 	####################################################################################################
 	loggers = Logger(west_front=wbooks.west_swor_front, east_front=wbooks.east_swor_front, west_back=wbooks.west_swor_back,
-		east_back=wbooks.east_swor_back, midnight=wbooks.midnight_readings)
+		east_back=wbooks.east_swor_back, midnight=wbooks.midnight_readings, prevwest=int(west.get()), preveast=int(east.get()))
 
 	INC_COUNT += inc_status_bar(msg="Logger instance created")
 
@@ -178,7 +182,7 @@ if __name__ == '__main__':
 	myimg = ImageTk.PhotoImage(Image.open(imgpath))
 	mylabel= Label(root, image=myimg)
 	mylabel.configure(width=220, height=220)
-	mylabel.place(relx=.5, rely=.525, anchor='center')
+	mylabel.place(relx=.5, rely=.59, anchor='center')
 
 	pimg = ImageTk.PhotoImage(Image.open(logopath))
 	lbl = Label(root, image=pimg)

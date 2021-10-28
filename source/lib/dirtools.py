@@ -6,10 +6,11 @@ def create_directory_structure():
 	dirs = [
 	"West_Plant_Operations_Reports\\",
 	"East_Plant_Operations_Reports\\",
-	"Chemical_Treatment_Records\\",
 	"MangoLogs\\",
-	"DocumentsPDFs\\",
+	"DocumentsJPG\\files",
+	"DocumentsPDF\\",
 	"Chemical_Treatment_Records\\Chlorine_Tables\\"
+	""
 	]
 	folder = filedialog.askdirectory()
 	res = messagebox.askyesno("Continue?", "Are you sure this is the correct location for Working_Directory ?")

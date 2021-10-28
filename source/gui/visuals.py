@@ -69,7 +69,7 @@ def menu():
 	month.set("Select Month")
 
 	om = OptionMenu(root, month, *MONTHS)
-	om.place(relx=0.35, rely=0.225, anchor='center')
+	om.place(relx=0.35, rely=0.21, anchor='center')
 	om.configure(width=33)
 
 	return month
@@ -82,12 +82,24 @@ def bmr_plant_name():
 	name.set("Choose BMR")
 
 	om = OptionMenu(root, name, *NAMES)
-	om.place(relx=0.625, rely=0.225, anchor='center')
+	om.place(relx=0.625, rely=0.21, anchor='center')
 	om.configure(width=33)
 	return name
 
+def meter_fields():
+	west = IntVar(root)
+	east = IntVar(root)
+	lbl1 = Label(root, text="Enter last West Plant Raw Meter Reading")
+	lbl1.place(relx=0.35, rely=0.275, anchor='center')
+	lbl1.configure(bg='SpringGreen4', fg='white', borderwidth=2, relief="raised")
+	entry1 = Entry(root, bd=3, textvariable=west).place(relx=0.35, rely=0.325, anchor='center', width=242)
+	lbl2 = Label(root, text="Enter last East Plant Raw Meter Reading")
+	lbl2.place(relx=0.625, rely=0.275, anchor='center')
+	lbl2.configure(bg='SpringGreen4', fg='white', borderwidth=2, relief="raised")
+	entry2 = Entry(root, bd=3, textvariable=east).place(relx=0.625, rely=0.325, anchor='center', width=242)
+	return west, east
 
-def header():
-	hd = Label(root, text="ExcelAuto")
-	hd.place(relx=0.42, rely=0.0)
-	hd.configure(font=("Helvetica", 24), fg="green")
+def check_meter_fields(west, east):
+	if west or east == 0:
+		prompt_error('Invalid Meter Number')
+		sys.exit()
