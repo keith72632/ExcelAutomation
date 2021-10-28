@@ -3,11 +3,13 @@ from spreadsheets.filelib import Directories
 import traceback
 import os
 from gui.visuals import prompt_error
+from datetime import datetime
+
 d = Directories()
 
 #Logs data to spreadsheets from various sources
 class Logger:
-	def __init__(self, west_front, east_front, west_back, east_back, midnight, prevwest, preveast):
+	def __init__(self, west_front, east_front, west_back, east_back, midnight, prevwest, preveast, month):
 		self.west_front = west_front
 		self.east_front = east_front
 		self.west_back = west_back
@@ -15,6 +17,7 @@ class Logger:
 		self.midnight = midnight
 		self.prevwest = prevwest
 		self.preveast = preveast
+		self.month = month
 
 	def __del__(self):
 		print('Logger Destroyed')
@@ -37,7 +40,20 @@ class Logger:
 		east_swor_meter_cols = self.east_front['B']
 		east_swor_raw = east_swor_meter_cols[8:38]
 
-		#east 492,328			
+		try:
+			self.west_front['AI50'].value = datetime.today()
+			self.east_front['AH50'].value = datetime.today()
+		except:
+			print(f'{p.err()}Could not log date on front of SWOR')
+			traceback.print_exc()
+
+		try:
+			self.west_front['AG2'].value = self.month
+			self.east_front['AF2'].value = self.month
+		except:
+			print(f'{p.err()}Could not log month on front of SWOR')
+			traceback.print_exc()
+		#east 492328			
 		#west 980338
 		try:
 			self.west_front['B5'].value = self.prevwest

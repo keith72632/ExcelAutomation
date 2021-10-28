@@ -1,17 +1,20 @@
+import traceback
 from PIL import Image
 from tkinter import messagebox
+from pdf2image import convert_from_path
 
 class Document:
 	file = ' '
 	file_out = ' '
 	directory = ' '
-	sig_width = 170
-	sig_height = 30
+	sig_width = 340
+	sig_height = 40
 	def __init__(self, file, file_out, directory):
 		self.directory = directory
 		self.file = self.directory + file
 		self.file_out = self.directory + file_out
 	
+
 
 	def signDocs(self, x_pos, y_pos):
 
@@ -37,111 +40,119 @@ def sign_all(working_dir):
 	confirm = messagebox.askquestion('DocAuto Sign', "You are fixing to sign the documents in files. Continue?")
 	if confirm =='yes':
 		try:
-			bmr_y_pos = 908
-			bmr_x_pos = 420
-			bmr_file_in = "\\DocumentsJPG\\files\\bmr.jpg"
-			bmr_file_out = "\\DocumentsJPG\\finals\\bmrFinale.jpg"
+			bmr_y_pos = 1900
+			bmr_x_pos = 850
+			bmr_file_in = "\\DocumentsJPG\\files\\bmr.jpeg"
+			bmr_file_out = "\\DocumentsJPG\\finals\\bmrFinale.jpeg"
 			bmr = Document(bmr_file_in, bmr_file_out, directory=working_dir)
 			bmr.get_file()
 			bmr.signDocs(bmr_x_pos, bmr_y_pos)
 		except:
 			print('Trouble opening BMR')
 			messagebox.showinfo('BMR', "Could not sign BMR")
+			traceback.print_exc()
 
 		try:
-			swor_front_y = 930
-			swor_front_x = 1015
-			west_front_file_in = "\\DocumentsJPG\\files\\west_swor_front.jpg"
-			west_front_file_out = "\\DocumentsJPG\\finals\\west_swor_frontFinale.jpg"
+			swor_front_y = 1945
+			swor_front_x = 2100
+			west_front_file_in = "\\DocumentsJPG\\files\\west_front.jpeg"
+			west_front_file_out = "\\DocumentsJPG\\finals\\west_frontFinale.jpeg"
 			west_front = Document(west_front_file_in, west_front_file_out, directory=working_dir)
 			west_front.get_file()
 			west_front.signDocs(swor_front_x, swor_front_y)
 		except:
 			print('Trouble opening West Surface Water Front')
 			messagebox.showinfo('West Surface Water Operation Report(Front)', "Could not sign East Surface Water Operation Report")
+			traceback.print_exc()
 
 
 		try:
-			swor_back_y = 938
-			swor_back_x = 1000
-			west_back_file_in = "\\DocumentsJPG\\files\\west_swor_back.jpg"
-			west_back_file_out = "\\DocumentsJPG\\finals\\west_swor_backFinale.jpg"
+			swor_back_y = 1974
+			swor_back_x = 2000
+			west_back_file_in = "\\DocumentsJPG\\files\\west_back.jpeg"
+			west_back_file_out = "\\DocumentsJPG\\finals\\west_backFinale.jpeg"
 			west_back = Document(west_back_file_in, west_back_file_out, directory=working_dir)
 			west_back.get_file()
 			west_back.signDocs(swor_back_x, swor_back_y)
 		except:
 			print('Trouble opening West Surface Back')
 			messagebox.showinfo('West Surface Water Operation Report(Back)', "Could not sign West Surface Water Operation Report")
+			traceback.print_exc()
 
 
 		try:
-			swor_front_y = 930
-			swor_front_x = 1015
-			west_front_file_in = "\\DocumentsJPG\\files\\east_swor_front.jpg"
-			west_front_file_out = "\\DocumentsJPG\\finals\\east_swor_frontFinale.jpg"
+			swor_front_y = 1945
+			swor_front_x = 2100
+			west_front_file_in = "\\DocumentsJPG\\files\\east_front.jpeg"
+			west_front_file_out = "\\DocumentsJPG\\finals\\east_frontFinale.jpeg"
 			west_front = Document(west_front_file_in, west_front_file_out, directory=working_dir)
 			west_front.get_file()
 			west_front.signDocs(swor_front_x, swor_front_y)
 		except:
 			print('Trouble opening East Surface Water Front')
 			messagebox.showinfo('East Surface Water Operation Report(Front)', "Could not sign East Surface Water Operation Report")
+			traceback.print_exc()
 
 
 		try:
-			swor_back_y = 938
-			swor_back_x = 1000
-			west_back_file_in = "\\DocumentsJPG\\files\\east_swor_back.jpg"
-			west_back_file_out = "\\DocumentsJPG\\finals\\east_swor_backFinale.jpg"
+			swor_back_y = 1975
+			swor_back_x = 2000
+			west_back_file_in = "\\DocumentsJPG\\files\\east_back.jpeg"
+			west_back_file_out = "\\DocumentsJPG\\finals\\east_backFinale.jpeg"
 			west_back = Document(west_back_file_in, west_back_file_out, directory=working_dir)
 			west_back.get_file()
 			west_back.signDocs(swor_back_x, swor_back_y)
 		except:
 			print('Trouble opening East Surface Water back')
 			messagebox.showinfo('East Surface Water Operation Report(Back)', "Could not sign East Surface Water Operation Report")
+			traceback.print_exc()
 
 		try:
-			ifmr_y = 945
-			ifmr_x = 170
-			west_ifmr_first = "\\DocumentsJPG\\files\\west_ifmr_page_one.jpg"
-			west_ifmr_first_out = "\\DocumentsJPG\\finals\\west_ifmr_page_oneFinale.jpg"
+			ifmr_y = 1975
+			ifmr_x = 350
+			west_ifmr_first = "\\DocumentsJPG\\files\\west_ifmr_one.jpeg"
+			west_ifmr_first_out = "\\DocumentsJPG\\finals\\west_ifmr_oneFinale.jpeg"
 			w_ifmr_first = Document(west_ifmr_first, west_ifmr_first_out, directory=working_dir)
 			w_ifmr_first.get_file()
 			w_ifmr_first.signDocs(ifmr_x, ifmr_y)
 		except:
 			print('Trouble opening first page of West IFMR')
 			messagebox.showinfo('West IFMR(First)', "Could not sign West IFMR")
+			traceback.print_exc()
 
 		try:
-			ifmr_two_y = 820
-			ifmr_two_x = 170
-			west_ifmr_second = "\\DocumentsJPG\\files\\west_ifmr_page_two.jpg"
-			west_ifmr_second_out = "\\DocumentsJPG\\finals\\west_ifmr_page_twoFinale.jpg"
+			ifmr_two_y = 1720
+			ifmr_two_x = 350
+			west_ifmr_second = "\\DocumentsJPG\\files\\west_ifmr_two.jpeg"
+			west_ifmr_second_out = "\\DocumentsJPG\\finals\\west_ifmr_twoFinale.jpeg"
 			w_ifmr_first = Document(west_ifmr_second, west_ifmr_second_out, directory=working_dir)
 			w_ifmr_first.get_file()
 			w_ifmr_first.signDocs(ifmr_two_x, ifmr_two_y)
 		except:
 			print('Trouble opening second page of West IFMR')
 			messagebox.showinfo('West IFMR(First)', "Could not sign West IFMR")
+			traceback.print_exc()
 
 
 		try:
-			ifmr_y = 945
-			ifmr_x = 170
-			east_ifmr_first = "\\DocumentsJPG\\files\\east_ifmr_page_one.jpg"
-			east_ifmr_first_out = "\\DocumentsJPG\\finals\\east_ifmr_page_oneFinale.jpg"
+			ifmr_y = 1975
+			ifmr_x = 350
+			east_ifmr_first = "\\DocumentsJPG\\files\\east_ifmr_one.jpeg"
+			east_ifmr_first_out = "\\DocumentsJPG\\finals\\east_ifmr_oneFinale.jpeg"
 			e_ifmr_first = Document(east_ifmr_first, east_ifmr_first_out, directory=working_dir)
 			e_ifmr_first.get_file()
 			e_ifmr_first.signDocs(ifmr_x, ifmr_y)
 		except:
 			print('Trouble opening first page of East IFMR')
 			messagebox.showinfo('East IFMR(First)', "Could not sign East IFMR")
+			traceback.print_exc()
 
 
 		try:
-			ifmr_two_y = 820
-			ifmr_two_x = 170
-			east_ifmr_second = "\\DocumentsJPG\\files\\east_ifmr_page_two.jpg"
-			east_ifmr_second_out = "\\DocumentsJPG\\finals\\east_ifmr_page_twoFinale.jpg"
+			ifmr_two_y = 1720
+			ifmr_two_x = 350
+			east_ifmr_second = "\\DocumentsJPG\\files\\east_ifmr_two.jpeg"
+			east_ifmr_second_out = "\\DocumentsJPG\\finals\\east_ifmr_twoFinale.jpeg"
 			e_ifmr_second = Document(east_ifmr_second, east_ifmr_second_out, directory=working_dir)
 			e_ifmr_second.get_file()
 			e_ifmr_second.signDocs(ifmr_two_x, ifmr_two_y)

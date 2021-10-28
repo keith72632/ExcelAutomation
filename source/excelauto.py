@@ -2,6 +2,7 @@ from openpyxl import Workbook, load_workbook
 import sys
 import os
 from datetime import datetime
+from pdf2image import convert_from_path
 from spreadsheets.loggers import Logger
 from spreadsheets.transfers import Transfer
 from spreadsheets.filelib import Directories
@@ -19,9 +20,7 @@ from documentlib.documents import sign_all
 from lib.dirtools import *
 from lib.helpers import *
 from PIL import Image, ImageTk
-
-
-
+import traceback
 
 
 #TODO: Move this function somewhere else
@@ -44,7 +43,7 @@ def select_work_dir():
 #TODO: Move this function somewhere else
 def sign_btn():
 	btn = Button(root, text="Sign Documents", fg="white", bd=3, bg='grey' ,command=lambda: sign_all(folderselect))
-	btn.place(relx=0.861, rely=0.07)
+	btn.place(relx=0.861, rely=0.14)
 	btn.configure(width=20)
 
 def mainf():
@@ -121,7 +120,7 @@ def mainf():
 	#################            LOGGER INIT                                            ################
 	####################################################################################################
 	loggers = Logger(west_front=wbooks.west_swor_front, east_front=wbooks.east_swor_front, west_back=wbooks.west_swor_back,
-		east_back=wbooks.east_swor_back, midnight=wbooks.midnight_readings, prevwest=int(west.get()), preveast=int(east.get()))
+		east_back=wbooks.east_swor_back, midnight=wbooks.midnight_readings, prevwest=int(west.get()), preveast=int(east.get()), month=monthmenu.get())
 
 	INC_COUNT += inc_status_bar(msg="Logger instance created")
 
@@ -176,6 +175,7 @@ if __name__ == '__main__':
 	#Start button calls mainf
 	start_btn(cmd=mainf)
 	dir_btn(cmd=select_work_dir)
+	convert_btn(cmd=convert_pdfs)
 	create_dirs_btn(cmd=create_directory_structure)
 	create_icon(path=iconpath)
 	
