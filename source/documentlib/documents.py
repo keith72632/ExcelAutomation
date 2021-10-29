@@ -18,7 +18,7 @@ class Document:
 
 	def signDocs(self, x_pos, y_pos):
 
-		signature = Image.open(self.directory + "\\DocumentsJPG\\files\\barry_signature_clean.jpg")
+		signature = Image.open(self.directory + "\\DocumentsJPG\\files\\signature.jpg")
 		newsize = (self.sig_width, self.sig_height)
 		img1 = signature.resize(newsize)
 		img2 = Image.open(self.file)

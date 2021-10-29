@@ -112,7 +112,7 @@ def mainf():
 	INC_COUNT += inc_status_bar(msg="BmrScraper instance created")
 
 	locations_data = hd_scraper.scan_health_dep()
-	# display_list_of_dicks(locations_data)
+	hd_scraper.display_list_of_dicks(locations_data)
 	INC_COUNT += inc_status_bar(msg="BMR data gathered from health department")
 
 
