@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 import os
 import sys
 from lib.colors import Prompts
@@ -77,8 +77,11 @@ class Directories:
 			"11": "November",
 			"12": "December"
 		}
-
-		month = '0' + str((datetime.now().month) - 1)
+		m = (datetime.now().month) - 1
+		if m < 10:
+			month = '0' + str(m)
+		else:
+			month = str(m)
 		return months[month]
 
 	def convert_month_to_dec(self, monthstr):

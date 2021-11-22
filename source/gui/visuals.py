@@ -25,7 +25,7 @@ def prog_bar():
 	pb1.pack(expand=True)
 	pb1.place(relx=0.5, rely=0.97, anchor='center')
 
-def inc_status_bar(msg):
+def inc_status_bar(msg)->int:
 	root.update_idletasks()
 	pb1['value'] += 7
 	txt = Text(root)
@@ -37,7 +37,7 @@ def inc_status_bar(msg):
 def prompt_error(msg):
 	messagebox.showerror(title="Error", message=msg)
 
-def get_inc_value(inc_count):
+def get_inc_value(inc_count)->int:
 	return 100/inc_count
 
 def program_finish():
@@ -47,7 +47,7 @@ def program_finish():
 def log_error(message):
 	res = messagebox.askquestion('Yes|No', str(message))
 	if res == 'yes':
-		sys.exit()
+		pass
 	if res == 'no':
 		sys.exit()
 
