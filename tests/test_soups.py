@@ -14,6 +14,12 @@ class WebScraperTestCase(unittest.TestCase):
     def test_request(self):
         self.assertEqual(self.res.status_code, 200)
 
+    def test_title(self):
+        self.assertTrue('Arkansas Department of Health' in self.res.text)
+
+    def test_data(self):
+        self.assertTrue('CARROLL-BOONE WATER DISTRICT' in self.res.text)
+
 
 
 if __name__ == "__main__":
