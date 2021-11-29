@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import sys
 import requests
-from lib.colors import Prompts
+from source.lib.colors import Prompts
 
 class BmrScraper:
 	url = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'

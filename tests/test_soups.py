@@ -4,6 +4,7 @@ topdir = os.path.join(os.path.dirname(__file__), "..")
 sys.path.append(topdir)
 import unittest
 from bs4 import BeautifulSoup
+from source.web.soups import BmrScraper
 import requests
 
 class WebScraperTestCase(unittest.TestCase):
@@ -20,6 +21,14 @@ class WebScraperTestCase(unittest.TestCase):
     def test_data(self):
         self.assertTrue('CARROLL-BOONE WATER DISTRICT' in self.res.text)
 
+    def test_check_data(self):
+        b = BmrScraper("CARROLL-BOONE WATER DISTRICT")
+        locations = b.scan_health_dep()
+        # b.display_list_of_dicks(locations)
+        if self.assertTrue(len(locations) > 0):
+            pws = [data for data in locations if data['PWS'] == '675']
+            self.assertTrue(pws)
+    
 
 
 if __name__ == "__main__":
