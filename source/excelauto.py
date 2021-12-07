@@ -43,7 +43,7 @@ def select_work_dir():
 #TODO: Move this function somewhere else
 def sign_btn():
 	btn = Button(root, text="Sign Documents", fg="white", bd=3, bg='grey' ,command=lambda: sign_all(folderselect))
-	btn.place(relx=0.861, rely=0.14)
+	btn.place(relx=0.861, rely=0.18)
 	btn.configure(width=20)
 
 def mainf():
@@ -176,6 +176,7 @@ if __name__ == '__main__':
 	start_btn(cmd=mainf)
 	dir_btn(cmd=select_work_dir)
 	convert_btn(cmd=convert_pdfs)
+	print_pdf_btn(cmd=print_pdfs)
 	create_dirs_btn(cmd=create_directory_structure)
 	create_icon(path=iconpath)
 	

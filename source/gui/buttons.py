@@ -15,9 +15,14 @@ def dir_btn(cmd):
 	btn.place(relx=0.5, rely=0.04, anchor='center')
 	btn.configure(width=25)
 
+def print_pdf_btn(cmd):
+	btn = Button(root, text="Print PDFs", fg='white', command=cmd, bd=3, bg='grey')
+	btn.place(relx=0.861, rely=0.06)
+	btn.configure(width=20)
+
 def convert_btn(cmd):
 	btn = Button(root, text="Convert PDFs to JPGs", fg='white', command=cmd, bd=3, bg='grey')
-	btn.place(relx=0.861, rely=0.07)
+	btn.place(relx=0.861, rely=0.12)
 	btn.configure(width=20)
 
 def create_dirs_btn(cmd):
