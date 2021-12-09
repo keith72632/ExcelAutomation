@@ -21,15 +21,15 @@ def center_img(path):
 	mylabel.configure(width=220, height=220)
 	mylabel.place(relx=.38, rely=.3)
 
-def prog_bar():
+def prog_bar_init():
 	pb1.pack(expand=True)
 	pb1.place(relx=0.5, rely=0.97, anchor='center')
 
-def inc_status_bar(msg)->int:
+def inc_status_bar(message, inc_no)->int:
 	root.update_idletasks()
-	pb1['value'] += 7
+	pb1['value'] += inc_no
 	txt = Text(root)
-	txt.insert(INSERT, msg)
+	txt.insert(INSERT, message)
 	txt.configure(height=1, width=36)
 	txt.place(relx=0.5, rely=0.84, anchor='center')
 	return 1

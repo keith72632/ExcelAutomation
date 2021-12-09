@@ -22,7 +22,7 @@ class Directories:
 		global INC_COUNT
 		p = Prompts()
 		if working_dir:
-			INC_COUNT += inc_status_bar("Working directory validated")
+			INC_COUNT += inc_status_bar("Working directory validated", 10)
 			self.working_dir = working_dir
 			pth = Path(self.working_dir)
 			self.west_dir = str(pth) + "\\West_Plant_Operations_Reports\\"
@@ -32,7 +32,7 @@ class Directories:
 			self.mango_meter = str(pth) + "\\MangoLogs\\"
 		else:
 			print(f'{p.err()}No working directory selected')
-			INC_COUNT += inc_status_bar("No working directory selected")
+			INC_COUNT += inc_status_bar("No working directory selected", 10)
 	def get_working_dir(self):
 		return self.working_dir
 
@@ -122,7 +122,7 @@ class Directories:
 			msg = "Month Selected is not the previous month. This could cause some issues. Continue?"
 			log_error(msg)
 		print(f'Month: {self.get_prev_month_str()}, Month from menu: {monthmenu}')
-		INC_COUNT += inc_status_bar("Month Selected")
+		INC_COUNT += inc_status_bar("Month Selected", 10)
 
 
 
@@ -176,7 +176,7 @@ class Directories:
 		table_path = self.chlorine_tables + tables_file[0]
 		midnight_path = self.mango_meter + midnight_file[0]
 		
-		INC_COUNT += inc_status_bar("All files matched with coreresponding month")
+		INC_COUNT += inc_status_bar("All files matched with coreresponding month", 10)
 
 		return west_path, east_path, chem_path, table_path, midnight_path
 

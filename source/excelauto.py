@@ -1,26 +1,18 @@
-from openpyxl import Workbook, load_workbook
-import sys
-import os
-from datetime import datetime
-from pdf2image import convert_from_path
 from spreadsheets.loggers import Logger
 from spreadsheets.transfers import Transfer
 from spreadsheets.filelib import Directories
 from spreadsheets.workbooks import Books
 from web.soups import BmrScraper
 from colorama import init
-from time import sleep
 from lib.colors import Prompts
 from tkinter import *
-from tkinter.ttk import Progressbar
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 from gui.visuals import *
 from gui.buttons import *
 from documentlib.documents import sign_all
 from lib.dirtools import *
 from lib.helpers import *
 from PIL import Image, ImageTk
-import traceback
 
 
 #TODO: Move this function somewhere else
@@ -47,23 +39,22 @@ def sign_btn():
 	btn.configure(width=20)
 
 def mainf():
-	prog_bar()
+	prog_bar_init()
 	
 	# check_meter_fields(west.get(), east.get())
 	global INC_COUNT
-	int_cnt = 30
 	#url for bact sample data
 	#needed to change text colors in terminal
 	init()
 
-	INC_COUNT += inc_status_bar(msg="terminal colors initialized")
+	INC_COUNT += inc_status_bar(message="terminal colors initialized", inc_no=7)
 
 	####################################################################################################
 	#################            DIRECTORIES INIT                                       ################
 	####################################################################################################
 	
 	dirs = Directories()
-	INC_COUNT += inc_status_bar(msg="Directories instance created")
+	INC_COUNT += inc_status_bar(message="Directories instance created", inc_no=7)
 	
 	p = Prompts()
 
@@ -74,79 +65,96 @@ def mainf():
 		print(f'{p.err()}Please select a working directory')
 
 
-	INC_COUNT += inc_status_bar(msg="working directory set")
+	INC_COUNT += inc_status_bar(message="working directory set", inc_no=7)
 
 	try:
 		westpath, eastpath, chempath, tablepath, midnightpath = dirs.get_file_from_date(monthmenu=monthmenu.get())
 	except KeyError:
 		prompt_error("No month selected. Please select month, then click Start again")
 		#resets the progress bar
-		pb1['value'] -= inc_cnt
 
 	except NameError:
 		prompt_error("Please select the Working_Directory")
 		#resets the progress bar
-		inc_cnt += 10
-		pb1['value'] -= inc_cnt
 
 	####################################################################################################
 	#################            BOOKS INIT                                             ################
 	####################################################################################################
-	wbooks = Books(west_file=westpath, east_file=eastpath, chem_file=chempath,
-		table_file=tablepath, meter_file=midnightpath)
+	wbooks = Books(
+		west_file=westpath,
+		east_file=eastpath, 
+		chem_file=chempath,
+		table_file=tablepath, 
+		meter_file=midnightpath
+		)
 
-	INC_COUNT += inc_status_bar(msg="Workbook instance created")
+	INC_COUNT += inc_status_bar(message="Workbook instance created", inc_no=7)
 	wbooks.load_workbooks()
 	wbooks.individual_pages_init()
 
 
-	INC_COUNT += inc_status_bar(msg="workbooks loaded")
+	INC_COUNT += inc_status_bar(message="workbooks loaded", inc_no=7)
 
-	w_active, e_active, c_active, table_active, midnight_active = wbooks.west_wb.active, wbooks.east_wb.active, wbooks.chem_wb.active, wbooks.table_wb.active, wbooks.meter_wb.active
+	w_active, e_active, c_active, table_active, midnight_active = \
+		wbooks.west_wb.active, wbooks.east_wb.active, wbooks.chem_wb.active, wbooks.table_wb.active, wbooks.meter_wb.active
 
 	####################################################################################################
 	#################            BmrScraper INIT                                             ################
 	####################################################################################################
 	#scan of the health department website for the BMR data
 	hd_scraper = BmrScraper(name=plantname.get())
-	INC_COUNT += inc_status_bar(msg="BmrScraper instance created")
+	INC_COUNT += inc_status_bar(message="BmrScraper instance created", inc_no=7)
 
 	locations_data = hd_scraper.scan_health_dep()
 	hd_scraper.display_list_of_dicks(locations_data)
-	INC_COUNT += inc_status_bar(msg="BMR data gathered from health department")
+	INC_COUNT += inc_status_bar(message="BMR data gathered from health department", inc_no=7)
 
 
 	####################################################################################################
 	#################            LOGGER INIT                                            ################
 	####################################################################################################
-	loggers = Logger(west_front=wbooks.west_swor_front, east_front=wbooks.east_swor_front, west_back=wbooks.west_swor_back,
-		east_back=wbooks.east_swor_back, midnight=wbooks.midnight_readings, prevwest=int(west.get()), preveast=int(east.get()), month=monthmenu.get())
+	loggers = Logger(
+		west_front=wbooks.west_swor_front,
+		east_front=wbooks.east_swor_front, 
+		west_back=wbooks.west_swor_back,
+		east_back=wbooks.east_swor_back, 
+		midnight=wbooks.midnight_readings, 
+		prevwest=int(west.get()), 
+		preveast=int(east.get()), 
+		month=monthmenu.get()
+		)
 
-	INC_COUNT += inc_status_bar(msg="Logger instance created")
+	INC_COUNT += inc_status_bar(message="Logger instance created", inc_no=7)
 
 	loggers.log_all()
 	loggers.log_ifmrs(wbooks.west_ifmr, wbooks.east_ifmr, month=monthmenu.get())
 	loggers.log_bmr(wbooks.bmr_wb, locations_data)
 
 
-	INC_COUNT += inc_status_bar(msg="BMR data logged to spreadsheet")
-	INC_COUNT += inc_status_bar(msg="All data logged successfully")
+	INC_COUNT += inc_status_bar(message="BMR data logged to spreadsheet", inc_no=7)
+	INC_COUNT += inc_status_bar(message="All data logged successfully", inc_no=7)
 
 
 	####################################################################################################
 	#################            TRANSFERS INIT                                         ################
 	####################################################################################################
-	transfers = Transfer(west_front=wbooks.west_swor_front, east_front=wbooks.east_swor_front, w_chem=wbooks.w_chem, e_chem=wbooks.e_chem,
-		west_table=wbooks.west_table, east_table=wbooks.east_table)
+	transfers = Transfer(
+		west_front=wbooks.west_swor_front, 
+		east_front=wbooks.east_swor_front, 
+		w_chem=wbooks.w_chem, 
+		e_chem=wbooks.e_chem,
+		west_table=wbooks.west_table, 
+		east_table=wbooks.east_table
+		)
 
-	INC_COUNT += inc_status_bar(msg="Transfer instance created")
+	INC_COUNT += inc_status_bar(message="Transfer instance created", inc_no=7)
 
 	transfers.transfer_all()
 
-	INC_COUNT += inc_status_bar(msg="transfering complete")
+	INC_COUNT += inc_status_bar(message="transfering complete", inc_no=7)
 
 	wbooks.save_workbooks()
-	INC_COUNT += inc_status_bar(msg="Workbooks Saved")
+	INC_COUNT += inc_status_bar(message="Workbooks Saved", inc_no=7)
 
 	process_exceptions(wbooks.get_exceptions() + loggers.get_exceptions() + transfers.get_exceptions() + hd_scraper.get_exceptions() + dirs.get_exceptions())
 
@@ -156,10 +164,10 @@ def mainf():
 
 	del loggers, wbooks, transfers, hd_scraper
 
-	INC_COUNT += inc_status_bar(msg="exceptions counted")
+	INC_COUNT += inc_status_bar(message="exceptions counted", inc_no=7)
 	
 	cmd_banner('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
-	INC_COUNT += inc_status_bar(msg="finished")
+	INC_COUNT += inc_status_bar(message="finished", inc_no=7)
 
 	print(f'Inc count {INC_COUNT}')
 	program_finish()
