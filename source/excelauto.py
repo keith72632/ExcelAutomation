@@ -80,13 +80,7 @@ def mainf():
 	####################################################################################################
 	#################            BOOKS INIT                                             ################
 	####################################################################################################
-	wbooks = Books(
-		west_file=westpath,
-		east_file=eastpath, 
-		chem_file=chempath,
-		table_file=tablepath, 
-		meter_file=midnightpath
-		)
+	wbooks = Books(westpath, eastpath, chempath, tablepath, midnightpath)
 
 	INC_COUNT += inc_status_bar(message="Workbook instance created", inc_no=7)
 	wbooks.load_workbooks()
@@ -153,8 +147,8 @@ def mainf():
 
 	INC_COUNT += inc_status_bar(message="transfering complete", inc_no=7)
 
-	wbooks.save_workbooks()
-	INC_COUNT += inc_status_bar(message="Workbooks Saved", inc_no=7)
+	# wbooks.save_workbooks()
+	# INC_COUNT += inc_status_bar(message="Workbooks Saved", inc_no=7)
 
 	process_exceptions(wbooks.get_exceptions() + loggers.get_exceptions() + transfers.get_exceptions() + hd_scraper.get_exceptions() + dirs.get_exceptions())
 
@@ -200,4 +194,5 @@ if __name__ == '__main__':
 
 	root.mainloop()
 
-
+#174705
+#555372

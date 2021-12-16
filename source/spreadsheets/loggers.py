@@ -53,8 +53,7 @@ class Logger:
 		except:
 			print(f'{p.err()}Could not log month on front of SWOR')
 			traceback.print_exc()
-		#east 492328			
-		#west 980338
+
 		try:
 			self.west_front['B5'].value = self.prevwest
 			self.east_front['B5'].value = self.preveast

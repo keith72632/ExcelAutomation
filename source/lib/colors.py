@@ -14,4 +14,4 @@ class Prompts:
 	def warn(self):
 		return self.WARNING + '[  !  ]' + self.RESET
 	def note(self):
-		return self.OK + '@' + self.RESET
+		return self.OK + '~' + self.RESET

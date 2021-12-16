@@ -30,6 +30,7 @@ def create_directory_structure():
 		pass
 
 def export_page(file_path, pdf_path, page_index):
+	files = os.listdir('.')
 	o = win32com.client.Dispatch("Excel.Application")
 	o.Visible = False
 	wb = o.Workbooks.Open(file_path)
