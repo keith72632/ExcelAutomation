@@ -36,13 +36,13 @@ class Directories:
 	def get_working_dir(self):
 		return self.working_dir
 
-	def get_year(self):
+	def get_year(self) -> str:
 		#get month number to use as prefix
-		date_list = str(datetime.today()).split('-')
-		year = date_list[0]
+		# date_list = str(datetime.today()).split('-')
+		year = str(datetime.now().year)
 		return year
 
-	def get_month_str(self):
+	def get_month_str(self) -> str:
 		months = {
 			"01": "January",
 			"02": "February",
@@ -62,7 +62,7 @@ class Directories:
 		month = monthnum[1]
 		return months[month]
 
-	def get_prev_month_str(self):
+	def get_prev_month_str(self) -> str:
 		months = {
 			"01": "January",
 			"02": "February",
@@ -80,6 +80,8 @@ class Directories:
 		m = (datetime.now().month) - 1
 		if m < 10:
 			month = '0' + str(m)
+		elif m == 0:
+			month = '12'
 		else:
 			month = str(m)
 		return months[month]
@@ -103,10 +105,18 @@ class Directories:
 		return months[monthstr]
 
 	def  get_month_dec(self):
-		return '0' + str((datetime.now().month))
+		month = datetime.now().month
+		if month < 10:
+			return '0' + str(month)
+		else:
+			return str(month)
 
 	def get_prev_month_dec(self):
-		return '0' + str((datetime.now().month) - 1)
+		prev_month = datetime.now().month - 1
+		if prev_month < 10:
+			return '0' + str(prev_month)
+		else:
+			return str(prev_month)
 
 
 	def get_file_from_date(self, monthmenu):
