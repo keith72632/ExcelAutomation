@@ -10,14 +10,14 @@ d = Directories()
 #Logs data to spreadsheets from various sources
 class Logger:
 	def __init__(self, west_front, east_front, west_back, east_back, midnight, prevwest, preveast, month):
-		self.west_front = west_front
-		self.east_front = east_front
-		self.west_back = west_back
-		self.east_back = east_back
-		self.midnight = midnight
-		self.prevwest = prevwest
-		self.preveast = preveast
-		self.month = month
+		self._west_front = west_front
+		self._east_front = east_front
+		self._west_back = west_back
+		self._east_back = east_back
+		self._midnight = midnight
+		self._prevwest = prevwest
+		self._preveast = preveast
+		self._month = month
 
 	def __del__(self):
 		print('Logger Destroyed')
@@ -28,35 +28,35 @@ class Logger:
 	def log_meters(self):
 		p = Prompts()
 
-		west_raw_cols = self.midnight['B']
+		west_raw_cols = self._midnight['B']
 		west_raw = west_raw_cols[5:35]
 
-		west_swor_meter_cols = self.west_front['B']
+		west_swor_meter_cols = self._west_front['B']
 		west_swor_raw = west_swor_meter_cols[8:38]
 
-		east_raw_cols = self.midnight['I']
+		east_raw_cols = self._midnight['I']
 		east_raw = east_raw_cols[5:35]
 
-		east_swor_meter_cols = self.east_front['B']
+		east_swor_meter_cols = self._east_front['B']
 		east_swor_raw = east_swor_meter_cols[8:38]
 
 		try:
-			self.west_front['AI50'].value = datetime.today()
-			self.east_front['AH50'].value = datetime.today()
+			self._west_front['AI50'].value = datetime.today()
+			self._east_front['AH50'].value = datetime.today()
 		except:
 			print(f'{p.err()}Could not log date on front of SWOR')
 			traceback.print_exc()
 
 		try:
-			self.west_front['AG2'].value = self.month
-			self.east_front['AF2'].value = self.month
+			self._west_front['AG2'].value = self._month
+			self._east_front['AF2'].value = self._month
 		except:
 			print(f'{p.err()}Could not log month on front of SWOR')
 			traceback.print_exc()
 
 		try:
-			self.west_front['B5'].value = self.prevwest
-			self.east_front['B5'].value = self.preveast
+			self.west_front['B5'].value = self._prevwest
+			self._east_front['B5'].value = self._preveast
 		except:
 			print(f'{p.err()}Could not log previous meter numbers')
 			traceback.print_exc()
@@ -88,16 +88,16 @@ class Logger:
 	def log_ammonia(self):
 		p = Prompts()
 
-		west_ammonia_cols = self.midnight['G']
+		west_ammonia_cols = self._midnight['G']
 		west_ammonia = west_ammonia_cols[5:35]
 
-		west_swor_ammonia_cols = self.west_front['M']
+		west_swor_ammonia_cols = self._west_front['M']
 		west_swor_ammonia = west_swor_ammonia_cols[8:38]
 
-		east_ammonia_cols = self.midnight['N']
+		east_ammonia_cols = self._midnight['N']
 		east_ammonia = east_ammonia_cols[5:35]
 
-		east_swor_ammonia_cols = self.east_front['M']
+		east_swor_ammonia_cols = self._east_front['M']
 		east_swor_ammonia = east_swor_ammonia_cols[8:38]
 		
 		try:
@@ -220,17 +220,17 @@ class Logger:
 		p = Prompts()
 
 		#Raw Peak data from the Midnight Spreadsheet
-		west_raw_cols = self.midnight['C']
+		west_raw_cols = self._midnight['C']
 		west_raw_peaks = west_raw_cols[5:35]
 
-		east_raw_cols = self.midnight['J']
+		east_raw_cols = self._midnight['J']
 		east_raw_peaks = east_raw_cols[5:35]
 
 		#High Service Peak data from the Midnight Spreadsheet
-		west_fin_cols = self.midnight['D']
+		west_fin_cols = self._midnight['D']
 		west_fin_peaks = west_fin_cols[5:35]
 
-		east_fin_cols = self.midnight['K']
+		east_fin_cols = self._midnight['K']
 		east_fin_peaks = east_fin_cols[5:35]
 
 		#Hardcoded cells because spreadsheet cells on the SWOR are not sequential
@@ -257,7 +257,7 @@ class Logger:
 		#log raw peak numbers to West SWOR
 		try:
 			for i, day in enumerate(west_raw_peaks):
-				self.west_back[swor_raw_peaks[i]].value = day.value 
+				self._west_back[swor_raw_peaks[i]].value = day.value 
 			print(f'{p.note()}West Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
@@ -280,7 +280,7 @@ class Logger:
 		#log finish peak values to West SWOR
 		try:
 			for i, day in enumerate(west_fin_peaks):
-				self.west_back[swor_fin_peaks[i]].value = day.value
+				self._west_back[swor_fin_peaks[i]].value = day.value
 			print(f'{p.note()}West High Service Peaks logged successfully')
 
 		except:
@@ -305,10 +305,10 @@ class Logger:
 		p = Prompts()
 
 		#Raw Peak data from the Midnight Spreadsheet
-		west_cw_cols = self.midnight['E']
+		west_cw_cols = self._midnight['E']
 		west_clearwell = west_cw_cols[5:35]
 
-		east_cw_cols = self.midnight['L']
+		east_cw_cols = self._midnight['L']
 		east_clearwell = east_cw_cols[5:35]
 
 
@@ -328,7 +328,7 @@ class Logger:
 		#log lowest clearwell reading for west plant
 		try:
 			for i, day in enumerate(west_clearwell):
-				self.west_back[swor_cw[i]].value = day.value 
+				self._west_back[swor_cw[i]].value = day.value 
 			print(f'{p.note()}Lowest Clearwell reading for West Plant logged successfully')
 
 		except:
@@ -356,10 +356,10 @@ class Logger:
 		p = Prompts()
 
 		#Raw Peak data from the Midnight Spreadsheet
-		west_cl_cols = self.midnight['F']
+		west_cl_cols = self._midnight['F']
 		west_cl = west_cl_cols[5:35]
 
-		east_cl_cols = self.midnight['M']
+		east_cl_cols = self._midnight['M']
 		east_cl = east_cl_cols[5:35]
 
 
@@ -379,7 +379,7 @@ class Logger:
 		#log free chlorine for west
 		try:
 			for i, day in enumerate(west_cl):
-				self.west_back[swor_cl[i]].value = day.value 
+				self._west_back[swor_cl[i]].value = day.value 
 			print(f'{p.note()}Lowest Free Chlorine for West Plant logged successfully logged successfully')
 
 		except:
@@ -407,16 +407,16 @@ class Logger:
 	def log_chlorine_used(self):
 		p = Prompts()
 
-		w_cl_cols = self.west_front['J']
+		w_cl_cols = self._west_front['J']
 		w_cl = w_cl_cols[8:38]
 
-		e_cl_cols = self.east_front['J']
+		e_cl_cols = self._east_front['J']
 		e_cl = e_cl_cols[8:38]
 
-		w_midnight_cols = self.midnight['R']
+		w_midnight_cols = self._midnight['R']
 		w_midnight = w_midnight_cols[5:35]
 
-		e_midnight_cols = self.midnight['S']
+		e_midnight_cols = self._midnight['S']
 		e_midnight = e_midnight_cols[5:35]
 
 		#midnight west chlorine usage -> west swor
@@ -447,16 +447,16 @@ class Logger:
 	def log_hours(self):
 		p = Prompts()
 
-		w_hours_cols = self.west_front['F']
+		w_hours_cols = self._west_front['F']
 		w_hours = w_hours_cols[8:38]
 
-		e_hours_cols = self.east_front['F']
+		e_hours_cols = self._east_front['F']
 		e_hours = e_hours_cols[8:38]
 
-		w_midnight_cols = self.midnight['P']
+		w_midnight_cols = self._midnight['P']
 		w_midnight = w_midnight_cols[5:35]
 
-		e_midnight_cols = self.midnight['Q']
+		e_midnight_cols = self._midnight['Q']
 		e_midnight = e_midnight_cols[5:35]
 
 		#midnight west chlorine usage -> west swor
@@ -486,16 +486,16 @@ class Logger:
 	def log_pac(self):
 		p = Prompts()
 
-		w_pac_cols = self.west_front['K']
+		w_pac_cols = self._west_front['K']
 		w_pac = w_pac_cols[8:39]
 
-		e_pac_cols = self.east_front['K']
+		e_pac_cols = self._east_front['K']
 		e_pac = e_pac_cols[8:39]
 
-		mid_west_cols = self.midnight['X']
+		mid_west_cols = self._midnight['X']
 		mid_west = mid_west_cols[5:36]
 
-		mid_east_cols = self.midnight['Y']
+		mid_east_cols = self._midnight['Y']
 		mid_east = mid_east_cols[5:36]
 
 		try:
@@ -523,16 +523,16 @@ class Logger:
 	def log_lime(self):
 		p = Prompts()
 
-		west_lime_columns = self.west_front['L']
+		west_lime_columns = self._west_front['L']
 		w_lime = west_lime_columns[8:38]
 
-		east_lime_columns = self.east_front['L']
+		east_lime_columns = self._east_front['L']
 		e_lime = east_lime_columns[8:38]
 
-		mid_west_cols = self.midnight['T']
+		mid_west_cols = self._midnight['T']
 		mid_west = mid_west_cols[5:36]
 
-		mid_east_cols = self.midnight['U']
+		mid_east_cols = self._midnight['U']
 		mid_east = mid_east_cols[5:35]
 
 		try:
@@ -559,16 +559,16 @@ class Logger:
 	def log_fluoride(self):
 		p = Prompts()
 
-		west_fl_columns = self.west_front['N']
+		west_fl_columns = self._west_front['N']
 		w_fl = west_fl_columns[8:38]
 
-		east_fl_columns = self.east_front['N']
+		east_fl_columns = self._east_front['N']
 		e_fl = east_fl_columns[8:38]
 
-		mid_west_cols = self.midnight['H']
+		mid_west_cols = self._midnight['H']
 		mid_west = mid_west_cols[5:36]
 
-		mid_east_cols = self.midnight['O']
+		mid_east_cols = self._midnight['O']
 		mid_east = mid_east_cols[5:35]
 
 		try:

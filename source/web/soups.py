@@ -4,10 +4,10 @@ import requests
 from lib.colors import Prompts
 
 class BmrScraper:
-	url = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
-	name = None
+	_url = 'https://www.ark.org/health/eng/autoupdates/bacti/bactic.htm'
+	_name = None
 	def __init__(self, name=None):
-		self.name = name
+		self._name = name
 
 	def __del__(self):
 		print('BmrScraper Destroyed')
@@ -28,15 +28,15 @@ class BmrScraper:
 
 	def scan_health_dep(self):
 		P = Prompts()
-		print(f'BMR url {self.url}')
-		p = requests.get(self.url)
+		print(f'BMR url {self._url}')
+		p = requests.get(self._url)
 		soup = BeautifulSoup(p.content, "html.parser")
 		data = soup.find_all('tr')
 
 		locations = []
 		i = 0
 		for line in data[1:]:
-			if line.td.text == self.name:
+			if line.td.text == self._name:
 				i += 1
 				items = line.text.split('\n')
 				locations.append(
@@ -54,7 +54,7 @@ class BmrScraper:
 					}
 				)
 
-		print(f'{P.ok()}{i} BMR entries for {self.name} found\n')
+		print(f'{P.ok()}{i} BMR entries for {self._name} found\n')
 
 		return locations
 

@@ -7,34 +7,34 @@ from gui.visuals import inc_status_bar, root, log_error, INC_COUNT
 
 
 class Directories:
-	working_dir = ' '
-	west_dir = ' '
-	east_dir = ' '
-	chem_treat_dir = ' '
-	chlorine_tables = ' '
-	mango_meter = ' '
+	_working_dir = ' '
+	_west_dir = ' '
+	_east_dir = ' '
+	_chem_treat_dir = ' '
+	_chlorine_tables = ' '
+	_mango_meter = ' '
 	def __init__(self):
 		pass
 
 	EXCEPTIONS = 0
 
-	def set_working_dir(self, working_dir):
+	def set__working_dir(self, _working_dir):
 		global INC_COUNT
 		p = Prompts()
-		if working_dir:
+		if _working_dir:
 			INC_COUNT += inc_status_bar("Working directory validated", 10)
-			self.working_dir = working_dir
-			pth = Path(self.working_dir)
-			self.west_dir = str(pth) + "\\West_Plant_Operations_Reports\\"
-			self.east_dir = str(pth) + "\\East_Plant_Operations_Reports\\"
-			self.chem_treat_dir = str(pth) + "\\Chemical_Treatment_Records\\"
-			self.chlorine_tables = str(pth) + "\\Chemical_Treatment_Records\\Chlorine_Tables\\"
-			self.mango_meter = str(pth) + "\\MangoLogs\\"
+			self._working_dir = _working_dir
+			pth = Path(self._working_dir)
+			self._west_dir = str(pth) + "\\West_Plant_Operations_Reports\\"
+			self._east_dir = str(pth) + "\\East_Plant_Operations_Reports\\"
+			self._chem_treat_dir = str(pth) + "\\Chemical_Treatment_Records\\"
+			self._chlorine_tables = str(pth) + "\\Chemical_Treatment_Records\\Chlorine_Tables\\"
+			self._mango_meter = str(pth) + "\\MangoLogs\\"
 		else:
 			print(f'{p.err()}No working directory selected')
 			INC_COUNT += inc_status_bar("No working directory selected", 10)
 	def get_working_dir(self):
-		return self.working_dir
+		return self._working_dir
 
 	def get_year(self) -> str:
 		#get month number to use as prefix
@@ -137,11 +137,11 @@ class Directories:
 
 
 		#list of files in 2021 directory
-		west_list = os.listdir(self.west_dir)
-		east_list = os.listdir(self.east_dir)
-		chem_list = os.listdir(self.chem_treat_dir)
-		midnight_list = os.listdir(self.mango_meter)
-		chlorine_tables_list = os.listdir(self.chlorine_tables)
+		west_list = os.listdir(self._west_dir)
+		east_list = os.listdir(self._east_dir)
+		chem_list = os.listdir(self._chem_treat_dir)
+		midnight_list = os.listdir(self._mango_meter)
+		chlorine_tables_list = os.listdir(self._chlorine_tables)
 
 		#sort through directory for file corresponding with the current month
 		try:
@@ -180,29 +180,29 @@ class Directories:
 			print(f'{p.warn()}Chlorine Table not found\n')
 
 
-		west_path = self.west_dir + west_file[0]
-		east_path = self.east_dir + east_file[0]
-		chem_path = self.chem_treat_dir + chem_file[0]
-		table_path = self.chlorine_tables + tables_file[0]
-		midnight_path = self.mango_meter + midnight_file[0]
+		west_path = self._west_dir + west_file[0]
+		east_path = self._east_dir + east_file[0]
+		chem_path = self._chem_treat_dir + chem_file[0]
+		table_path = self._chlorine_tables + tables_file[0]
+		midnight_path = self._mango_meter + midnight_file[0]
 		
 		INC_COUNT += inc_status_bar("All files matched with coreresponding month", 10)
 
 		return west_path, east_path, chem_path, table_path, midnight_path
 
-	def create_files(self, west_dir, east_dir):
+	def create_files(self, _west_dir, _east_dir):
 		year = str(datetime.today()).split('-')
 		print(year[0])
 		for file in range(13):
 			if file < 10:
-				f = open(f'{west_dir}0{str(file)}-{str(year[0])}_CBWD_West_FR.xlsx', 'w')
-				x = open(f'{east_dir}0{str(file)}-{str(year[0])}_CBWD_East_FR.xlsx', 'w')
+				f = open(f'{_west_dir}0{str(file)}-{str(year[0])}_CBWD_West_FR.xlsx', 'w')
+				x = open(f'{_east_dir}0{str(file)}-{str(year[0])}_CBWD_East_FR.xlsx', 'w')
 			else:
-				f = open(f'{west_dir}{str(file)}-{str(year[0])}_CBWD_West_FR.xlsx', 'w')
-				x = open(f'{east_dir}{str(file)}-{str(year[0])}_CBWD_East_FR.xlsx', 'w')
+				f = open(f'{_west_dir}{str(file)}-{str(year[0])}_CBWD_West_FR.xlsx', 'w')
+				x = open(f'{_east_dir}{str(file)}-{str(year[0])}_CBWD_East_FR.xlsx', 'w')
 				
-			print(f'File created: {west_dir}0{str(file)}-{str(year[0])}_CBWD_West_FR.xlsx')
-			print(f'File created: {east_dir}0{str(file)}-{str(year[0])}_CBWD_East_FR.xlsx')
+			print(f'File created: {_west_dir}0{str(file)}-{str(year[0])}_CBWD_West_FR.xlsx')
+			print(f'File created: {_east_dir}0{str(file)}-{str(year[0])}_CBWD_East_FR.xlsx')
 			f.close()
 			x.close()
 

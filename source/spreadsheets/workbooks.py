@@ -6,11 +6,11 @@ from lib.colors import Prompts
 class Books:
 	def __init__(self, west_file=None, east_file=None, chem_file=None, table_file=None, meter_file=None):
 		p = Prompts()
-		self.west_file = west_file
-		self.east_file = east_file
-		self.chem_file = chem_file
-		self.table_file = table_file
-		self.meter_file = meter_file
+		self._west_file = west_file
+		self._east_file = east_file
+		self._chem_file = chem_file
+		self._table_file = table_file
+		self._meter_file = meter_file
 		print('Books constructed')
 
 	def __del__(self):
@@ -24,45 +24,45 @@ class Books:
 		COLOR = p.DEV
 		RESET = p.RESET
 		FAIL = p.FAIL
-		if self.west_file:
+		if self._west_file:
 			try:
-				self.west_wb = load_workbook(self.west_file)
-				print(f'{p.ok()}West Workbook loaded from:\n{COLOR}{self.west_file}{RESET}\n')
+				self.west_wb = load_workbook(self._west_file)
+				print(f'{p.ok()}West Workbook loaded from:\n{COLOR}{self._west_file}{RESET}\n')
 			except:
 				self.EXCEPTIONS += 1
-				print(f'{p.err()}West Workbook loading failed from:\n{FAIL}{self.west_file}{RESET}\n')
+				print(f'{p.err()}West Workbook loading failed from:\n{FAIL}{self._west_file}{RESET}\n')
 
-		if self.east_file:
+		if self._east_file:
 			try:
-				self.east_wb = load_workbook(self.east_file)
-				print(f'{p.ok()}East Workbook loaded from:\n{COLOR}{self.east_file}{RESET}\n')
+				self.east_wb = load_workbook(self._east_file)
+				print(f'{p.ok()}East Workbook loaded from:\n{COLOR}{self._east_file}{RESET}\n')
 			except:
 				self.EXCEPTIONS += 1
-				print(f'{p.err()}East Workbook loading failed from:\n{FAIL}{self.east_file}{RESET}\n')
+				print(f'{p.err()}East Workbook loading failed from:\n{FAIL}{self._east_file}{RESET}\n')
 
-		if self.chem_file:
+		if self._chem_file:
 			try:
-				self.chem_wb = load_workbook(self.chem_file)
-				print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n{COLOR}{self.chem_file}{RESET}\n')
+				self.chem_wb = load_workbook(self._chem_file)
+				print(f'{p.ok()}Chemical Treatment Workbook loaded from:\n{COLOR}{self._chem_file}{RESET}\n')
 			except:
 				self.EXCEPTIONS += 1
-				print(f'{p.err()}Chemical Treatment Workbook loading failed from:\n{FAIL}{self.chem_file}{RESET}\n')
+				print(f'{p.err()}Chemical Treatment Workbook loading failed from:\n{FAIL}{self._chem_file}{RESET}\n')
 
-		if self.table_file:
+		if self._table_file:
 			try:
-				self.table_wb = load_workbook(self.table_file)
-				print(f'{p.ok()}Chlorine Table Workbook loaded from:\n{COLOR}{self.table_file}{RESET}\n')
+				self.table_wb = load_workbook(self._table_file)
+				print(f'{p.ok()}Chlorine Table Workbook loaded from:\n{COLOR}{self._table_file}{RESET}\n')
 			except:
 				self.EXCEPTIONS += 1
-				print(f'{p.err()}Chlorine Table Workbook loading failed from:\n{FAIL}{self.table_file}{RESET}\n')
+				print(f'{p.err()}Chlorine Table Workbook loading failed from:\n{FAIL}{self._table_file}{RESET}\n')
 
-		if self.meter_file:
+		if self._meter_file:
 			try:
-				self.meter_wb = load_workbook(self.meter_file)
-				print(f'{p.ok()}Meter Workbook loaded from:\n{COLOR}{self.meter_file}{RESET}\n')
+				self.meter_wb = load_workbook(self._meter_file)
+				print(f'{p.ok()}Meter Workbook loaded from:\n{COLOR}{self._meter_file}{RESET}\n')
 			except:
 				self.EXCEPTIONS += 1
-				print(f'{p.err()}Meter Workbook loading failed from:\n{FAIL}{self.meter_file}{RESET}\n')
+				print(f'{p.err()}Meter Workbook loading failed from:\n{FAIL}{self._meter_file}{RESET}\n')
 
 		return self.west_wb, self.east_wb, self.chem_wb, self.table_wb, self.meter_wb
 
@@ -91,45 +91,45 @@ class Books:
 	def save_workbooks(self):
 		p = Prompts()
 
-		if self.west_file:
+		if self._west_file:
 			try:
-				self.west_wb.save(self.west_file)
+				self.west_wb.save(self._west_file)
 				print(f'{p.note()} west workbook saved')
 			except:
 				self.EXCEPTIONS += 1
 				print(f'{p.err()}West Workbook could not save\n')
 				# traceback.print_exc()
 		
-		if self.east_file:
+		if self._east_file:
 			try:
-				self.east_wb.save(self.east_file)
+				self.east_wb.save(self._east_file)
 				print(f'{p.note()} east workbook saved')
 			except:
 				self.EXCEPTIONS += 1
 				print(f'{p.err()}East Workbook could not save\n')
 				traceback.print_exc()
 
-		if self.chem_file:
+		if self._chem_file:
 			try:
-				self.chem_wb.save(self.chem_file)
+				self.chem_wb.save(self._chem_file)
 				print(f'{p.note()} chemical treatment workbook saved')
 			except:
 				self.EXCEPTIONS += 1
 				print(f'{p.err()}Chemical Treatment Record could not save\n')
 				traceback.print_exc()
 
-		if self.table_file:
+		if self._table_file:
 			try:
-				self.table_wb.save(self.table_file)
+				self.table_wb.save(self._table_file)
 				print(f'{p.note()} chlorine table workbook saved')
 			except:
 				self.EXCEPTIONS += 1
 				print(f'{p.err()}Chlorine Table could not save\n')
 				traceback.print_exc()
 
-		if self.meter_file:
+		if self._meter_file:
 			try:
-				self.meter_wb.save(self.meter_file)
+				self.meter_wb.save(self._meter_file)
 				print(f'{p.note()} midnight meter workbook saved')
 			except:
 				self.EXCEPTIONS += 1
