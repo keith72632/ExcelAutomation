@@ -55,7 +55,7 @@ class Logger:
 			traceback.print_exc()
 
 		try:
-			self.west_front['B5'].value = self._prevwest
+			self._west_front['B5'].value = self._prevwest
 			self._east_front['B5'].value = self._preveast
 		except:
 			print(f'{p.err()}Could not log previous meter numbers')
@@ -268,7 +268,7 @@ class Logger:
 		#log raw peak values to East SWOR
 		try:
 			for i, day in enumerate(east_raw_peaks):
-				self.east_back[swor_raw_peaks[i]].value = day.value 
+				self._east_back[swor_raw_peaks[i]].value = day.value 
 			print(f'{p.note()}East Raw Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
@@ -292,7 +292,7 @@ class Logger:
 		#log finish peak values to East SWOR
 		try:
 			for i, day in enumerate(east_fin_peaks):
-				self.east_back[swor_fin_peaks[i]].value = day.value
+				self._east_back[swor_fin_peaks[i]].value = day.value
 			print(f'{p.note()}East High Service Peaks logged successfully')
 		except:
 			self.EXCEPTIONS += 1
@@ -341,7 +341,7 @@ class Logger:
 		#log lowest clearwell reading for east plat
 		try:
 			for i, day in enumerate(east_clearwell):
-				self.east_back[swor_cw[i]].value = day.value 
+				self._east_back[swor_cw[i]].value = day.value 
 			print(f'{p.note()}Lowest Clearwell reading for East Plant logged successfully')
 
 		except:
@@ -392,7 +392,7 @@ class Logger:
 		#log free chlorine for eat
 		try:
 			for i, day in enumerate(east_cl):
-				self.east_back[swor_cl[i]].value = day.value 
+				self._east_back[swor_cl[i]].value = day.value 
 			print(f'{p.note()}Lowest Free Chlorine for East Plant logged successfully')
 
 		except:

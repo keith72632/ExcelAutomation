@@ -2,6 +2,7 @@ from datetime import date, datetime
 import os
 import sys
 from lib.colors import Prompts
+import traceback
 from pathlib import Path
 from gui.visuals import inc_status_bar, root, log_error, INC_COUNT
 
@@ -18,7 +19,7 @@ class Directories:
 
 	EXCEPTIONS = 0
 
-	def set__working_dir(self, _working_dir):
+	def set_working_dir(self, _working_dir):
 		global INC_COUNT
 		p = Prompts()
 		if _working_dir:
@@ -84,7 +85,8 @@ class Directories:
 			month = '12'
 		else:
 			month = str(m)
-		return months[month]
+		print(f'get prev month {months["12"]}')
+		return months["12"]
 
 	def convert_month_to_dec(self, monthstr):
 		months = {
@@ -101,7 +103,7 @@ class Directories:
 		"November": "11",
 		"December": "12"
 		}
-
+		print(f'convert month to dec {months[monthstr]}')
 		return months[monthstr]
 
 	def  get_month_dec(self):
@@ -128,10 +130,7 @@ class Directories:
 		
 		# use this below for previous month
 		month = self.convert_month_to_dec(monthmenu)
-		if self.get_prev_month_str() != monthmenu:
-			msg = "Month Selected is not the previous month. This could cause some issues. Continue?"
-			log_error(msg)
-		print(f'Month: {self.get_prev_month_str()}, Month from menu: {monthmenu}')
+	
 		INC_COUNT += inc_status_bar("Month Selected", 10)
 
 
@@ -150,35 +149,35 @@ class Directories:
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.warn()}West Operations Report Not Found\n')
-
+			traceback.print_exc()
 		try:
 			east_file =  [file for file in east_list if file.startswith(month)]
 			print(f'{p.ok()}East file: {east_file[0]}')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.warn()}East Operations Report Not Found\n')
-
+			traceback.print_exc()
 		try:
 			chem_file =  [file for file in chem_list if file.startswith(month)]
 			print(f'{p.ok()}Chem file: {chem_file[0]}')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.warn()}Chemical Reatment Record Not Found\n')
-
+			traceback.print_exc()
 		try:
 			midnight_file = [file for file in midnight_list if file.startswith(month)]
 			print(f'{p.ok()}Midnight file: {midnight_file[0]}')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.warn()}Meter Reading File Not Found\n')
-
+			traceback.print_exc()
 		try:
 			tables_file = [file for file in chlorine_tables_list if file.startswith(month)]
 			print(f'{p.ok()}Tables file {tables_file[0]}')
 		except:
 			self.EXCEPTIONS += 1
 			print(f'{p.warn()}Chlorine Table not found\n')
-
+			traceback.print_exc()
 
 		west_path = self._west_dir + west_file[0]
 		east_path = self._east_dir + east_file[0]

@@ -163,7 +163,6 @@ def mainf():
 	cmd_banner('DATES ON MIDNIGHT SPREADSHEET ARE SUPPOSE TO BE OFF BY A DAY')
 	INC_COUNT += inc_status_bar(message="finished", inc_no=7)
 
-	print(f'Inc count {INC_COUNT}')
 	program_finish()
 
 if __name__ == '__main__':
