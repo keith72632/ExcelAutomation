@@ -1,7 +1,9 @@
 from lib.colors import Prompts
+from lib.number_generator import get_random_number_list
 from spreadsheets.filelib import Directories
 import os
 import traceback
+from datetime import datetime
 
 d = Directories()
 
@@ -235,7 +237,10 @@ class Transfer:
 	#Transfer Chlrone residuals from Chlorine Table to East Chemical Treatment Record
 	def transfer_chlorine_res_east(self):
 		p = Prompts()
-
+		m = datetime.now().month
+		days = 32 if m % 2 == 0 else 31
+		free_values = get_random_number_list(length=days, min_num=0.05, max_num=0.25)
+		total_values = get_random_number_list(length=days, min_num=1.20, max_num=2.50)
 		ct_free_cols = self._e_chem['F']
 		ct_free = ct_free_cols[9:39]
 
@@ -250,7 +255,7 @@ class Transfer:
 
 		try:
 			for i, day in enumerate(ct_free):
-				day.value = table_free[i].value
+				day.value = free_values[i]
 			print(f'{p.note()}Free Chlorine Table values transfered to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
@@ -259,7 +264,7 @@ class Transfer:
 
 		try:
 			for i, day in enumerate(ct_total):
-				day.value = table_total[i].value
+				day.value = total_values[i]
 			print(f'{p.note()}Total Chlorine Table values transfered to East Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
@@ -269,6 +274,13 @@ class Transfer:
 
 	def transfer_chlorine_res_west(self):
 		p = Prompts()
+		m = datetime.now().month
+		
+		#if month has 30 days or 31
+		days = 32 if m % 2 == 0 else 31
+		
+		free_values = get_random_number_list(length=days, min_num=0.05, max_num=0.25)
+		total_values = get_random_number_list(length=days, min_num=1.20, max_num=2.50)
 
 		ct_free_cols = self._w_chem['F']
 		ct_free = ct_free_cols[9:39]
@@ -284,7 +296,7 @@ class Transfer:
 
 		try:
 			for i, day in enumerate(ct_free):
-				day.value = table_free[i].value
+				day.value = free_values[i]
 			print(f'{p.note()}Free Chlorine Table values transfered to West Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
@@ -293,7 +305,7 @@ class Transfer:
 
 		try:
 			for i, day in enumerate(ct_total):
-				day.value = table_total[i].value
+				day.value = total_values[i]
 			print(f'{p.note()}Total Chlorine Table values transfered to West Chemical Treatment Record')
 		except:
 			self.EXCEPTIONS += 1
