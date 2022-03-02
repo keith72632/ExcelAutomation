@@ -179,11 +179,16 @@ class Directories:
 			print(f'{p.warn()}Chlorine Table not found\n')
 			traceback.print_exc()
 
-		west_path = self._west_dir + west_file[0]
-		east_path = self._east_dir + east_file[0]
-		chem_path = self._chem_treat_dir + chem_file[0]
-		table_path = self._chlorine_tables + tables_file[0]
-		midnight_path = self._mango_meter + midnight_file[0]
+		try:
+			west_path = self._west_dir + west_file[0]
+			east_path = self._east_dir + east_file[0]
+			chem_path = self._chem_treat_dir + chem_file[0]
+			table_path = self._chlorine_tables + tables_file[0]
+			midnight_path = self._mango_meter + midnight_file[0]
+		except IndexError:
+			print('Are you sure all spreadsheets have been created for last month?')
+			traceback.print_exc()
+			inc_status_bar("No spreadsheets found. Are you sure spreadsheets for last month have been created?", 10)
 		
 		INC_COUNT += inc_status_bar("All files matched with coreresponding month", 10)
 

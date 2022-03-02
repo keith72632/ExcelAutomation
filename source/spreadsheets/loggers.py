@@ -9,6 +9,7 @@ d = Directories()
 
 #Logs data to spreadsheets from various sources
 class Logger:
+	_row_len = 38
 	def __init__(self, west_front, east_front, west_back, east_back, midnight, prevwest, preveast, month):
 		self._west_front = west_front
 		self._east_front = east_front
@@ -32,13 +33,13 @@ class Logger:
 		west_raw = west_raw_cols[5:35]
 
 		west_swor_meter_cols = self._west_front['B']
-		west_swor_raw = west_swor_meter_cols[8:38]
+		west_swor_raw = west_swor_meter_cols[8:self._row_len]
 
 		east_raw_cols = self._midnight['I']
 		east_raw = east_raw_cols[5:35]
 
 		east_swor_meter_cols = self._east_front['B']
-		east_swor_raw = east_swor_meter_cols[8:38]
+		east_swor_raw = east_swor_meter_cols[8:self._row_len]
 
 		try:
 			self._west_front['AI50'].value = datetime.today()
@@ -92,13 +93,13 @@ class Logger:
 		west_ammonia = west_ammonia_cols[5:35]
 
 		west_swor_ammonia_cols = self._west_front['M']
-		west_swor_ammonia = west_swor_ammonia_cols[8:38]
+		west_swor_ammonia = west_swor_ammonia_cols[8:self._row_len]
 
 		east_ammonia_cols = self._midnight['N']
 		east_ammonia = east_ammonia_cols[5:35]
 
 		east_swor_ammonia_cols = self._east_front['M']
-		east_swor_ammonia = east_swor_ammonia_cols[8:38]
+		east_swor_ammonia = east_swor_ammonia_cols[8:self._row_len]
 		
 		try:
 			for i, day in enumerate(west_swor_ammonia):
@@ -408,10 +409,10 @@ class Logger:
 		p = Prompts()
 
 		w_cl_cols = self._west_front['J']
-		w_cl = w_cl_cols[8:38]
+		w_cl = w_cl_cols[8:self._row_len]
 
 		e_cl_cols = self._east_front['J']
-		e_cl = e_cl_cols[8:38]
+		e_cl = e_cl_cols[8:self._row_len]
 
 		w_midnight_cols = self._midnight['R']
 		w_midnight = w_midnight_cols[5:35]
@@ -448,10 +449,10 @@ class Logger:
 		p = Prompts()
 
 		w_hours_cols = self._west_front['F']
-		w_hours = w_hours_cols[8:38]
+		w_hours = w_hours_cols[8:self._row_len]
 
 		e_hours_cols = self._east_front['F']
-		e_hours = e_hours_cols[8:38]
+		e_hours = e_hours_cols[8:self._row_len]
 
 		w_midnight_cols = self._midnight['P']
 		w_midnight = w_midnight_cols[5:35]
@@ -487,10 +488,10 @@ class Logger:
 		p = Prompts()
 
 		w_pac_cols = self._west_front['K']
-		w_pac = w_pac_cols[8:39]
+		w_pac = w_pac_cols[8:self._row_len]
 
 		e_pac_cols = self._east_front['K']
-		e_pac = e_pac_cols[8:39]
+		e_pac = e_pac_cols[8:self._row_len]
 
 		mid_west_cols = self._midnight['X']
 		mid_west = mid_west_cols[5:36]
@@ -524,10 +525,10 @@ class Logger:
 		p = Prompts()
 
 		west_lime_columns = self._west_front['L']
-		w_lime = west_lime_columns[8:38]
+		w_lime = west_lime_columns[8:self._row_len]
 
 		east_lime_columns = self._east_front['L']
-		e_lime = east_lime_columns[8:38]
+		e_lime = east_lime_columns[8:self._row_len]
 
 		mid_west_cols = self._midnight['T']
 		mid_west = mid_west_cols[5:36]
@@ -560,10 +561,10 @@ class Logger:
 		p = Prompts()
 
 		west_fl_columns = self._west_front['N']
-		w_fl = west_fl_columns[8:38]
+		w_fl = west_fl_columns[8:self._row_len]
 
 		east_fl_columns = self._east_front['N']
-		e_fl = east_fl_columns[8:38]
+		e_fl = east_fl_columns[8:self._row_len]
 
 		mid_west_cols = self._midnight['H']
 		mid_west = mid_west_cols[5:36]
