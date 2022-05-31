@@ -4,7 +4,6 @@ comtypes == 1.1.10
 Cython == 0.29.22
 openpyxl == 3.0.7
 pdf2image == 1.14.0
-Pillow == 8.1.2
 platformdirs == 2.2.0
 pyowm == 3.2.0
 PyPDF2 == 1.26.0

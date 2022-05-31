@@ -168,9 +168,9 @@ def mainf():
 if __name__ == '__main__':
 	root.title("ExcelAuto")
 	root.geometry('1100x500+375+225')
-	iconpath='C:\\Users\\Carroll Boone Water\\Documents\\Projects\\Python\\ExcelAuto\\Photos\\excelicon.ico'
-	imgpath = 'C:\\Users\\Carroll Boone Water\\Documents\\Projects\\Python\\ExcelAuto\\Photos\\excelimg.png'
-	logopath = 'C:\\Users\\Carroll Boone Water\\Documents\\Projects\\Python\\ExcelAuto\\Photos\\black_python.png'
+	iconpath='C:\\Users\\CBWD\\Documents\\Old PC\\Projects\\Python\\ExcelAuto\\Photos\\excelicon.ico'
+	imgpath = 'C:\\Users\\CBWD\\Documents\\Old PC\\Projects\\Python\\ExcelAuto\\Photos\\excelimg.png'
+	logopath = 'C:\\Users\\CBWD\\Documents\\Old PC\\Projects\\Python\\ExcelAuto\\Photos\\black_python.png'
 	# header()
 	#pass functions as argument to be used as commands in gui buttons
 	#Start button calls mainf
